@@ -7,14 +7,13 @@
 <style>
 div#app {
   overflow: hidden;
+  height: 100%;
 }
 </style>
 
 <script>
 export default {
-  name: 'app',
-  created () {
-  }
+  name: 'app'
 }
 </script>
 

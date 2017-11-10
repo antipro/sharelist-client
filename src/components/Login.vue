@@ -24,11 +24,17 @@
   </div><!-- /.row -->
 </template>
 <script>
+/* global SERVER_IP:true */
+import Promise from 'es6-promise'
 import axios from 'axios'
 
+if (window.Promise === undefined) {
+  window.Promise = Promise
+}
+
 var instance = axios.create({
-  baseURL: 'http://localhost:3000/api/',
-  timeout: 1000
+  baseURL: `http://${SERVER_IP}:3000/api/`,
+  timeout: 5000
 })
 
 export default {

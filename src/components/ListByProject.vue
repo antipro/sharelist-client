@@ -39,7 +39,7 @@ export default {
         $(ele).affix({
           offset: {
             top: function () {
-              return (this.top = ele.offsetTop - 50)
+              return (this.top = ele.offsetTop + 1 - idx * 60)
             }
           },
           target: '.main'
@@ -69,10 +69,10 @@ export default {
   },
   computed: {
     projects () {
-      if (this.$store.state.projects.length === 0) {
+      if (this.$store.state.items.length === 0) {
         return []
       }
-      if (this.$parent.active_pid === null) {
+      if (this.$parent.active_pid === null && this.$store.state.projects.length !== 0) {
         this.$parent.active_pid = this.$store.state.projects[0].id
       }
       let newProjects = this.$store.state.projects.map((project) => {

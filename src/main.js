@@ -1,5 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+/* global SERVER_IP:true */
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuePersist from 'vue-persist'
@@ -26,6 +27,10 @@ const store = new Vuex.Store({
     },
     addItem (state, item) {
       state.items.push(item)
+    },
+    init (state, all) {
+      state.items = all.items
+      state.projects = all.projects
     },
     replaceAllItems (state, items) {
       state.items = items
@@ -55,25 +60,26 @@ new Vue({
   },
   persist: ['uid', 'tel', 'uname', 'token'],
   components: { App },
-  mounted () {
-  },
   methods: {
     connect () {
-      socket = io('http://localhost:3000', {
+      socket = io(`http://${SERVER_IP}:3000`, {
         transports: ['websocket'],
         query: {
           token: this.token,
           uid: this.uid
         }
       })
+      socket.on('init', function (all) {
+        store.commit('init', all)
+      })
       socket.on('items', function (items) {
         store.commit('replaceAllItems', items)
       })
-      socket.on('newitem', function (item) {
-        store.commit('addItem', item)
-      })
       socket.on('projects', function (projects) {
         store.commit('replaceAllProjects', projects)
+      })
+      socket.on('newitem', function (item) {
+        store.commit('addItem', item)
       })
     },
     addItem (pid, content) {

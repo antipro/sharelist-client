@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position: relative; height: 100%;">
     <navibar ref="nav" />
     <div class="main">
       <router-view></router-view>
@@ -17,12 +17,19 @@
 
 <style scoped>
 .main { 
-  height: calc(100vh - 100px);
+  position: absolute;
+  top: 52px;
+  bottom: 40px;
+  left: 0px;
   width: 100vw;
   margin: 5px 0;
   overflow-y: auto;
 }
 .footer {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100vw;
   height: 35px;
   width: 100vw;
 }

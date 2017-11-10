@@ -3,7 +3,7 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <a class="navbar-brand" href="#" @click="open" @touchmove.prevent>
-        <span class="glyphicon glyphicon-th-list"></span> 菜单
+        <span class="glyphicon glyphicon-tasks"></span> 菜单
       </a>
       <div class="side-modal" @click="close">
         <div class="side-action" style="text-align: left;">
@@ -25,16 +25,17 @@
           </div>
         </div>
       </div>
-      <div class="navbar-brand" style="float:right;">
-        <span v-if="online" class="glyphicon glyphicon-cloud"></span>
-        <span v-else class="glyphicon glyphicon-flash text-danger"></span>
-      </div>
+    </div>
+    <div class="navbar-brand" style="float:right;">
+      <span v-if="online" class="glyphicon glyphicon-cloud"></span>
+      <span v-else class="glyphicon glyphicon-flash text-danger"></span>
     </div>
   </nav>
 </template>
 
 <style scoped>
-.navbar { margin-bottom: 5px; background-color: #337ab7; width: 100vw; }
+.navbar { margin-bottom: 0px; background-color: #337ab7; width: 100vw; border-width: 0px; border-radius: 0; }
+.navbar .navbar-header::after { clear: none; }
 .navbar .navbar-brand { color: #FFF; }
 .navbar .navbar-brand:hover { color: #FFF; }
 .navbar .navbar-brand:focus { color: #FFF; }

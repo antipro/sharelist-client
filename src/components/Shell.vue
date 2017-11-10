@@ -6,9 +6,11 @@
     </div>
     <div class="footer">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="New ..." v-model="content" @keyup.enter="add">
+        <input type="text" class="form-control input-lg" placeholder="New ..." v-model="content" @keyup.enter="add">
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button" @click="add">Go!</button>
+          <button class="btn btn-default btn-lg" type="button" @click="add">
+            <span class="glyphicon glyphicon-floppy-disk"></span>
+          </button>
         </span>
       </div><!-- /input-group -->
     </div>
@@ -18,11 +20,11 @@
 <style scoped>
 .main { 
   position: absolute;
-  top: 52px;
-  bottom: 40px;
+  top: 50px;
+  bottom: 50px;
   left: 0px;
   width: 100vw;
-  margin: 5px 0;
+  margin: 0px;
   overflow-y: auto;
 }
 .footer {
@@ -30,8 +32,9 @@
   bottom: 0px;
   left: 0px;
   width: 100vw;
-  height: 35px;
+  height: 50px;
   width: 100vw;
+  padding: 2px 0px;
 }
 </style>
 

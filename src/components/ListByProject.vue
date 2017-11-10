@@ -24,7 +24,7 @@
 div.pull-right span.glyphicon { margin-left: 5px; }
 p.lead { margin-bottom: 0px; overflow: hidden; }
 p.wrap { white-space: nowrap; text-overflow: ellipsis; }
-.affix { top: 57px; left: 0px; width: 100vw; z-index: 1001; }
+.affix { top: 50px; left: 0px; width: 100vw; z-index: 1001; }
 </style>
 
 

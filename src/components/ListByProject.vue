@@ -39,13 +39,18 @@ export default {
         $(ele).affix({
           offset: {
             top: function () {
-              return (this.top = ele.offsetTop + 1 - idx * 60)
+              return (this.top = ele.offsetTop + 1 - idx * 2)
             }
           },
           target: '.main'
         })
-        $(ele).on('affix.bs.affix', function () {
+        $(ele).on('affixed.bs.affix', function () {
           $(this).click()
+          $(this).next().css('margin-top', $(this).height() + 20)
+        })
+        $(ele).on('affixed-top.bs.affix', function () {
+          $(this).click()
+          $(this).next().css('margin-top', '0px')
         })
       })
     })

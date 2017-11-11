@@ -2,11 +2,13 @@
   <div style="position: relative; height: 100%;">
     <navibar ref="nav" />
     <div class="main">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
     <div class="footer">
       <div class="input-group">
-        <input type="text" class="form-control input-lg" placeholder="New ..." v-model="content" @keyup.enter="add">
+        <input type="text" class="form-control input-lg" placeholder="新任务 ..." v-model="content" @keyup.enter="add">
         <span class="input-group-btn">
           <button class="btn btn-default btn-lg" type="button" @click="add">
             <span class="glyphicon glyphicon-floppy-disk"></span>

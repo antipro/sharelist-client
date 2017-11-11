@@ -3,40 +3,49 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <a class="navbar-brand" href="#" @click="open" @touchmove.prevent>
-        <span class="glyphicon glyphicon-tasks"></span> 菜单
+        <span class="glyphicon glyphicon-tasks"></span>
       </a>
       <div class="side-modal" @click="close">
         <div class="side-action" style="text-align: left;">
           <div class="row" style="margin-bottom: 50px;">
-            <div class="col-xs-3">
-            </div>
-            <div class="col-xs-6">
-              <img src="../assets/logo.png" class="img-rounded img-responsive">
-              {{ $root.tel }} {{ $root.uname }}
-            </div>
-            <div class="col-xs-3">
+            <div class="col-xs-12" style="text-align: center;">
+              <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">
+              <h3>{{ $root.tel }}<br><small>{{ $root.uname }}</small></h3>
             </div>
           </div>
           <div class="list-group">
-            <router-link class="list-group-item" to="/project" replace>按项目查看</router-link>
-            <router-link class="list-group-item" to="/date" replace>按时间查看</router-link>
-            <button type="button" class="list-group-item" >搜索</button>
-            <button type="button" class="list-group-item" @click="exit">退出</button>
+            <router-link class="list-group-item" to="/project" replace>
+              <span class="glyphicon glyphicon-menu-hamburger"></span> 按项目查看
+            </router-link>
+            <router-link class="list-group-item" to="/date" replace>
+              <span class="glyphicon glyphicon-calendar"></span> 按时间查看
+            </router-link>
+            <button type="button" class="list-group-item">
+              <span class="glyphicon glyphicon-search"></span> 搜索
+            </button>
+            <button type="button" class="list-group-item" @click="$root.logout">
+              <span class="glyphicon glyphicon-log-out"></span> 登出
+            </button>
+            <button v-if="$root.env !== 'browser'" type="button" class="list-group-item" @click="$root.exit">
+              <span class="glyphicon glyphicon-off"></span> 退出
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <div class="navbar-brand" style="float:right;">
+    <p class="navbar-text">菜单</p>
+    <p class="navbar-brand" style="float:right;">
       <span v-if="online" class="glyphicon glyphicon-cloud"></span>
       <span v-else class="glyphicon glyphicon-flash text-danger"></span>
-    </div>
+    </p>
   </nav>
 </template>
 
 <style scoped>
-.navbar { margin-bottom: 0px; background-color: #337ab7; width: 100vw; border-width: 0px; border-radius: 0; }
+.navbar { height: 50px; margin-bottom: 0px; background-color: #337ab7; width: 100vw; border-width: 0px; border-radius: 0; }
 .navbar .navbar-header::after { clear: none; }
 .navbar .navbar-brand { color: #FFF; }
+.navbar .navbar-text { float: left; color: #FFF; }
 .navbar .navbar-brand:hover { color: #FFF; }
 .navbar .navbar-brand:focus { color: #FFF; }
 .side-action {
@@ -99,14 +108,6 @@ export default {
         $('.side-modal').removeClass('side-modal-on')
       })
       $('body').animate({ paddingLeft: '0px' }, 'normal')
-    },
-    exit () {
-      this.$root.token = ''
-      this.$root.uname = ''
-      this.$root.tel = ''
-      this.$root.uid = ''
-      this.$root.exit()
-      this.$router.replace('/login')
     }
   }
 }

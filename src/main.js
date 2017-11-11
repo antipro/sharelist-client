@@ -7,6 +7,7 @@ import VuePersist from 'vue-persist'
 import App from './App'
 import router from './router'
 import io from 'socket.io-client'
+import $ from 'jquery'
 
 Vue.use(Vuex)
 Vue.use(VuePersist)
@@ -32,14 +33,8 @@ const store = new Vuex.Store({
       state.items = all.items
       state.projects = all.projects
     },
-    replaceAllItems (state, items) {
-      state.items = items
-    },
     addProject (state, project) {
       state.projects.push(project)
-    },
-    replaceAllProjects (state, projects) {
-      state.projects = projects
     }
   }
 })
@@ -56,10 +51,20 @@ new Vue({
     uid: '',
     tel: '',
     uname: '',
-    token: ''
+    token: '',
+    runtime: 'browser'
   },
   persist: ['uid', 'tel', 'uname', 'token'],
   components: { App },
+  mounted () {
+    var userAgent = navigator.userAgent.toLowerCase()
+    if (userAgent.indexOf('electron/') > -1) {
+      this.runtime = 'electron'
+    }
+    $.getScript('cordova.js').done(() => {
+      this.runtime = 'cordova'
+    })
+  },
   methods: {
     connect () {
       socket = io(`http://${SERVER_IP}:3000`, {
@@ -72,12 +77,6 @@ new Vue({
       socket.on('init', function (all) {
         store.commit('init', all)
       })
-      socket.on('items', function (items) {
-        store.commit('replaceAllItems', items)
-      })
-      socket.on('projects', function (projects) {
-        store.commit('replaceAllProjects', projects)
-      })
       socket.on('newitem', function (item) {
         store.commit('addItem', item)
       })
@@ -89,8 +88,25 @@ new Vue({
         content
       })
     },
-    exit () {
+    logout () {
+      this.token = ''
+      this.uname = ''
+      this.tel = ''
+      this.uid = ''
+      this.$router.replace('/login')
       socket.disconnect()
+    },
+    exit () {
+      switch (this.runtime) {
+        case 'electron':
+          window.close()
+          break
+        case 'cordova':
+          window.navigator.app.exitApp()
+          break
+        default:
+          console.log('unknown environment')
+      }
     }
   }
 })

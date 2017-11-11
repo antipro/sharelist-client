@@ -33,25 +33,23 @@ import $ from 'jquery'
 
 export default {
   name: 'project',
-  created () {
-    $(function () {
-      $('.list-group-item-info').each(function (idx, ele) {
-        $(ele).affix({
-          offset: {
-            top: function () {
-              return (this.top = ele.offsetTop + 1 - idx * 2)
-            }
-          },
-          target: '.main'
-        })
-        $(ele).on('affixed.bs.affix', function () {
-          $(this).click()
-          $(this).next().css('margin-top', $(this).height() + 20)
-        })
-        $(ele).on('affixed-top.bs.affix', function () {
-          $(this).click()
-          $(this).next().css('margin-top', '0px')
-        })
+  updated () {
+    $('.list-group-item-info').each(function (idx, ele) {
+      $(ele).affix({
+        offset: {
+          top: function () {
+            return (this.top = ele.offsetTop + 1 - idx * 2)
+          }
+        },
+        target: '.main'
+      })
+      $(ele).on('affixed.bs.affix', function () {
+        $(this).click()
+        $(this).next().css('margin-top', $(this).height() + 20)
+      })
+      $(ele).on('affixed-top.bs.affix', function () {
+        $(this).click()
+        $(this).next().css('margin-top', '0px')
       })
     })
   },

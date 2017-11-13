@@ -12,8 +12,15 @@
         <p class="lead wrap" @click="expandContent">{{ item.content }}</p>
         <small v-if="item.notify_date">{{ item.notify_date }}</small>
         <small v-else class="text-muted">无期限</small>
-        <small>{{ item.ctime }}</small>
         <div class="pull-right">
+          <div v-if="$root.env !== 'cordova'" class="btn-group btn-group-xs" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" @click="$root.finishItem(item.id, project.id)">
+              <span class="glyphicon glyphicon-ok"></span>
+            </button>
+            <button type="button" class="btn btn-default" @click="$root.removeItem(item.id, project.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </div>
         </div>
       </div>
     </template>

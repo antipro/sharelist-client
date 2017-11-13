@@ -33,6 +33,10 @@ const store = new Vuex.Store({
       state.items = all.items
       state.projects = all.projects
     },
+    clear (state) {
+      state.items = []
+      state.projects = []
+    },
     addProject (state, project) {
       state.projects.push(project)
     }
@@ -88,11 +92,18 @@ new Vue({
         content
       })
     },
+    finishItem (id, pid) {
+      // TODO
+    },
+    removeItem (id, pid) {
+      // TODO
+    },
     logout () {
       this.token = ''
       this.uname = ''
       this.tel = ''
       this.uid = ''
+      store.commit('clear')
       this.$router.replace('/login')
       socket.disconnect()
     },

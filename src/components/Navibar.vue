@@ -26,7 +26,7 @@
             <button type="button" class="list-group-item" @click="$root.logout">
               <span class="glyphicon glyphicon-log-out"></span> 登出
             </button>
-            <button v-if="$root.env !== 'browser'" type="button" class="list-group-item" @click="$root.exit">
+            <button v-if="$root.runtime !== 'browser'" type="button" class="list-group-item" @click="$root.exit">
               <span class="glyphicon glyphicon-off"></span> 退出
             </button>
           </div>

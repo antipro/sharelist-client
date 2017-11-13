@@ -9,12 +9,16 @@
         </div>
       </div>
       <div class="list-group-item" v-for="item in project.items" v-bind:key="item.id">
-        <p class="lead wrap" @click="expandContent">{{ item.content }}</p>
+        <p class="lead wrap" @click="expandContent">
+          <span v-if="item.state===0" class="glyphicon glyphicon-unchecked"></span>
+          <span v-if="item.state===1" class="glyphicon glyphicon-check"></span>
+           {{ item.content }}
+        </p>
         <small v-if="item.notify_date">{{ item.notify_date }}</small>
         <small v-else class="text-muted">无期限</small>
         <div class="pull-right">
           <div v-if="$root.env !== 'cordova'" class="btn-group btn-group-xs" role="group" aria-label="...">
-            <button type="button" class="btn btn-default" @click="$root.finishItem(item.id, project.id)">
+            <button v-if="item.state===0" type="button" class="btn btn-default" @click="$root.finishItem(item.id, project.id)">
               <span class="glyphicon glyphicon-ok"></span>
             </button>
             <button type="button" class="btn btn-default" @click="$root.removeItem(item.id, project.id)">

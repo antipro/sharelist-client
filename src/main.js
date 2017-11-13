@@ -29,6 +29,24 @@ const store = new Vuex.Store({
     addItem (state, item) {
       state.items.push(item)
     },
+    removeItem (state, id) {
+      for (let idx = 0; idx < state.items.length; idx++) {
+        const item = state.items[idx]
+        if (item.id === id) {
+          state.items.splice(idx, 1)
+          break
+        }
+      }
+    },
+    finishItem (state, id) {
+      for (let idx = 0; idx < state.items.length; idx++) {
+        const item = state.items[idx]
+        if (item.id === id) {
+          item.state = 1
+          break
+        }
+      }
+    },
     init (state, all) {
       state.items = all.items
       state.projects = all.projects
@@ -81,22 +99,34 @@ new Vue({
       socket.on('init', function (all) {
         store.commit('init', all)
       })
-      socket.on('newitem', function (item) {
+      socket.on('item added', function (item) {
         store.commit('addItem', item)
+      })
+      socket.on('item removed', function (id) {
+        store.commit('removeItem', id)
+      })
+      socket.on('item finished', function (id) {
+        store.commit('finishItem', id)
       })
     },
     addItem (pid, content) {
-      socket.emit('addnewitem', {
+      socket.emit('additem', {
         pid,
         uid: this.uid,
         content
       })
     },
     finishItem (id, pid) {
-      // TODO
+      socket.emit('finishitem', {
+        id,
+        pid
+      })
     },
     removeItem (id, pid) {
-      // TODO
+      socket.emit('removeitem', {
+        id,
+        pid
+      })
     },
     logout () {
       this.token = ''

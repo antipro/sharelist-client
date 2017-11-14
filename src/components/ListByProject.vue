@@ -29,6 +29,7 @@
 </template>
 
 <style>
+div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); }
 div.pull-right span.glyphicon { margin-left: 5px; }
 p.lead { margin-bottom: 0px; overflow: hidden; }
 p.wrap { white-space: nowrap; text-overflow: ellipsis; }

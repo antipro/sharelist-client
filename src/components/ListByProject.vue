@@ -1,27 +1,24 @@
 <template>
   <div class="list-group">
     <template v-for="project in projects">
-      <div class="list-group-item list-group-item-info" v-bind:key="project.id" @click="active" v-bind:data-pid="project.id">
+      <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" @click="activeProject(project, $event)" v-bind:data-pid="project.id">
         <span class="glyphicon glyphicon-chevron-down"></span> {{ project.name }}
         <div class="pull-right">
           <span v-if="project.editable === 'Y'" class="glyphicon glyphicon-share"></span>
           <span v-if="project.editable === 'Y'" class="glyphicon glyphicon-pencil" @click="editproject(project)"></span>
         </div>
       </div>
-      <div class="list-group-item" v-for="item in project.items" v-bind:key="item.id">
+      <div class="list-group-item" v-for="item in project.items" v-bind:key="item.id" @mouseenter="mousein" @mouseleave="mouseout">
         <p class="lead wrap" @click="expandContent">
-          <span v-if="item.state===0" class="glyphicon glyphicon-unchecked"></span>
+          <span v-if="item.state===0" class="glyphicon glyphicon-unchecked" @click="finishItem(item, $event)"></span>
           <span v-if="item.state===1" class="glyphicon glyphicon-check"></span>
            {{ item.content }}
         </p>
         <small v-if="item.notify_date">{{ item.notify_date }}</small>
         <small v-else class="text-muted">无期限</small>
-        <div class="pull-right">
-          <div v-if="$root.env !== 'cordova'" class="btn-group btn-group-xs" role="group" aria-label="...">
-            <button v-if="item.state===0" type="button" class="btn btn-default" @click="$root.finishItem(item.id, project.id)">
-              <span class="glyphicon glyphicon-ok"></span>
-            </button>
-            <button type="button" class="btn btn-default" @click="$root.removeItem(item.id, project.id)">
+        <div class="pull-right" style="visibility: hidden">
+          <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" @click="removeItem(item, $event)">
               <span class="glyphicon glyphicon-trash"></span>
             </button>
           </div>
@@ -38,31 +35,15 @@ p.wrap { white-space: nowrap; text-overflow: ellipsis; }
 .affix { top: 50px; left: 0px; width: 100vw; z-index: 1001; }
 </style>
 
-
 <script>
 import $ from 'jquery'
 
 export default {
   name: 'project',
   updated () {
-    $('.list-group-item-info').each(function (idx, ele) {
-      $(ele).affix({
-        offset: {
-          top: function () {
-            return (this.top = ele.offsetTop + 1 - idx * 2)
-          }
-        },
-        target: '.main'
-      })
-      $(ele).on('affixed.bs.affix', function () {
-        $(this).click()
-        $(this).next().css('margin-top', $(this).height() + 20)
-      })
-      $(ele).on('affixed-top.bs.affix', function () {
-        $(this).click()
-        $(this).next().css('margin-top', '0px')
-      })
-    })
+    if (this.$parent.active_pid === null) {
+      $('.list-group-item-info:first').click()
+    }
   },
   methods: {
     expandContent (evt) {
@@ -75,19 +56,42 @@ export default {
     edititem (item) {
       console.log('编辑条目', item)
     },
-    active (evt) {
+    finishItem (item, evt) {
+      item.state = 1
+      this.$parent.shownotice(() => {
+        this.$root.finishItem(item.id, item.pid)
+      }, () => {
+        item.state = 0
+      })
+    },
+    removeItem (item, evt) {
+      let $item = $(evt.target).parents('.list-group-item')
+      $item.fadeOut('normal', () => {
+        $item.css({ display: 'none' })
+      })
+      this.$parent.shownotice(() => {
+        this.$root.removeItem(item.id, item.pid)
+      }, () => {
+        $item.css({ display: 'block' })
+      })
+    },
+    activeProject (project, evt) {
       $('span.glyphicon-ok-circle').remove()
       $('<span>').addClass('glyphicon glyphicon-ok-circle').appendTo($('.pull-right', evt.target))
-      this.$parent.active_pid = $(evt.target).data('pid')
+      this.$parent.active_pid = project.id
+      this.$parent.$refs.nav.title = project.name
+    },
+    mousein (evt) {
+      evt.target.querySelector('.pull-right').style.visibility = ''
+    },
+    mouseout (evt) {
+      evt.target.querySelector('.pull-right').style.visibility = 'hidden'
     }
   },
   computed: {
     projects () {
       if (this.$store.state.items.length === 0) {
         return []
-      }
-      if (this.$parent.active_pid === null && this.$store.state.projects.length !== 0) {
-        this.$parent.active_pid = this.$store.state.projects[0].id
       }
       let newProjects = this.$store.state.projects.map((project) => {
         let newProject = {}

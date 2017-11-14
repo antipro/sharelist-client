@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <p class="navbar-text">菜单</p>
+    <p class="navbar-text">{{ title }}</p>
     <p class="navbar-brand" style="float:right;">
       <span v-if="online" class="glyphicon glyphicon-cloud"></span>
       <span v-else class="glyphicon glyphicon-flash text-danger"></span>
@@ -80,6 +80,7 @@ import $ from 'jquery'
 export default {
   data () {
     return {
+      title: '菜单',
       online: true
     }
   },
@@ -102,12 +103,14 @@ export default {
       modal.addClass('side-modal-on')
       modal.children().animate({ left: '0px' }, 'normal')
       $('body').animate({ paddingLeft: '250px' }, 'normal')
+      $('.affix').animate({ left: '250px' }, 'normal')
     },
     close () {
       $('.side-action').animate({ left: '-250px' }, 'normal', () => {
         $('.side-modal').removeClass('side-modal-on')
       })
       $('body').animate({ paddingLeft: '0px' }, 'normal')
+      $('.affix').animate({ left: '0px' }, 'normal')
     }
   }
 }

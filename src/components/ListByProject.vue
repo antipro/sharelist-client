@@ -1,11 +1,12 @@
 <template>
   <div class="list-group">
     <template v-for="project in projects">
-      <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" @click="activeProject(project, $event)" v-bind:data-pid="project.id">
+      <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
+        @click="activeProject(project, $event)" @dblclick="editproject(project)">
         <span class="glyphicon glyphicon-chevron-down"></span> {{ project.name }}
         <div class="pull-right">
           <span v-if="project.editable === 'Y'" class="glyphicon glyphicon-share"></span>
-          <span v-if="project.editable === 'Y'" class="glyphicon glyphicon-pencil" @click="editproject(project)"></span>
+          <span v-if="project.editable === 'Y'" class="glyphicon glyphicon-pencil"></span>
         </div>
       </div>
       <div class="list-group-item" v-for="item in project.items" v-bind:key="item.id" @mouseenter="mousein" @mouseleave="mouseout">
@@ -18,7 +19,7 @@
         <small v-else class="text-muted">无期限</small>
         <div class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
-            <button type="button" class="btn btn-default" @click="removeItem(item, $event)">
+            <button type="button" class="rmbtn btn btn-default" @click="removeItem(item, $event)">
               <span class="glyphicon glyphicon-trash"></span>
             </button>
           </div>
@@ -38,13 +39,21 @@ p.wrap { white-space: nowrap; text-overflow: ellipsis; }
 
 <script>
 import $ from 'jquery'
+import touch from 'touchjs'
 
 export default {
-  name: 'project',
+  name: 'projectlist',
   updated () {
-    if (this.$parent.active_pid === null) {
+    if (this.$parent.active_gid === null) {
       $('.list-group-item-info:first').click()
     }
+    touch.on('.list-group-item', 'swiperight', function (evt) {
+      if ($(this).hasClass('list-group-item')) {
+        $('.rmbtn', this).click()
+      } else {
+        $(this).parents('.list-group-item').find('.rmbtn').click()
+      }
+    })
   },
   methods: {
     expandContent (evt) {
@@ -52,7 +61,11 @@ export default {
       $(evt.target).toggleClass('wrap')
     },
     editproject (project) {
-      console.log('编辑项目', project)
+      console.log(project)
+      if (project.editable === 'N') {
+        return
+      }
+      this.$router.push({ name: 'project', params: project })
     },
     edititem (item) {
       console.log('编辑条目', item)
@@ -79,8 +92,8 @@ export default {
     activeProject (project, evt) {
       $('span.glyphicon-ok-circle').remove()
       $('<span>').addClass('glyphicon glyphicon-ok-circle').appendTo($('.pull-right', evt.target))
-      this.$parent.active_pid = project.id
-      this.$parent.$refs.nav.title = project.name
+      this.$parent.active_gid = project.id
+      this.$parent.active_gname = project.name
     },
     mousein (evt) {
       evt.target.querySelector('.pull-right').style.visibility = ''

@@ -14,10 +14,10 @@
             </div>
           </div>
           <div class="list-group">
-            <router-link class="list-group-item" to="/project" replace>
+            <router-link class="list-group-item" to="/projectlist" replace>
               <span class="glyphicon glyphicon-menu-hamburger"></span> 按项目查看
             </router-link>
-            <router-link class="list-group-item" to="/date" replace>
+            <router-link class="list-group-item" to="/datelist" replace>
               <span class="glyphicon glyphicon-calendar"></span> 按时间查看
             </router-link>
             <button type="button" class="list-group-item">
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <p class="navbar-text">{{ title }}</p>
+    <p class="navbar-text">{{ navtitle }}</p>
     <p class="navbar-brand" style="float:right;">
       <span v-if="online" class="glyphicon glyphicon-cloud"></span>
       <span v-else class="glyphicon glyphicon-flash text-danger"></span>
@@ -80,10 +80,10 @@ import $ from 'jquery'
 export default {
   data () {
     return {
-      title: '菜单',
       online: true
     }
   },
+  props: ['navtitle'],
   mounted () {
     if (navigator.onLine) {
       this.online = true

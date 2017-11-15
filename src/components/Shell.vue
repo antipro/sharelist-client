@@ -4,7 +4,7 @@
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       操作完成 <a class="pull-right" href="#" @click="restore">撤销</a>
     </div>
-    <navibar ref="nav" />
+    <navibar ref="nav" v-bind:navtitle="active_gname"/>
     <div class="main" @scroll="detect">
       <keep-alive>
         <router-view></router-view>
@@ -12,7 +12,7 @@
     </div>
     <div class="footer">
       <div class="input-group">
-        <input type="text" class="form-control input-lg" placeholder="新任务 ..." v-model="content" @keyup.enter="add">
+        <input type="text" class="form-control input-lg" placeholder="新任务 ..." maxlength="255" v-model="content" @keyup.enter="add">
         <span class="input-group-btn">
           <button class="btn btn-default btn-lg" type="button" @click="add">
             <span class="glyphicon glyphicon-floppy-disk"></span>
@@ -62,7 +62,8 @@ import $ from 'jquery'
 export default {
   data () {
     return {
-      active_pid: null,
+      active_gname: '',
+      active_gid: null,
       content: '',
       timeout_ptr: null,
       forward: null,
@@ -75,7 +76,7 @@ export default {
       return
     }
     this.$root.connect()
-    let defaultPath = '/project'
+    let defaultPath = '/projectlist'
     this.$router.replace(defaultPath)
   },
   components: {
@@ -84,7 +85,7 @@ export default {
   methods: {
     add () {
       if (this.content !== '') {
-        this.$root.addItem(this.active_pid, this.content)
+        this.$root.addItem(this.active_gid, this.content)
         this.content = ''
       }
     },

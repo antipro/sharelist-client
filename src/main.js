@@ -38,11 +38,11 @@ const store = new Vuex.Store({
         }
       }
     },
-    finishTask (state, id) {
+    toggleTask (state, { id, state1 }) {
       for (let idx = 0; idx < state.tasks.length; idx++) {
         const task = state.tasks[idx]
         if (task.id === id) {
-          task.state = 1
+          task.state = state1
           break
         }
       }
@@ -105,8 +105,8 @@ new Vue({
       socket.on('task removed', function (id) {
         store.commit('removeTask', id)
       })
-      socket.on('task finished', function (id) {
-        store.commit('finishTask', id)
+      socket.on('task toggled', function (id, state1) {
+        store.commit('toggleTask', { id, state1 })
       })
     },
     addTask (pid, content) {
@@ -116,9 +116,10 @@ new Vue({
         content
       })
     },
-    finishTask (id, pid) {
-      socket.emit('finishtask', {
+    toggleTask (id, state, pid) {
+      socket.emit('toggletask', {
         id,
+        state,
         pid
       })
     },

@@ -2,17 +2,16 @@
   <div class="list-group">
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
-        @click="activeProject(project, $event)" @dblclick="editproject(project)">
+        @click="activeProject(project, $event)" @dblclick="editProject(project, $event)">
         <span class="glyphicon glyphicon-chevron-down"></span> {{ project.name }}
         <div class="pull-right">
-          <span v-if="project.editable === 'Y'" class="glyphicon glyphicon-share"></span>
           <span v-if="project.editable === 'Y'" class="glyphicon glyphicon-pencil"></span>
         </div>
       </div>
       <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id" @mouseenter="mousein" @mouseleave="mouseout">
-        <p class="lead wrap" @click="expandContent">
-          <span v-if="task.state===0" class="glyphicon glyphicon-unchecked" @click="finishTask(task, $event)"></span>
-          <span v-if="task.state===1" class="glyphicon glyphicon-check"></span>
+        <p class="lead wrap" @click="expandContent" @dblclick="editTask(project, $event)">
+          <span v-if="task.state===0" class="glyphicon glyphicon-unchecked" @click="toggleTask(task, 1, $event)"></span>
+          <span v-if="task.state===1" class="glyphicon glyphicon-check" @click="toggleTask(task, 0, $event)"></span>
            {{ task.content }}
         </p>
         <small v-if="task.notify_date">{{ task.notify_date }}</small>
@@ -47,11 +46,18 @@ export default {
     if (this.$parent.active_gid === null) {
       $('.list-group-item-info:first').click()
     }
-    touch.on('.list-group-item', 'swiperight', function (evt) {
+    touch.on('.list-group-item', 'swiperight swipeleft', function (evt) {
       if ($(this).hasClass('list-group-item')) {
         $('.rmbtn', this).click()
       } else {
         $(this).parents('.list-group-item').find('.rmbtn').click()
+      }
+    })
+    touch.on('.list-group-item', 'doubletap', function (evt) {
+      if ($(this).hasClass('list-group-item')) {
+        $(this).dblclick()
+      } else {
+        $(this).parents('.list-group-item').dblclick()
       }
     })
   },
@@ -60,23 +66,17 @@ export default {
       $('p.lead').not(evt.target).addClass('wrap')
       $(evt.target).toggleClass('wrap')
     },
-    editproject (project) {
-      console.log(project)
+    editProject (project, evt) {
       if (project.editable === 'N') {
         return
       }
       this.$router.push({ name: 'project', params: project })
     },
-    editTask (task) {
+    editTask (task, evt) {
       console.log('编辑条目', task)
     },
-    finishTask (task, evt) {
-      task.state = 1
-      this.$parent.shownotice(() => {
-        this.$root.finishTask(task.id, task.pid)
-      }, () => {
-        task.state = 0
-      })
+    toggleTask (task, state, evt) {
+      this.$root.toggleTask(task.id, state, task.pid)
     },
     removeTask (task, evt) {
       let $item = $(evt.target).parents('.list-group-item')

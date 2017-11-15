@@ -85,7 +85,7 @@ export default {
   methods: {
     add () {
       if (this.content !== '') {
-        this.$root.addItem(this.active_gid, this.content)
+        this.$root.addTask(this.active_gid, this.content)
         this.content = ''
       }
     },

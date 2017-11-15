@@ -16,7 +16,7 @@ Vue.config.productionTip = false
 const store = new Vuex.Store({
   state: {
     login: true,
-    items: [],
+    tasks: [],
     projects: []
   },
   mutations: {
@@ -26,33 +26,33 @@ const store = new Vuex.Store({
     online (state) {
       state.login = true
     },
-    addItem (state, item) {
-      state.items.push(item)
+    addTask (state, task) {
+      state.tasks.push(task)
     },
-    removeItem (state, id) {
-      for (let idx = 0; idx < state.items.length; idx++) {
-        const item = state.items[idx]
-        if (item.id === id) {
-          state.items.splice(idx, 1)
+    removeTask (state, id) {
+      for (let idx = 0; idx < state.tasks.length; idx++) {
+        const task = state.tasks[idx]
+        if (task.id === id) {
+          state.tasks.splice(idx, 1)
           break
         }
       }
     },
-    finishItem (state, id) {
-      for (let idx = 0; idx < state.items.length; idx++) {
-        const item = state.items[idx]
-        if (item.id === id) {
-          item.state = 1
+    finishTask (state, id) {
+      for (let idx = 0; idx < state.tasks.length; idx++) {
+        const task = state.tasks[idx]
+        if (task.id === id) {
+          task.state = 1
           break
         }
       }
     },
     init (state, all) {
-      state.items = all.items
+      state.tasks = all.tasks
       state.projects = all.projects
     },
     clear (state) {
-      state.items = []
+      state.tasks = []
       state.projects = []
     },
     addProject (state, project) {
@@ -99,31 +99,31 @@ new Vue({
       socket.on('init', function (all) {
         store.commit('init', all)
       })
-      socket.on('item added', function (item) {
-        store.commit('addItem', item)
+      socket.on('task added', function (task) {
+        store.commit('addTask', task)
       })
-      socket.on('item removed', function (id) {
-        store.commit('removeItem', id)
+      socket.on('task removed', function (id) {
+        store.commit('removeTask', id)
       })
-      socket.on('item finished', function (id) {
-        store.commit('finishItem', id)
+      socket.on('task finished', function (id) {
+        store.commit('finishTask', id)
       })
     },
-    addItem (pid, content) {
-      socket.emit('additem', {
+    addTask (pid, content) {
+      socket.emit('addtask', {
         pid,
         uid: this.uid,
         content
       })
     },
-    finishItem (id, pid) {
-      socket.emit('finishitem', {
+    finishTask (id, pid) {
+      socket.emit('finishtask', {
         id,
         pid
       })
     },
-    removeItem (id, pid) {
-      socket.emit('removeitem', {
+    removeTask (id, pid) {
+      socket.emit('removetask', {
         id,
         pid
       })

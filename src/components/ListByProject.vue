@@ -9,17 +9,17 @@
           <span v-if="project.editable === 'Y'" class="glyphicon glyphicon-pencil"></span>
         </div>
       </div>
-      <div class="list-group-item" v-for="item in project.items" v-bind:key="item.id" @mouseenter="mousein" @mouseleave="mouseout">
+      <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id" @mouseenter="mousein" @mouseleave="mouseout">
         <p class="lead wrap" @click="expandContent">
-          <span v-if="item.state===0" class="glyphicon glyphicon-unchecked" @click="finishItem(item, $event)"></span>
-          <span v-if="item.state===1" class="glyphicon glyphicon-check"></span>
-           {{ item.content }}
+          <span v-if="task.state===0" class="glyphicon glyphicon-unchecked" @click="finishTask(task, $event)"></span>
+          <span v-if="task.state===1" class="glyphicon glyphicon-check"></span>
+           {{ task.content }}
         </p>
-        <small v-if="item.notify_date">{{ item.notify_date }}</small>
+        <small v-if="task.notify_date">{{ task.notify_date }}</small>
         <small v-else class="text-muted">无期限</small>
         <div class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
-            <button type="button" class="rmbtn btn btn-default" @click="removeItem(item, $event)">
+            <button type="button" class="rmbtn btn btn-default" @click="removeTask(task, $event)">
               <span class="glyphicon glyphicon-trash"></span>
             </button>
           </div>
@@ -67,24 +67,24 @@ export default {
       }
       this.$router.push({ name: 'project', params: project })
     },
-    edititem (item) {
-      console.log('编辑条目', item)
+    editTask (task) {
+      console.log('编辑条目', task)
     },
-    finishItem (item, evt) {
-      item.state = 1
+    finishTask (task, evt) {
+      task.state = 1
       this.$parent.shownotice(() => {
-        this.$root.finishItem(item.id, item.pid)
+        this.$root.finishTask(task.id, task.pid)
       }, () => {
-        item.state = 0
+        task.state = 0
       })
     },
-    removeItem (item, evt) {
+    removeTask (task, evt) {
       let $item = $(evt.target).parents('.list-group-item')
       $item.fadeOut('normal', () => {
         $item.css({ display: 'none' })
       })
       this.$parent.shownotice(() => {
-        this.$root.removeItem(item.id, item.pid)
+        this.$root.removeTask(task.id, task.pid)
       }, () => {
         $item.css({ display: 'block' })
       })
@@ -104,19 +104,19 @@ export default {
   },
   computed: {
     projects () {
-      if (this.$store.state.items.length === 0) {
+      if (this.$store.state.tasks.length === 0) {
         return []
       }
       let newProjects = this.$store.state.projects.map((project) => {
         let newProject = {}
         $.extend(newProject, project)
-        newProject.items = []
-        this.$store.state.items.forEach((item) => {
-          if (item.pid === project.id) {
-            newProject.items.push(item)
+        newProject.tasks = []
+        this.$store.state.tasks.forEach((task) => {
+          if (task.pid === project.id) {
+            newProject.tasks.push(task)
           }
         })
-        newProject.items.sort((a, b) => {
+        newProject.tasks.sort((a, b) => {
           if (a.notify_date === null && b.notify_date !== null) {
             return true
           } else if (a.notify_date !== null && b.notify_date === null) {

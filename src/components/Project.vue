@@ -1,6 +1,6 @@
 <template>
   <div style="position: relative; height: 100%;">
-  <navibar ref="nav" navtitle="项目"></navibar>
+  <navibar ref="nav" navtitle="项目" :tel="$root.tel" :uname="$root.uname"></navibar>
   <div class="container">
     <div class="row">
       <div class="col-md-6">

@@ -4,7 +4,7 @@
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       操作完成 <a class="pull-right" href="#" @click="restore">撤销</a>
     </div>
-    <navibar ref="nav" v-bind:navtitle="active_gname"/>
+    <navibar ref="nav" :navtitle="active_gname" :tel="$root.tel" :uname="$root.uname"/>
     <div class="main" @scroll="detect">
       <keep-alive>
         <router-view></router-view>

@@ -70,8 +70,9 @@ const store = new Vuex.Store({
       state.projects.push(project)
     },
     addShared (state, all) {
-      state.projects.push(...all.projects)
-      state.tasks.push(...all.tasks)
+      let pid = all.project.id
+      state.projects = state.projects.filter(project => project.id !== pid).push(all.project)
+      state.tasks = state.tasks.filter(task => task.pid !== pid).push(all.tasks)
     },
     removeUnshared (state, pid) {
       state.projects = state.projects.filter((project) => {

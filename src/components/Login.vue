@@ -58,7 +58,6 @@ export default {
         this.$root.uid = res.data.uid
         this.$root.uname = res.data.uname
         this.$root.token = res.data.token
-        this.$root.connect()
         this.$router.replace('/')
       }).catch((error) => {
         console.log(error)

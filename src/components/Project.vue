@@ -82,14 +82,20 @@ export default {
       this.shares.splice(index, 1)
     },
     addShare () {
-      if (this.tel.trim() !== '') {
-        this.shares.push({
-          uid: 0,
-          uname: '<新用户>',
-          tel: this.tel.trim()
-        })
-        this.tel = ''
+      let tel = this.tel.trim()
+      if (tel === this.$root.tel) {
+        alert('不能添加本号码。')
+        return
       }
+      if (tel === '') {
+        return
+      }
+      this.shares.push({
+        uid: 0,
+        uname: '<新用户>',
+        tel: this.tel.trim()
+      })
+      this.tel = ''
     },
     updateProject (pid, pname, shares) {
       this.$root.updateProject(pid, pname, shares)

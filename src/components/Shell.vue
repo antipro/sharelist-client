@@ -5,7 +5,7 @@
       操作完成 <a class="pull-right" href="#" @click="restore">撤销</a>
     </div>
     <navibar ref="nav" :navtitle="active_gname" :tel="$root.tel" :uname="$root.uname"/>
-    <div class="main" @scroll="detect">
+    <div class="main">
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
@@ -75,6 +75,7 @@ export default {
       this.$router.replace('/login')
       return
     }
+    this.$root.connect()
     let defaultPath = '/projectlist'
     this.$router.replace(defaultPath)
   },

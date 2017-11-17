@@ -8,6 +8,17 @@ import App from './App'
 import router from './router'
 import io from 'socket.io-client'
 import $ from 'jquery'
+import Promise from 'es6-promise'
+import axios from 'axios'
+
+if (window.Promise === undefined) {
+  window.Promise = Promise
+}
+
+Vue.prototype.$axios = axios.create({
+  baseURL: `http://${SERVER_IP}:3000/api/`,
+  timeout: 5000
+})
 
 Vue.use(Vuex)
 Vue.use(VuePersist)
@@ -57,6 +68,18 @@ const store = new Vuex.Store({
     },
     addProject (state, project) {
       state.projects.push(project)
+    },
+    addShared (state, all) {
+      state.projects.push(...all.projects)
+      state.tasks.push(...all.tasks)
+    },
+    removeUnshared (state, pid) {
+      state.projects = state.projects.filter((project) => {
+        return project.id !== pid
+      })
+      state.tasks = state.tasks.filter((task) => {
+        return task.pid !== pid
+      })
     }
   }
 })
@@ -96,17 +119,34 @@ new Vue({
           uid: this.uid
         }
       })
-      socket.on('init', function (all) {
+      socket.on('init', (all) => {
         store.commit('init', all)
       })
-      socket.on('task added', function (task) {
+      socket.on('task added', (task) => {
         store.commit('addTask', task)
       })
-      socket.on('task removed', function (id) {
+      socket.on('task removed', (id) => {
         store.commit('removeTask', id)
       })
-      socket.on('task toggled', function (id, state1) {
+      socket.on('task toggled', (id, state1) => {
         store.commit('toggleTask', { id, state1 })
+      })
+      socket.on('project shared', (pid) => {
+        this.$axios.get('/projects/' + pid, {
+          headers: {
+            TOKEN: this.token
+          }
+        }).then((response) => {
+          let res = response.data
+          if (res.state === '001') {
+            alert(res.msg)
+            return
+          }
+          store.commit('addShared', res.data)
+        })
+      })
+      socket.on('project unshared', (pid) => {
+        store.commit('removeUnshared', pid)
       })
     },
     addTask (pid, content) {
@@ -127,6 +167,13 @@ new Vue({
       socket.emit('removetask', {
         id,
         pid
+      })
+    },
+    updateProject (pid, pname, shares) {
+      socket.emit('updateproject', {
+        pid,
+        pname,
+        shares
       })
     },
     logout () {

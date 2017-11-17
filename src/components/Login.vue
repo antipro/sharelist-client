@@ -24,19 +24,6 @@
   </div><!-- /.row -->
 </template>
 <script>
-/* global SERVER_IP:true */
-import Promise from 'es6-promise'
-import axios from 'axios'
-
-if (window.Promise === undefined) {
-  window.Promise = Promise
-}
-
-var instance = axios.create({
-  baseURL: `http://${SERVER_IP}:3000/api/`,
-  timeout: 5000
-})
-
 export default {
   name: 'login',
   data () {
@@ -56,7 +43,7 @@ export default {
         alert('请输入用户名和密码')
         return
       }
-      instance.get('/login', {
+      this.$axios.get('/login', {
         params: {
           tel: this.tel,
           pwd: this.pwd
@@ -71,6 +58,7 @@ export default {
         this.$root.uid = res.data.uid
         this.$root.uname = res.data.uname
         this.$root.token = res.data.token
+        this.$root.connect()
         this.$router.replace('/')
       }).catch((error) => {
         console.log(error)

@@ -75,7 +75,6 @@ export default {
       this.$router.replace('/login')
       return
     }
-    this.$root.connect()
     let defaultPath = '/projectlist'
     this.$router.replace(defaultPath)
   },
@@ -84,8 +83,8 @@ export default {
   },
   methods: {
     add () {
-      if (this.content !== '') {
-        this.$root.addTask(this.active_gid, this.content)
+      if (this.content.trim() !== '') {
+        this.$root.addTask(this.active_gid, this.content.trim())
         this.content = ''
       }
     },

@@ -2,13 +2,13 @@
   <div class="list-group">
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
-        @click="activeProject(project, $event)" @dblclick="editProject(project, $event)">
+        @click="activeProject(project, $event)" @dblclick="editProject(project, $event)" v-editproject="project">
         <span class="glyphicon glyphicon-chevron-down"></span> {{ project.name }}
         <div class="pull-right">
-          <span v-if="project.editable === 'Y'" class="glyphicon glyphicon-pencil"></span>
+          <span v-if="project.uid===$root.uid" class="glyphicon glyphicon-pencil"></span>
         </div>
       </div>
-      <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id" @mouseenter="mousein" @mouseleave="mouseout">
+      <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id" v-edittask="task" @mouseenter="mousein" @mouseleave="mouseout">
         <p class="lead wrap" @click="expandContent" @dblclick="editTask(project, $event)">
           <span v-if="task.state===0" class="glyphicon glyphicon-unchecked" @click="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="glyphicon glyphicon-check" @click="toggleTask(task, 0, $event)"></span>
@@ -60,6 +60,40 @@ export default {
         $(this).parents('.list-group-item').dblclick()
       }
     })
+  },
+  directives: {
+    editproject: {
+      inserted: function (el, binding, vnode) {
+        let diff = 0
+        el.addEventListener('touchstart', (evt) => {
+          if (diff === 0) {
+            diff = evt.timeStamp
+          } else {
+            diff = evt.timeStamp - diff
+            if (diff < 500) {
+              vnode.context.editProject(binding.value)
+            }
+            diff = 0
+          }
+        })
+      }
+    },
+    edittask: {
+      inserted: function (el, binding, vnode) {
+        let diff = 0
+        el.addEventListener('touchstart', (evt) => {
+          if (diff === 0) {
+            diff = evt.timeStamp
+          } else {
+            diff = evt.timeStamp - diff
+            if (diff < 1000) {
+              vnode.context.editTask(binding.value)
+            }
+            diff = 0
+          }
+        })
+      }
+    }
   },
   methods: {
     expandContent (evt) {

@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuePersist from 'vue-persist'
+import Datetime from 'vue-datetime'
 import App from './App'
 import router from './router'
 import io from 'socket.io-client'
@@ -22,6 +23,7 @@ Vue.prototype.$axios = axios.create({
 
 Vue.use(Vuex)
 Vue.use(VuePersist)
+Vue.use(Datetime)
 Vue.config.productionTip = false
 
 const store = new Vuex.Store({
@@ -39,6 +41,16 @@ const store = new Vuex.Store({
     },
     addTask (state, task) {
       state.tasks.push(task)
+    },
+    updateTask (state, updatedTask) {
+      for (let idx = 0; idx < state.tasks.length; idx++) {
+        const task = state.tasks[idx]
+        if (task.id === updatedTask.id) {
+          task.content = updatedTask.content
+          task.notify_date = updatedTask.notify_date
+          break
+        }
+      }
     },
     removeTask (state, id) {
       for (let idx = 0; idx < state.tasks.length; idx++) {
@@ -128,6 +140,9 @@ new Vue({
       socket.on('task added', (task) => {
         store.commit('addTask', task)
       })
+      socket.on('task updated', (task) => {
+        store.commit('updateTask', task)
+      })
       socket.on('task removed', (id) => {
         store.commit('removeTask', id)
       })
@@ -177,6 +192,14 @@ new Vue({
         pid,
         pname,
         shares
+      })
+    },
+    updateTask (id, pid, content, notifyDate) {
+      socket.emit('updatetask', {
+        id,
+        pid,
+        content,
+        notify_date: notifyDate
       })
     },
     logout () {

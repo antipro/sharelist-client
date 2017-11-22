@@ -1,15 +1,15 @@
 <template>
-  <div style="position: relative; height: 100%;">
+  <div style="position: relative; height: 100%; width: 100vw;">
   <navibar ref="nav" navtitle="项目" :tel="$root.tel" :uname="$root.uname"></navibar>
   <div class="container" style="margin-top: 20px;">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="project_name">项目名称</label>
+          <label for="project_name">名称</label>
           <input type="text" class="form-control" id="project_name" v-model="pname">
         </div>
         <div class="form-group">
-          <label for="">共享用户</label>
+          <label for="">共享</label>
           <div>
             <div class="alert alert-info alert-dismissible" role="alert" v-for="(share, index) of shares" :key="share.uid">
               <button type="button" class="close" aria-label="Close" @click="removeShare(index)">
@@ -30,7 +30,7 @@
           </div><!-- /input-group -->
         </div>
         <div class="form-group">
-          <button type="button" class="btn btn-default" @click="updateProject(pid, pname, shares)">
+          <button type="button" class="btn btn-default" @click="updateProject">
             <span class="glyphicon glyphicon-floppy-disk"></span>
           </button>
         </div>
@@ -97,8 +97,8 @@ export default {
       })
       this.tel = ''
     },
-    updateProject (pid, pname, shares) {
-      this.$root.updateProject(pid, pname, shares)
+    updateProject () {
+      this.$root.updateProject(this.pid, this.pname, this.shares)
       this.$router.go(-1)
     }
   },

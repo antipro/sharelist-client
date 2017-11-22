@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id" v-edittask="task" @mouseenter="mousein" @mouseleave="mouseout">
-        <p class="lead wrap" @click="expandContent" @dblclick="editTask(project, $event)">
+        <p class="lead wrap" @click="expandContent" @dblclick="editTask(task, $event)">
           <span v-if="task.state===0" class="glyphicon glyphicon-unchecked" @click="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="glyphicon glyphicon-check" @click="toggleTask(task, 0, $event)"></span>
            {{ task.content }}
@@ -107,7 +107,7 @@ export default {
       this.$router.push({ name: 'project', params: project })
     },
     editTask (task, evt) {
-      console.log('编辑条目', task)
+      this.$router.push({ name: 'task', params: task })
     },
     toggleTask (task, state, evt) {
       this.$root.toggleTask(task.id, state, task.pid)

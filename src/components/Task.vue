@@ -11,14 +11,13 @@
         <div class="form-group">
           <label for="task_date">时间</label>
           <div class="input-group">
-            <datetime id="task_date" v-model="notify_date" type="date" input-format="YYYY-MM-DD" locale="en" input-class="form-control"></datetime>
+            <input type="text" id="task_date" class="form-control" readonly>
             <span class="input-group-btn">
               <button class="btn btn-default" type="button" @click="notify_date=''">
                 <span class="glyphicon glyphicon-remove"></span>
               </button>
             </span>
           </div>
-          
         </div>
         <div class="form-group">
           <button type="button" class="btn btn-default" @click="updateTask">
@@ -38,6 +37,11 @@
 
 <script>
 import Navibar from '@/components/Navibar'
+import $ from 'jquery'
+import 'bootstrap/dist/js/bootstrap'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-datepicker'
+import 'bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN'
 
 export default {
   name: 'task',
@@ -60,10 +64,19 @@ export default {
     if (this.$route.params.notify_date) {
       this.notify_date = this.$route.params.notify_date
     }
+    $(() => {
+      $('#task_date').val(this.notify_date)
+      $('#task_date').datepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd'
+      })
+      $('#task_date').on('changeDate', () => {
+        this.notify_date = $('#task_date').datepicker('getFormattedDate')
+      })
+    })
   },
   methods: {
     updateTask () {
-      console.log(Date.parse(this.notify_date))
       this.$root.updateTask(this.id, this.pid, this.content, this.notify_date)
       this.$router.go(-1)
     }

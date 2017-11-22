@@ -4,7 +4,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuePersist from 'vue-persist'
-import Datetime from 'vue-datetime'
 import App from './App'
 import router from './router'
 import io from 'socket.io-client'
@@ -23,7 +22,6 @@ Vue.prototype.$axios = axios.create({
 
 Vue.use(Vuex)
 Vue.use(VuePersist)
-Vue.use(Datetime)
 Vue.config.productionTip = false
 
 const store = new Vuex.Store({

@@ -26,17 +26,10 @@ Vue.config.productionTip = false
 
 const store = new Vuex.Store({
   state: {
-    login: true,
     tasks: [],
     projects: []
   },
   mutations: {
-    offline (state) {
-      state.login = false
-    },
-    online (state) {
-      state.login = true
-    },
     addTask (state, task) {
       state.tasks.push(task)
     },
@@ -97,7 +90,48 @@ const store = new Vuex.Store({
   }
 })
 
-var socket = null
+function initSocket (uid, token) {
+  let socket = io(`http://${SERVER_IP}:3000`, {
+    transports: ['websocket'],
+    query: {
+      token: token,
+      uid: uid
+    }
+  })
+  socket.on('init', (all) => {
+    store.commit('init', all)
+  })
+  socket.on('task added', (task) => {
+    store.commit('addTask', task)
+  })
+  socket.on('task updated', (task) => {
+    store.commit('updateTask', task)
+  })
+  socket.on('task removed', (id) => {
+    store.commit('removeTask', id)
+  })
+  socket.on('task toggled', (id, state1) => {
+    store.commit('toggleTask', { id, state1 })
+  })
+  socket.on('project shared', (pid) => {
+    this.$axios.get('/projects/' + pid, {
+      headers: {
+        TOKEN: this.token
+      }
+    }).then((response) => {
+      let res = response.data
+      if (res.state === '001') {
+        alert(res.msg)
+        return
+      }
+      store.commit('addShared', res.data)
+    })
+  })
+  socket.on('project unshared', (pid) => {
+    store.commit('removeUnshared', pid)
+  })
+  return socket
+}
 
 /* eslint-disable no-new */
 new Vue({
@@ -124,76 +158,35 @@ new Vue({
     })
   },
   methods: {
-    connect () {
-      socket = io(`http://${SERVER_IP}:3000`, {
-        transports: ['websocket'],
-        query: {
-          token: this.token,
-          uid: this.uid
-        }
-      })
-      socket.on('init', (all) => {
-        store.commit('init', all)
-      })
-      socket.on('task added', (task) => {
-        store.commit('addTask', task)
-      })
-      socket.on('task updated', (task) => {
-        store.commit('updateTask', task)
-      })
-      socket.on('task removed', (id) => {
-        store.commit('removeTask', id)
-      })
-      socket.on('task toggled', (id, state1) => {
-        store.commit('toggleTask', { id, state1 })
-      })
-      socket.on('project shared', (pid) => {
-        this.$axios.get('/projects/' + pid, {
-          headers: {
-            TOKEN: this.token
-          }
-        }).then((response) => {
-          let res = response.data
-          if (res.state === '001') {
-            alert(res.msg)
-            return
-          }
-          store.commit('addShared', res.data)
-        })
-      })
-      socket.on('project unshared', (pid) => {
-        store.commit('removeUnshared', pid)
-      })
-    },
     addTask (pid, content) {
-      socket.emit('addtask', {
+      this.$socket.emit('addtask', {
         pid,
         uid: this.uid,
         content
       })
     },
     toggleTask (id, state, pid) {
-      socket.emit('toggletask', {
+      this.$socket.emit('toggletask', {
         id,
         state,
         pid
       })
     },
     removeTask (id, pid) {
-      socket.emit('removetask', {
+      this.$socket.emit('removetask', {
         id,
         pid
       })
     },
     updateProject (pid, pname, shares) {
-      socket.emit('updateproject', {
+      this.$socket.emit('updateproject', {
         pid,
         pname,
         shares
       })
     },
     updateTask (id, pid, content, notifyDate) {
-      socket.emit('updatetask', {
+      this.$socket.emit('updatetask', {
         id,
         pid,
         content,
@@ -207,7 +200,6 @@ new Vue({
       this.uid = ''
       store.commit('clear')
       this.$router.replace('/login')
-      socket.disconnect()
     },
     exit () {
       switch (this.runtime) {
@@ -219,6 +211,19 @@ new Vue({
           break
         default:
           console.log('unknown environment')
+      }
+    }
+  },
+  watch: {
+    token (val) {
+      if (val !== '') {
+        console.log('socket connect')
+        this.$socket = initSocket(this.uid, this.token)
+        return
+      }
+      if (this.$socket !== null) {
+        console.log('socket disconnect')
+        this.$socket.disconnect()
       }
     }
   }

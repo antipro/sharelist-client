@@ -75,7 +75,6 @@ export default {
       this.$router.replace('/login')
       return
     }
-    this.$root.connect()
     let defaultPath = '/projectlist'
     this.$router.replace(defaultPath)
   },

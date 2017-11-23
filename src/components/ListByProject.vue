@@ -65,6 +65,7 @@ export default {
     editproject: {
       inserted: function (el, binding, vnode) {
         let diff = 0
+        let ptr = 0
         el.addEventListener('touchstart', (evt) => {
           if (diff === 0) {
             diff = evt.timeStamp
@@ -74,7 +75,11 @@ export default {
               vnode.context.editProject(binding.value)
             }
             diff = 0
+            clearTimeout(ptr)
           }
+          ptr = setTimeout(() => {
+            diff = 0
+          }, 600)
         })
       }
     },

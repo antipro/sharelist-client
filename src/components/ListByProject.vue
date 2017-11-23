@@ -31,7 +31,7 @@
 </template>
 
 <style>
-div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); }
+div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); font-weight: 600; }
 span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; }
 div.content { padding-left: 35px; }
 div.pull-right span.glyphicon { margin-left: 5px; }

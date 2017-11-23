@@ -45,7 +45,7 @@
 .navbar { height: 50px; margin-bottom: 0px; background-color: #337ab7; width: 100vw; border-width: 0px; border-radius: 0; }
 .navbar .navbar-header::after { clear: none; }
 .navbar .navbar-brand { color: #FFF; }
-.navbar .navbar-text { float: left; color: #FFF; }
+.navbar .navbar-text { float: left; color: #FFF; font-weight: 800; }
 .navbar .navbar-brand:hover { color: #FFF; }
 .navbar .navbar-brand:focus { color: #FFF; }
 .side-action {

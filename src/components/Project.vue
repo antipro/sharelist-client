@@ -1,6 +1,8 @@
 <template>
   <div style="position: relative; height: 100%; width: 100vw;">
-  <navibar ref="nav" navtitle="项目" :tel="$root.tel" :uname="$root.uname"></navibar>
+  <navibar ref="nav" navtitle="项目" :tel="$root.tel" :uname="$root.uname">
+    <span class="glyphicon glyphicon-floppy-disk" @click="updateProject"></span>
+  </navibar>
   <div class="container" style="margin-top: 20px;">
     <div class="row">
       <div class="col-md-6">
@@ -28,11 +30,6 @@
               </button>
             </span>
           </div><!-- /input-group -->
-        </div>
-        <div class="form-group">
-          <button type="button" class="btn btn-default" @click="updateProject">
-            <span class="glyphicon glyphicon-floppy-disk"></span>
-          </button>
         </div>
       </div>
     </div>

@@ -150,17 +150,15 @@ export default {
       if (this.$store.state.tasks.length === 0) {
         return []
       }
-      let newProjects = this.$store.state.projects.map((project) => {
-        let newProject = {}
-        $.extend(newProject, project)
-        newProject.tasks = []
+      this.$store.state.projects.forEach((project) => {
+        project.tasks = []
         this.$store.state.tasks.forEach((task) => {
           if (task.pid === project.id) {
-            task.gname = newProject.name
-            newProject.tasks.push(task)
+            task.gname = project.name
+            project.tasks.push(task)
           }
         })
-        newProject.tasks.sort((a, b) => {
+        project.tasks.sort((a, b) => {
           if (a.state < b.state) {
             return -1
           }
@@ -177,12 +175,11 @@ export default {
             return a.notify_date > b.notify_date
           }
         })
-        return newProject
       })
-      newProjects.sort((a, b) => {
+      this.$store.state.projects.sort((a, b) => {
         return a.id > b.id
       })
-      return newProjects
+      return this.$store.state.projects
     }
   }
 }

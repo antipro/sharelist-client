@@ -23,6 +23,11 @@
     </div><!-- /.col-->
   </div><!-- /.row -->
 </template>
+
+<style scoped>
+div.row { margin-top: 100px; }
+</style>
+
 <script>
 export default {
   name: 'login',

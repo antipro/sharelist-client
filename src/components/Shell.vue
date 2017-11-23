@@ -4,7 +4,9 @@
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       操作完成 <a class="pull-right" href="#" @click="restore">撤销</a>
     </div>
-    <navibar ref="nav" :navtitle="active_gname" :tel="$root.tel" :uname="$root.uname"/>
+    <navibar ref="nav" :navtitle="active_gname" :tel="$root.tel" :uname="$root.uname">
+      <span class="glyphicon glyphicon-refresh" @click="refresh"></span>
+    </navibar>
     <div class="main">
       <keep-alive>
         <router-view></router-view>
@@ -51,6 +53,23 @@
   left: 0;
   right: 0;
   z-index: 1050;
+}
+@keyframes rotate {
+  0%   { transform: rotate(0deg); }
+  10%  { transform: rotate(36deg); }
+  20%  { transform: rotate(72deg); }
+  30%  { transform: rotate(108deg); }
+  40%  { transform: rotate(144deg); }
+  50%  { transform: rotate(180deg); }
+  60%  { transform: rotate(216deg); }
+  70%  { transform: rotate(252deg); }
+  80%  { transform: rotate(288deg); }
+  90%  { transform: rotate(324deg); }
+  100% { transform: rotate(360deg); }
+}
+span.glyphicon-refresh{
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
 }
 </style>
 
@@ -112,6 +131,12 @@ export default {
         this.timeout_ptr = null
       }
       $('.notice').css({ display: 'none', top: '0' })
+    },
+    refresh () {
+      $('span.glyphicon-refresh').css('animation-name', 'rotate')
+      this.$root.refresh(() => {
+        $('span.glyphicon-refresh').css('animation-name', '')
+      })
     },
     detect (evt) {
       let elements = document.querySelectorAll('.list-group-item-info')

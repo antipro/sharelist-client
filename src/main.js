@@ -34,32 +34,22 @@ const store = new Vuex.Store({
       state.tasks.push(task)
     },
     updateTask (state, updatedTask) {
-      for (let idx = 0; idx < state.tasks.length; idx++) {
-        const task = state.tasks[idx]
-        if (task.id === updatedTask.id) {
-          task.content = updatedTask.content
-          task.notify_date = updatedTask.notify_date
-          break
-        }
-      }
+      let task = state.tasks.find(task => {
+        return task.id === updatedTask.id
+      })
+      task.content = updatedTask.content
+      task.notify_date = updatedTask.notify_date
     },
     removeTask (state, id) {
-      for (let idx = 0; idx < state.tasks.length; idx++) {
-        const task = state.tasks[idx]
-        if (task.id === id) {
-          state.tasks.splice(idx, 1)
-          break
-        }
-      }
+      let idx = state.tasks.findIndex(task => {
+        return task.id === id
+      })
+      state.tasks.splice(idx, 1)
     },
     toggleTask (state, { id, state1 }) {
-      for (let idx = 0; idx < state.tasks.length; idx++) {
-        const task = state.tasks[idx]
-        if (task.id === id) {
-          task.state = state1
-          break
-        }
-      }
+      state.tasks.find(task => {
+        return task.id === id
+      }).state = state1
     },
     init (state, all) {
       state.tasks = all.tasks
@@ -71,6 +61,11 @@ const store = new Vuex.Store({
     },
     addProject (state, project) {
       state.projects.push(project)
+    },
+    updateProject (state, updatedProject) {
+      state.projects.find(project => {
+        return project.id === updatedProject.id
+      }).name = updatedProject.name
     },
     addShared (state, all) {
       let pid = all.project.id
@@ -112,6 +107,9 @@ function initSocket (uid, token) {
   })
   socket.on('task toggled', (id, state1) => {
     store.commit('toggleTask', { id, state1 })
+  })
+  socket.on('project updated', (project) => {
+    store.commit('updateProject', project)
   })
   socket.on('project shared', (pid) => {
     this.$axios.get('/projects/' + pid, {
@@ -158,6 +156,9 @@ new Vue({
     })
   },
   methods: {
+    refresh (fn) {
+      this.$socket.emit('refresh', fn)
+    },
     addTask (pid, content) {
       this.$socket.emit('addtask', {
         pid,
@@ -198,7 +199,7 @@ new Vue({
       this.uname = ''
       this.tel = ''
       this.uid = ''
-      store.commit('clear')
+      this.$store.commit('clear')
       this.$router.replace('/login')
     },
     exit () {

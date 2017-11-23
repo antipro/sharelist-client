@@ -35,7 +35,7 @@
     </div>
     <p class="navbar-text">{{ navtitle }}</p>
     <p class="navbar-brand" style="float:right;">
-      <span v-if="online" class="glyphicon glyphicon-cloud"></span>
+      <slot v-if="online"></slot>
       <span v-else class="glyphicon glyphicon-flash text-danger"></span>
     </p>
   </nav>

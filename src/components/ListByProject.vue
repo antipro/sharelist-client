@@ -151,10 +151,16 @@ export default {
           }
         })
         newProject.tasks.sort((a, b) => {
+          if (a.state < b.state) {
+            return -1
+          }
+          if (a.state > b.state) {
+            return 1
+          }
           if (a.notify_date === null && b.notify_date !== null) {
-            return true
+            return 1
           } else if (a.notify_date !== null && b.notify_date === null) {
-            return false
+            return -1
           } else if (a.notify_date === null && b.notify_date === null) {
             return a.ctime > b.ctime
           } else {

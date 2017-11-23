@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <p class="form-control-static">{{ gname }}</p>
+          <h3>{{ gname }}</h3>
         </div>
         <div class="form-group">
           <label for="task_content">内容</label>
@@ -30,9 +30,8 @@
   </div>
 </template>
 <style scoped>
-.vdatetime input {
-  border-radius: 4px;
-}
+.vdatetime input { border-radius: 4px; }
+#task_content { font-size: 16px; }
 </style>
 
 <script>

@@ -8,7 +8,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="project_name">名称</label>
-          <input type="text" class="form-control" id="project_name" v-model="pname">
+          <h3>{{ pname }}</h3>
         </div>
         <div class="form-group">
           <label for="">共享</label>

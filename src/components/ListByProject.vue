@@ -3,7 +3,7 @@
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
         @click="activeProject(project, $event)" @dblclick="editProject(project, $event)" v-editproject="project">
-        <span class="glyphicon glyphicon-chevron-down"></span> {{ project.name }}
+        {{ project.name }}
         <div class="pull-right">
           <span v-if="project.uid===$root.uid" class="glyphicon glyphicon-pencil"></span>
         </div>
@@ -31,10 +31,10 @@
 </template>
 
 <style>
-div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); font-weight: 600; }
+div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); font-weight: 600; font-size: 20px; }
 span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; }
 div.content { padding-left: 35px; }
-div.pull-right span.glyphicon { margin-left: 5px; }
+div.pull-right span.glyphicon { margin: 0 5px; }
 p.lead { margin-bottom: 0px; overflow: hidden; font-weight: 400; }
 p.wrap { white-space: nowrap; text-overflow: ellipsis; }
 .affix { top: 50px; left: 0px; width: 100vw; z-index: 1001; }

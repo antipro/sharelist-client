@@ -9,18 +9,20 @@
         </div>
       </div>
       <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id" v-edittask="task" @mouseenter="mousein" @mouseleave="mouseout">
-        <p class="lead wrap" @click="expandContent" @dblclick="editTask(task, $event)">
-          <span v-if="task.state===0" class="glyphicon glyphicon-unchecked" @click="toggleTask(task, 1, $event)"></span>
-          <span v-if="task.state===1" class="glyphicon glyphicon-check" @click="toggleTask(task, 0, $event)"></span>
-           {{ task.content }}
-        </p>
-        <small v-if="task.notify_date">{{ task.notify_date }}</small>
-        <small v-else class="text-muted">无期限</small>
-        <div class="pull-right" style="visibility: hidden">
-          <div class="btn-group btn-group-xs" role="group" aria-label="...">
-            <button type="button" class="rmbtn btn btn-default" @click="removeTask(task, $event)">
-              <span class="glyphicon glyphicon-trash"></span>
-            </button>
+        <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click="toggleTask(task, 1, $event)"></span>
+        <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click="toggleTask(task, 0, $event)"></span>
+        <div class="content">
+          <p class="lead wrap" @click="expandContent" @dblclick="editTask(task, $event)">
+            {{ task.content }}
+          </p>
+          <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }}</small>
+          <small v-else class="text-muted">无期限</small>
+          <div class="pull-right" style="visibility: hidden">
+            <div class="btn-group btn-group-xs" role="group" aria-label="...">
+              <button type="button" class="rmbtn btn btn-default" @click="removeTask(task, $event)">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -30,8 +32,10 @@
 
 <style>
 div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); }
+span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; }
+div.content { padding-left: 35px; }
 div.pull-right span.glyphicon { margin-left: 5px; }
-p.lead { margin-bottom: 0px; overflow: hidden; }
+p.lead { margin-bottom: 0px; overflow: hidden; font-weight: 400; }
 p.wrap { white-space: nowrap; text-overflow: ellipsis; }
 .affix { top: 50px; left: 0px; width: 100vw; z-index: 1001; }
 </style>
@@ -71,7 +75,7 @@ export default {
             diff = evt.timeStamp
           } else {
             diff = evt.timeStamp - diff
-            if (diff < 500) {
+            if (diff < 300) {
               vnode.context.editProject(binding.value)
             }
             diff = 0
@@ -79,7 +83,7 @@ export default {
           }
           ptr = setTimeout(() => {
             diff = 0
-          }, 600)
+          }, 400)
         })
       }
     },

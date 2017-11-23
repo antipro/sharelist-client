@@ -56,6 +56,14 @@ export default {
       tel: ''
     }
   },
+  beforeRouteEnter (to, from, next) {
+    // 刷新页面就返回列表
+    if (from.path === '/') {
+      next('/')
+    } else {
+      next()
+    }
+  },
   created () {
     if (this.$root.token === '') {
       this.$router.replace('/login')

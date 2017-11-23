@@ -152,6 +152,7 @@ export default {
         newProject.tasks = []
         this.$store.state.tasks.forEach((task) => {
           if (task.pid === project.id) {
+            task.gname = newProject.name
             newProject.tasks.push(task)
           }
         })

@@ -1,9 +1,12 @@
 <template>
   <div style="position: relative; height: 100%; width: 100vw;">
-  <navibar ref="nav" navtitle="项目" :tel="$root.tel" :uname="$root.uname"></navibar>
+  <navibar ref="nav" navtitle="任务" :tel="$root.tel" :uname="$root.uname"></navibar>
   <div class="container" style="margin-top: 20px;">
     <div class="row">
       <div class="col-md-6">
+        <div class="form-group">
+          <p class="form-control-static">{{ gname }}</p>
+        </div>
         <div class="form-group">
           <label for="task_content">内容</label>
           <textarea rows="15" maxlength="255" class="form-control" id="task_content" v-model="content"></textarea>
@@ -50,7 +53,16 @@ export default {
       id: null,
       pid: null,
       content: null,
+      gname: '',
       notify_date: ''
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    // 刷新页面就返回列表
+    if (from.path === '/') {
+      next('/')
+    } else {
+      next()
     }
   },
   created () {
@@ -61,6 +73,7 @@ export default {
     this.id = this.$route.params.id
     this.pid = this.$route.params.pid
     this.content = this.$route.params.content
+    this.gname = this.$route.params.gname
     if (this.$route.params.notify_date) {
       this.notify_date = this.$route.params.notify_date
     }

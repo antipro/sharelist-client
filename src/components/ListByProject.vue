@@ -2,28 +2,39 @@
   <div class="list-group">
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
-        @click="activeProject(project, $event)" @dblclick="editProject(project, $event)" v-editproject="project">
+        @click="activeProject(project, $event)" @dblclick="editProject(project, $event)">
         {{ project.name }}
         <div class="pull-right">
           <span v-if="project.uid===$root.uid" class="glyphicon glyphicon-pencil"></span>
         </div>
       </div>
-      <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id" v-edittask="task" @mouseenter="mousein" @mouseleave="mouseout">
+      <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id">
         <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click="toggleTask(task, 1, $event)"></span>
         <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click="toggleTask(task, 0, $event)"></span>
-        <div class="content">
+        <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
           <p class="lead wrap" @click="expandContent" @dblclick="editTask(task, $event)">
             {{ task.content }}
           </p>
           <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }}</small>
           <small v-else class="text-muted">无期限</small>
-          <div class="pull-right" style="visibility: hidden">
+          <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
             <div class="btn-group btn-group-xs" role="group" aria-label="...">
+              <button type="button" class="rmbtn btn btn-default" @click="editTask(task, $event)">
+                <span class="glyphicon glyphicon-pencil"></span>
+              </button>
               <button type="button" class="rmbtn btn btn-default" @click="removeTask(task, $event)">
                 <span class="glyphicon glyphicon-trash"></span>
               </button>
             </div>
           </div>
+        </div>
+        <div v-if="$root.runtime === 'cordova'" class="drawer-right btn-group">
+          <button type="button" class="btn btn-default" @click.stop="editTask(task, $event)">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+          <button type="button" class="btn btn-default" @click.stop="removeTask(task, $event)">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
         </div>
       </div>
     </template>
@@ -34,8 +45,15 @@
 div.list-group-item { margin: 0 5px; box-shadow: 3px 3px #F4F4F4 }
 div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); font-weight: 600; font-size: 16px; margin-top: 10px; }
 span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; color: #51c4f1; }
-div.content { padding-left: 35px; }
+div.content { margin-left: 35px; position: relative; }
 div.pull-right span.glyphicon { margin: 0 5px; }
+div.drawer-right { position: absolute; top: 0; right: 0; bottom: 0; width: 100px; background-color: #F4F4F4; 
+  display: none; flex-direction: row; flex-wrap: nowrap; justify-content: flex-end; transition: display .5s; }
+div.drawer-right-on { display: flex; }
+div.drawer-right .btn { flex-grow: 1; }
+div.drawer-right span.glyphicon-pencil { color: #7ed321; }
+div.drawer-right span.glyphicon-trash { color: red; }
+
 p.lead { margin-bottom: 0px; overflow: hidden; font-weight: 400; }
 p.wrap { white-space: nowrap; text-overflow: ellipsis; }
 .affix { top: 50px; left: 0px; width: 100vw; z-index: 1001; }
@@ -57,46 +75,6 @@ export default {
   updated () {
     this.initDom()
   },
-  directives: {
-    editproject: {
-      inserted: function (el, binding, vnode) {
-        let diff = 0
-        let ptr = 0
-        el.addEventListener('touchstart', (evt) => {
-          if (diff === 0) {
-            diff = evt.timeStamp
-          } else {
-            diff = evt.timeStamp - diff
-            console.log(diff)
-            if (diff < 100) {
-              vnode.context.editProject(binding.value)
-            }
-            diff = 0
-            clearTimeout(ptr)
-          }
-          ptr = setTimeout(() => {
-            diff = 0
-          }, 100)
-        })
-      }
-    },
-    edittask: {
-      inserted: function (el, binding, vnode) {
-        let diff = 0
-        el.addEventListener('touchstart', (evt) => {
-          if (diff === 0) {
-            diff = evt.timeStamp
-          } else {
-            diff = evt.timeStamp - diff
-            if (diff < 1000) {
-              vnode.context.editTask(binding.value)
-            }
-            diff = 0
-          }
-        })
-      }
-    }
-  },
   activated () {
     this.initDom()
   },
@@ -107,19 +85,15 @@ export default {
       } else {
         $('.list-group-item-info:first').click()
       }
-      touch.on('.list-group-item', 'swiperight swipeleft', function (evt) {
+      touch.on('.list-group-item', 'hold', function (evt) {
+        let _self = null
         if ($(this).hasClass('list-group-item')) {
-          $('.rmbtn', this).click()
+          _self = $('.drawer-right', this)
         } else {
-          $(this).parents('.list-group-item').find('.rmbtn').click()
+          _self = $(this).parents('.list-group-item').find('.drawer-right')
         }
-      })
-      touch.on('.list-group-item', 'doubletap', function (evt) {
-        if ($(this).hasClass('list-group-item')) {
-          $(this).dblclick()
-        } else {
-          $(this).parents('.list-group-item').dblclick()
-        }
+        $('.drawer-right').not(_self).removeClass('drawer-right-on')
+        _self.addClass('drawer-right-on')
       })
     },
     expandContent (evt) {
@@ -157,10 +131,10 @@ export default {
       this.$emit('activate', project.id, project.name)
     },
     mousein (evt) {
-      evt.target.querySelector('.pull-right').style.visibility = ''
+      $('.pull-right', evt.target).css('visibility', '')
     },
     mouseout (evt) {
-      evt.target.querySelector('.pull-right').style.visibility = 'hidden'
+      $('.pull-right', evt.target).css('visibility', 'hidden')
     }
   },
   computed: {

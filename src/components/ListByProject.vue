@@ -31,8 +31,9 @@
 </template>
 
 <style>
-div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); font-weight: 600; font-size: 20px; }
-span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; }
+div.list-group-item { margin: 0 5px; box-shadow: 3px 3px #F4F4F4 }
+div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); font-weight: 600; font-size: 16px; margin-top: 10px; }
+span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; color: #51c4f1; }
 div.content { padding-left: 35px; }
 div.pull-right span.glyphicon { margin: 0 5px; }
 p.lead { margin-bottom: 0px; overflow: hidden; font-weight: 400; }
@@ -46,24 +47,15 @@ import touch from 'touchjs'
 
 export default {
   name: 'projectlist',
-  updated () {
-    if (this.$parent.active_gid === null) {
-      $('.list-group-item-info:first').click()
+  data () {
+    return {
+      active_pname: '',
+      active_pid: null
     }
-    touch.on('.list-group-item', 'swiperight swipeleft', function (evt) {
-      if ($(this).hasClass('list-group-item')) {
-        $('.rmbtn', this).click()
-      } else {
-        $(this).parents('.list-group-item').find('.rmbtn').click()
-      }
-    })
-    touch.on('.list-group-item', 'doubletap', function (evt) {
-      if ($(this).hasClass('list-group-item')) {
-        $(this).dblclick()
-      } else {
-        $(this).parents('.list-group-item').dblclick()
-      }
-    })
+  },
+  persist: ['active_pid', 'active_pname'],
+  updated () {
+    this.initDom()
   },
   directives: {
     editproject: {
@@ -75,7 +67,8 @@ export default {
             diff = evt.timeStamp
           } else {
             diff = evt.timeStamp - diff
-            if (diff < 300) {
+            console.log(diff)
+            if (diff < 100) {
               vnode.context.editProject(binding.value)
             }
             diff = 0
@@ -83,7 +76,7 @@ export default {
           }
           ptr = setTimeout(() => {
             diff = 0
-          }, 400)
+          }, 100)
         })
       }
     },
@@ -104,7 +97,31 @@ export default {
       }
     }
   },
+  activated () {
+    this.initDom()
+  },
   methods: {
+    initDom () {
+      if (this.active_pid !== null && $('.list-group-item-info[data-pid="' + this.active_pid + '"]').length !== 0) {
+        $('.list-group-item-info[data-pid="' + this.active_pid + '"]').click()
+      } else {
+        $('.list-group-item-info:first').click()
+      }
+      touch.on('.list-group-item', 'swiperight swipeleft', function (evt) {
+        if ($(this).hasClass('list-group-item')) {
+          $('.rmbtn', this).click()
+        } else {
+          $(this).parents('.list-group-item').find('.rmbtn').click()
+        }
+      })
+      touch.on('.list-group-item', 'doubletap', function (evt) {
+        if ($(this).hasClass('list-group-item')) {
+          $(this).dblclick()
+        } else {
+          $(this).parents('.list-group-item').dblclick()
+        }
+      })
+    },
     expandContent (evt) {
       $('p.lead').not(evt.target).addClass('wrap')
       $(evt.target).toggleClass('wrap')
@@ -135,8 +152,9 @@ export default {
     activeProject (project, evt) {
       $('span.glyphicon-ok-circle').remove()
       $('<span>').addClass('glyphicon glyphicon-ok-circle').appendTo($('.pull-right', evt.target))
-      this.$parent.active_gid = project.id
-      this.$parent.active_gname = project.name
+      this.active_pid = project.id
+      this.active_pname = project.name
+      this.$emit('activate', project.id, project.name)
     },
     mousein (evt) {
       evt.target.querySelector('.pull-right').style.visibility = ''

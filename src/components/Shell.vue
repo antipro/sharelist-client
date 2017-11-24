@@ -9,7 +9,7 @@
     </navibar>
     <div class="main">
       <keep-alive>
-        <router-view></router-view>
+        <router-view @activate="activated"></router-view>
       </keep-alive>
     </div>
     <div class="footer">
@@ -89,6 +89,7 @@ export default {
       back: null
     }
   },
+  persist: ['active_gid'],
   created () {
     if (this.$root.token === '') {
       this.$router.replace('/login')
@@ -101,6 +102,10 @@ export default {
     Navibar
   },
   methods: {
+    activated (gid, gname) {
+      this.active_gid = gid
+      this.active_gname = gname
+    },
     add () {
       if (this.content.trim() !== '') {
         this.$root.addTask(this.active_gid, this.content.trim())

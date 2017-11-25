@@ -15,10 +15,8 @@
     <div class="footer">
       <div class="input-group">
         <input type="text" class="form-control input-lg" placeholder="新任务 ..." maxlength="255" v-model="content" @keyup.enter="add">
-        <span class="input-group-btn">
-          <button class="btn btn-default btn-lg" type="button" @click="add">
-            <span class="glyphicon glyphicon-floppy-disk"></span>
-          </button>
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-edit" @click="add"></span>
         </span>
       </div><!-- /input-group -->
     </div>
@@ -44,6 +42,8 @@
   width: 100vw;
   padding: 2px 0px;
 }
+.footer * { border-radius: 0; }
+.footer .input-group { margin: 0 5px; }
 .notice {
   position: fixed;
   display: none;

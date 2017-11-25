@@ -1,37 +1,43 @@
 <template>
   <div style="position: relative; height: 100%; width: 100vw;">
-  <navibar ref="nav" navtitle="任务" :tel="$root.tel" :uname="$root.uname">
-    <span class="glyphicon glyphicon-floppy-disk" @click="updateTask"></span>
-  </navibar>
-  <div class="container" style="margin-top: 20px;">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <h3>{{ gname }}</h3>
-        </div>
-        <div class="form-group">
-          <label for="task_content">内容</label>
-          <textarea rows="15" maxlength="255" class="form-control" id="task_content" v-model="content"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="task_date">时间</label>
-          <div class="input-group">
-            <input type="text" id="task_date" class="form-control" readonly>
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button" @click="notify_date=''">
-                <span class="glyphicon glyphicon-remove"></span>
-              </button>
-            </span>
+    <navibar ref="nav" :navtitle="gname" :tel="$root.tel" :uname="$root.uname">
+      <span class="glyphicon glyphicon-floppy-disk" @click="updateTask"></span>
+    </navibar>
+    <div class="container" style="margin-top: 20px;">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <textarea rows="15" maxlength="255" class="form-control input-lg" id="task_content" v-model="content" ></textarea>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" v-model="notify_date" class="form-control input-lg" readonly @focus="showDlg" placeholder="提醒时间">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-remove" @click="clearDate"></span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+    
+    <div class="modal fade" id="modal-id" @click="hideDlg">
+      <div class="modal-dialog" @click.stop>
+        <div class="modal-content">
+          <div class="modal-body">
+            <div id="task_date"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </template>
 <style scoped>
-.vdatetime input { border-radius: 4px; }
-#task_content { font-size: 16px; }
+textarea { resize: none; }
+</style>
+<style>
+#modal-id .datepicker-inline { margin: 0 auto; }
 </style>
 
 <script>
@@ -39,7 +45,8 @@ import Navibar from '@/components/Navibar'
 import $ from 'jquery'
 import 'bootstrap/dist/js/bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-datepicker'
+import 'bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'
+import 'bootstrap-datepicker/js/bootstrap-datepicker'
 import 'bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN'
 
 export default {
@@ -74,13 +81,18 @@ export default {
       this.notify_date = this.$route.params.notify_date
     }
     $(() => {
-      $('#task_date').val(this.notify_date)
+      $('#modal-id').modal({
+        backdrop: false,
+        show: false
+      })
       $('#task_date').datepicker({
         language: 'zh-CN',
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd',
+        todayHighlight: true
       })
       $('#task_date').on('changeDate', () => {
         this.notify_date = $('#task_date').datepicker('getFormattedDate')
+        $('#modal-id').modal('hide')
       })
     })
   },
@@ -88,6 +100,15 @@ export default {
     updateTask () {
       this.$root.updateTask(this.id, this.pid, this.content, this.notify_date)
       this.$router.go(-1)
+    },
+    clearDate () {
+      this.notify_date = ''
+    },
+    showDlg () {
+      $('#modal-id').modal('show')
+    },
+    hideDlg () {
+      $('#modal-id').modal('hide')
     }
   },
   components: {

@@ -101,7 +101,7 @@ export default {
       $(evt.target).toggleClass('wrap')
     },
     editProject (project, evt) {
-      if (project.editable === 'N') {
+      if (project.uid !== this.$root.uid) {
         return
       }
       this.$router.push({ name: 'project', params: project })

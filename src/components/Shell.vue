@@ -5,7 +5,7 @@
       操作完成 <a class="pull-right" href="#" @click="restore">撤销</a>
     </div>
     <navibar ref="nav" :navtitle="active_gname" :tel="$root.tel" :uname="$root.uname">
-      <span class="glyphicon glyphicon-refresh" @click="refresh"></span>
+      <span slot="action" class="glyphicon glyphicon-refresh" @click="refresh"></span>
     </navibar>
     <div class="main">
       <keep-alive>
@@ -37,7 +37,6 @@
   position: absolute;
   bottom: 0px;
   left: 0px;
-  width: 100vw;
   height: 50px;
   width: 100vw;
   padding: 2px 0px;

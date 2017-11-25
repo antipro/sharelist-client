@@ -5,7 +5,7 @@
         @click="activeProject(project, $event)" @dblclick="editProject(project, $event)">
         {{ project.name }}
         <div class="pull-right">
-          <span v-if="project.uid===$root.uid" class="glyphicon glyphicon-pencil"></span>
+          <span v-if="project.uid===$root.uid && project.editable==='Y'" class="glyphicon glyphicon-pencil" @click="editProject(project, $event)"></span>
         </div>
       </div>
       <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id">
@@ -85,13 +85,8 @@ export default {
       } else {
         $('.list-group-item-info:first').click()
       }
-      touch.on('.list-group-item', 'hold', function (evt) {
-        let _self = null
-        if ($(this).hasClass('list-group-item')) {
-          _self = $('.drawer-right', this)
-        } else {
-          _self = $(this).parents('.list-group-item').find('.drawer-right')
-        }
+      touch.on('.list-group-item:not(.list-group-item-info)', 'hold', function (evt) {
+        let _self = $('.drawer-right', evt.currentTarget)
         $('.drawer-right').not(_self).removeClass('drawer-right-on')
         _self.addClass('drawer-right-on')
       })

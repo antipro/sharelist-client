@@ -1,7 +1,10 @@
 <template>
   <div style="position: relative; height: 100%; width: 100vw;">
   <navibar ref="nav" navtitle="项目" :tel="$root.tel" :uname="$root.uname">
-    <span class="glyphicon glyphicon-floppy-disk" @click="updateProject"></span>
+    <a slot="header" class="navbar-brand" href="#" @click="back" @touchmove.prevent>
+      <span class="glyphicon glyphicon-arrow-left"></span>
+    </a>
+    <span slot="action" class="glyphicon glyphicon-floppy-disk" @click="updateProject"></span>
   </navibar>
   <div class="container" style="margin-top: 20px;">
     <div class="row">
@@ -83,6 +86,9 @@ export default {
     })
   },
   methods: {
+    back () {
+      this.$router.go(-1)
+    },
     removeShare (index) {
       this.shares.splice(index, 1)
     },

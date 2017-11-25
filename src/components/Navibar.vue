@@ -2,9 +2,11 @@
   <nav class="navbar navbar-default">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <a class="navbar-brand" href="#" @click="open" @touchmove.prevent>
-        <span class="glyphicon glyphicon-tasks"></span>
-      </a>
+      <slot name="header">
+        <a class="navbar-brand" href="#" @click="open" @touchmove.prevent>
+          <span class="glyphicon glyphicon-tasks"></span>
+        </a>
+      </slot>
       <div class="side-modal" @click="close">
         <div class="side-action" style="text-align: left;">
           <div class="row" style="margin-bottom: 50px;">
@@ -35,7 +37,7 @@
     </div>
     <p class="navbar-text">{{ navtitle }}</p>
     <p class="navbar-brand" style="float:right;">
-      <slot v-if="online"></slot>
+      <slot v-if="online" name="action"></slot>
       <span v-else class="glyphicon glyphicon-flash text-danger"></span>
     </p>
   </nav>

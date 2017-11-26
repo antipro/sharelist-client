@@ -3,7 +3,7 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <slot name="header">
-        <a class="navbar-brand" href="#" @click="open" @touchmove.prevent>
+        <a class="navbar-brand navbar-menu" href="#" @click="open" @touchmove.prevent>
           <span class="glyphicon glyphicon-tasks"></span>
         </a>
       </slot>
@@ -45,16 +45,23 @@
 
 <style scoped>
 .navbar { font-size: 16px; }
-.navbar { height: 50px; margin-bottom: 0px; background-color: #337ab7; width: 100vw; border-width: 0px; border-radius: 0; }
+.navbar { height: 50px; margin-bottom: 0px; background-color: #337ab7; width: 100%; border-width: 0px; border-radius: 0; }
 .navbar .navbar-header::after { clear: none; }
 .navbar .navbar-brand { color: #FFF; }
-.navbar .navbar-text { float: left; color: #FFF; font-weight: 800; }
+.navbar .navbar-text { float: left; color: #FFF; font-weight: 800;  }
 .navbar .navbar-brand:hover { color: #FFF; }
 .navbar .navbar-brand:focus { color: #FFF; }
 .side-action { position: absolute; width: 250px; top: 0px; bottom: 0px; left: -250px; background-color: #f9f7f6;
   display: flex; flex-direction: column; justify-content: center; }
 .side-modal { overflow: hidden; display: none; z-index: 1050; }
 .side-modal-on { position: fixed;	right: 0px;	left: 0px; top: 0px; bottom: 0px;	display: block; background-color: rgba(52, 52, 52, 0.5); }
+@media screen and (min-width: 800px) {
+  .navbar .navbar-menu { display: none; }
+  .navbar .navbar-text { margin-left: 15px; }
+  .side-action { left: 0; }
+  .side-modal { position: fixed; display: block; width: 250px;	left: 0px; top: 0px; bottom: 0px;	display: block; }
+}
+
 </style>
 <script>
 import $ from 'jquery'
@@ -78,6 +85,12 @@ export default {
     window.addEventListener('offline', () => {
       this.online = false
     })
+    window.addEventListener('resize', (evt) => {
+      if (window.screen.availWidth >= 800 && $('.side-modal').hasClass('side-modal-on')) {
+        $('.side-modal').removeClass('side-modal-on')
+        $('body').css('padding-left', '')
+      }
+    })
   },
   methods: {
     open () {
@@ -85,14 +98,18 @@ export default {
       modal.addClass('side-modal-on')
       modal.children().animate({ left: '0px' }, 'normal')
       $('body').animate({ paddingLeft: '250px' }, 'normal')
-      $('.affix').animate({ left: '250px' }, 'normal')
     },
     close () {
+      if (window.screen.availWidth >= 800) {
+        return
+      }
       $('.side-action').animate({ left: '-250px' }, 'normal', () => {
         $('.side-modal').removeClass('side-modal-on')
+        $('.side-action').css('left', '')
       })
-      $('body').animate({ paddingLeft: '0px' }, 'normal')
-      $('.affix').animate({ left: '0px' }, 'normal')
+      $('body').animate({ paddingLeft: '0px' }, 'normal', () => {
+        $('body').css('padding-left', '')
+      })
     }
   }
 }

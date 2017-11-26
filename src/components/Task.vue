@@ -1,12 +1,12 @@
 <template>
-  <div style="position: relative; height: 100%; width: 100vw;">
+  <div class="task">
     <navibar ref="nav" :navtitle="gname" :tel="$root.tel" :uname="$root.uname">
       <a slot="header" class="navbar-brand" href="#" @click="back" @touchmove.prevent>
         <span class="glyphicon glyphicon-arrow-left"></span>
       </a>
       <span slot="action" class="glyphicon glyphicon-floppy-disk" @click="updateTask"></span>
     </navibar>
-    <div class="container" style="margin-top: 20px;">
+    <div class="container-fluid" style="margin-top: 20px;">
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
@@ -37,6 +37,7 @@
   </div>
 </template>
 <style scoped>
+.task { position: relative; height: 100%; width: 100%; }
 textarea { resize: none; }
 </style>
 <style>

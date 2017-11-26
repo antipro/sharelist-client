@@ -56,7 +56,6 @@ div.drawer-right span.glyphicon-trash { color: red; }
 
 p.lead { margin-bottom: 0px; overflow: hidden; font-weight: 400; }
 p.wrap { white-space: nowrap; text-overflow: ellipsis; }
-.affix { top: 50px; left: 0px; width: 100vw; z-index: 1001; }
 </style>
 
 <script>

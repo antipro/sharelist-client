@@ -24,35 +24,11 @@
 </template>
 
 <style scoped>
-.main { 
-  position: absolute;
-  top: 50px;
-  bottom: 50px;
-  left: 0px;
-  width: 100vw;
-  margin: 0px;
-  overflow-y: auto;
-}
-.footer {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  height: 50px;
-  width: 100vw;
-  padding: 2px 0px;
-}
+.main { position: absolute; top: 50px; bottom: 50px; left: 0px; width: 100vw; margin: 0px; overflow-y: auto; }
+.footer { position: absolute; bottom: 0px; left: 0px; height: 50px; width: 100vw; padding: 2px 0px; }
 .footer * { border-radius: 0; }
 .footer .input-group { margin: 0 5px; }
-.notice {
-  position: fixed;
-  display: none;
-  top: 0;
-  margin: 0 auto;
-  width: 200px;
-  left: 0;
-  right: 0;
-  z-index: 1050;
-}
+.notice { position: fixed; display: none; top: 0; margin: 0 auto; width: 200px; left: 0; right: 0; z-index: 1050; }
 @keyframes rotate {
   0%   { transform: rotate(0deg); }
   10%  { transform: rotate(36deg); }

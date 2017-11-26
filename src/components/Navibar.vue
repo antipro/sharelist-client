@@ -51,31 +51,10 @@
 .navbar .navbar-text { float: left; color: #FFF; font-weight: 800; }
 .navbar .navbar-brand:hover { color: #FFF; }
 .navbar .navbar-brand:focus { color: #FFF; }
-.side-action {
-	position: absolute; 
-	width: 250px; 
-	top: 0px; 
-	bottom: 0px; 
-	left: -250px; 
-	display: flex; 
-	flex-direction: column;
-	justify-content: center;
-	background-color: #f9f7f6;
-}
-.side-modal {
-	overflow: hidden;
-	display: none;
-	z-index: 1050;
-}
-.side-modal-on {
-	position: fixed;
-	right: 0px;
-	left: 0px;
-	top: 0px;
-	bottom: 0px;
-	display: block;
-  background-color: rgba(52, 52, 52, 0.5)
-}
+.side-action { position: absolute; width: 250px; top: 0px; bottom: 0px; left: -250px; background-color: #f9f7f6;
+  display: flex; flex-direction: column; justify-content: center; }
+.side-modal { overflow: hidden; display: none; z-index: 1050; }
+.side-modal-on { position: fixed;	right: 0px;	left: 0px; top: 0px; bottom: 0px;	display: block; background-color: rgba(52, 52, 52, 0.5); }
 </style>
 <script>
 import $ from 'jquery'

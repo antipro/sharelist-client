@@ -25,6 +25,9 @@
 
 <style scoped>
 .shell { position: relative; height: 100%; width: 100%; }
+@media screen and (min-width: 800px) {
+  .shell { margin-left: 250px; width: calc(100% - 250px); }
+}
 .main { position: absolute; top: 50px; bottom: 50px; left: 0px; width: 100%; margin: 0px; overflow-y: auto; }
 .footer { position: absolute; bottom: 0px; left: 0px; height: 50px; width: 100%; padding: 2px 0px; }
 .footer * { border-radius: 0; }

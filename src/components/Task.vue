@@ -38,6 +38,9 @@
 </template>
 <style scoped>
 .task { position: relative; height: 100%; width: 100%; }
+@media screen and (min-width: 800px) {
+  .task { margin-left: 250px; width: calc(100% - 250px); }
+}
 textarea { resize: none; }
 </style>
 <style>

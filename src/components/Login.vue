@@ -26,6 +26,7 @@
 
 <style scoped>
 div.row { margin-top: 100px; }
+div#app { margin-left: 0; }
 </style>
 
 <script>

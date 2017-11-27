@@ -18,9 +18,6 @@ div#app {
   height: 100%;
 }
 div#app { position: relative; height: 100%; width: 100vw; }
-@media screen and (min-width: 800px) {
-  div#app { margin-left: 250px; width: calc(100% - 250px); }
-}
 </style>
 
 <script>

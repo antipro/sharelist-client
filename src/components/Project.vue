@@ -41,6 +41,9 @@
 </template>
 <style scoped>
 .project { position: relative; height: 100%; width: 100%; }
+@media screen and (min-width: 800px) {
+  .project { margin-left: 250px; width: calc(100% - 250px); }
+}
 .alert-info { margin-bottom: 1px; }
 </style>
 

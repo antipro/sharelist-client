@@ -48,8 +48,8 @@ span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text
 div.content { margin-left: 35px; position: relative; }
 div.pull-right span.glyphicon { margin: 0 5px; }
 div.drawer-right { position: absolute; top: 0; right: 0; bottom: 0; width: 100px; background-color: #F4F4F4; 
-  display: none; flex-direction: row; flex-wrap: nowrap; justify-content: flex-end; transition: display .5s; }
-div.drawer-right-on { display: flex; }
+  display: none; }
+div.drawer-right-on { display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: flex-end; }
 div.drawer-right .btn { flex-grow: 1; }
 div.drawer-right span.glyphicon-pencil { color: #7ed321; }
 div.drawer-right span.glyphicon-trash { color: red; }

@@ -7,6 +7,7 @@ import ListByProject from '@/components/ListByProject'
 import ListByDate from '@/components/ListByDate'
 import Project from '@/components/Project'
 import Task from '@/components/Task'
+import Preference from '@/components/Preference'
 import Login from '@/components/Login'
 
 Vue.use(Router)
@@ -36,6 +37,11 @@ export default new Router({
       name: 'task',
       path: '/task',
       component: Task
+    },
+    {
+      name: 'preference',
+      path: '/preference',
+      component: Preference
     },
     {
       path: '/login',

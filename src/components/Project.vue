@@ -1,42 +1,42 @@
 <template>
   <div class="project">
-  <navibar ref="nav" navtitle="项目" :tel="$root.tel" :uname="$root.uname">
-    <a slot="header" class="navbar-brand" href="#" @click="back" @touchmove.prevent>
-      <span class="glyphicon glyphicon-arrow-left"></span>
-    </a>
-    <span slot="action" class="glyphicon glyphicon-floppy-disk" @click="updateProject"></span>
-  </navibar>
-  <div class="container-fluid" style="margin-top: 20px;">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="project_name">名称</label>
-          <h3>{{ pname }}</h3>
-        </div>
-        <div class="form-group">
-          <label for="">共享</label>
-          <div>
-            <div class="alert alert-info alert-dismissible" role="alert" v-for="(share, index) of shares" :key="share.uid">
-              <button type="button" class="close" aria-label="Close" @click="removeShare(index)">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <span>{{ share.tel }} <small>{{ share.uname }}</small></span>
+    <navibar ref="nav" navtitle="项目" :tel="$root.tel" :uname="$root.uname">
+      <a slot="header" class="navbar-brand" href="#" @click="back" @touchmove.prevent>
+        <span class="glyphicon glyphicon-arrow-left"></span>
+      </a>
+      <span slot="action" class="glyphicon glyphicon-floppy-disk" @click="updateProject"></span>
+    </navibar>
+    <div class="container-fluid" style="margin-top: 20px;">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="project_name">名称</label>
+            <h3>{{ pname }}</h3>
+          </div>
+          <div class="form-group">
+            <label for="">共享</label>
+            <div>
+              <div class="alert alert-info alert-dismissible" role="alert" v-for="(share, index) of shares" :key="share.uid">
+                <button type="button" class="close" aria-label="Close" @click="removeShare(index)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <span>{{ share.tel }} <small>{{ share.uname }}</small></span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Tel..." v-model="tel">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button" @click="addShare">
-                <span class="glyphicon glyphicon-plus"></span>
-              </button>
-            </span>
-          </div><!-- /input-group -->
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Tel..." v-model="tel">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" @click="addShare">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div><!-- /input-group -->
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 <style scoped>

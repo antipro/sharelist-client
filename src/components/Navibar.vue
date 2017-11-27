@@ -11,7 +11,9 @@
         <div class="side-action" style="text-align: left;">
           <div class="row" style="margin-bottom: 50px;">
             <div class="col-xs-12" style="text-align: center;">
-              <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">
+              <router-link class="list-group-item" to="/preference">
+                <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">
+              </router-link>
               <h3>{{ tel }}<br><small>{{ uname }}</small></h3>
             </div>
           </div>

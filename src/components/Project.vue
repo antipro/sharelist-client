@@ -24,7 +24,7 @@
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="输入要分享的账号并添加..." v-model="tel" @keyup.enter="addShare">
+              <input type="tel" class="form-control" placeholder="输入要分享的账号并添加..." v-model="tel" @keyup.enter="addShare">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="button" @click="addShare">
                   <span class="glyphicon glyphicon-plus"></span>

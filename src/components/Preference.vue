@@ -1,7 +1,6 @@
 <template>
   <div class="preference">
     <navibar ref="nav" navtitle="设置" :tel="$root.tel" :uname="$root.uname">
-      <span slot="action" class="glyphicon glyphicon-floppy-disk" @click="updatePreference"></span>
     </navibar>
     <div class="container-fluid" style="margin-top: 20px;">
       <div class="row">
@@ -37,6 +36,13 @@ export default {
     return {
       starup_hidden: false
     }
+  },
+  created () {
+    const ipc = eval('require(\'electron\')').ipcRenderer
+    ipc.on('preference-get-reply', (event, ref) => {
+      this.starup_hidden = ref.starup_hidden
+    })
+    ipc.send('preference-get-message')
   },
   methods: {
     back () {

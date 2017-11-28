@@ -118,8 +118,11 @@ export default {
       })
     },
     activeProject (project, evt) {
+      if ($('span.glyphicon-ok-circle', evt.currentTarget).length !== 0) {
+        return
+      }
       $('span.glyphicon-ok-circle').remove()
-      $('<span>').addClass('glyphicon glyphicon-ok-circle').appendTo($('.pull-right', evt.target))
+      $('<span>').addClass('glyphicon glyphicon-ok-circle').appendTo($('.pull-right', evt.currentTarget))
       this.active_pid = project.id
       this.active_pname = project.name
       this.$emit('activate', project.id, project.name)

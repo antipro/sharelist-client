@@ -46,16 +46,16 @@
 </template>
 
 <style scoped>
-.navbar { font-size: 16px; }
-.navbar { height: 50px; margin-bottom: 0px; background-color: #337ab7; width: 100%; border-width: 0px; border-radius: 0; }
+.navbar { font-size: 16px; -webkit-app-region: drag; height: 50px; margin-bottom: 0px; 
+  background-color: #337ab7; width: 100%; border-width: 0px; border-radius: 0; }
 .navbar .navbar-header::after { clear: none; }
-.navbar .navbar-brand { color: #FFF; }
+.navbar .navbar-brand { -webkit-app-region: no-drag; color: #FFF; }
 .navbar .navbar-text { float: left; color: #FFF; font-weight: 800;  }
 .navbar .navbar-brand:hover { color: #FFF; }
 .navbar .navbar-brand:focus { color: #FFF; }
 .side-action { position: absolute; width: 250px; top: 0px; bottom: 0px; left: -250px; background-color: #f9f7f6;
   display: flex; flex-direction: column; justify-content: center; }
-.side-modal { overflow: hidden; display: none; z-index: 1050; }
+.side-modal { -webkit-app-region: no-drag; overflow: hidden; display: none; z-index: 1050; }
 .side-modal-on { position: fixed;	right: 0px;	left: 0px; top: 0px; bottom: 0px;	display: block; background-color: rgba(52, 52, 52, 0.5); }
 @media screen and (min-width: 800px) {
   .navbar .navbar-menu { display: none; }

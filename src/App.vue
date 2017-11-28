@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view style="-webkit-app-region: no-drag;" />
   </div>
 </template>
 
@@ -13,11 +13,7 @@
   -ms-user-select:none;
   user-select:none;
 }
-div#app {
-  overflow: hidden;
-  height: 100%;
-}
-div#app { position: relative; height: 100%; width: 100vw; }
+div#app { -webkit-app-region: drag; overflow: hidden; height: 100%; position: relative; width: 100vw; }
 </style>
 
 <script>

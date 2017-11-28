@@ -6,7 +6,7 @@
       </a>
       <span slot="action" class="glyphicon glyphicon-floppy-disk" @click="updateTask"></span>
     </navibar>
-    <div class="container-fluid" style="margin-top: 20px;">
+    <div class="container-fluid" style="margin-top: 20px; overflow-y:auto;">
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
@@ -99,6 +99,17 @@ export default {
       })
       $('#task_date').on('changeDate', () => {
         this.notify_date = $('#task_date').datepicker('getFormattedDate')
+        if (this.$root.runtime === 'cordova') {
+          let year = parseInt(this.notify_date.substr(0, 4))
+          let month = parseInt(this.notify_date.substr(5, 2)) - 1
+          let day = parseInt(this.notify_date.substr(8, 2))
+          window.cordova.plugins.notification.local.schedule({
+            id: this.id,
+            title: '提醒',
+            text: this.content,
+            trigger: { at: new Date(year, month, day, 17, 10) }
+          })
+        }
         $('#modal-id').modal('hide')
       })
     })

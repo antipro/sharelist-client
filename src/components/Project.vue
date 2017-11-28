@@ -10,13 +10,11 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="project_name">名称</label>
-            <h3>{{ pname }}</h3>
+            <input type="text" v-model="pname" class="form-control">
           </div>
           <div class="form-group">
-            <label for="">共享</label>
-            <div>
-              <div class="alert alert-info alert-dismissible" role="alert" v-for="(share, index) of shares" :key="share.uid">
+            <div class="list-group">
+              <div class="list-group-item" v-for="(share, index) of shares" :key="share.uid">
                 <button type="button" class="close" aria-label="Close" @click="removeShare(index)">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -44,6 +42,7 @@
 @media screen and (min-width: 800px) {
   .project { margin-left: 250px; width: calc(100% - 250px); }
 }
+div.list-group-item { margin: 0 5px; box-shadow: 3px 3px #F4F4F4 }
 .alert-info { margin-bottom: 1px; }
 </style>
 

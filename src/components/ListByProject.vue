@@ -7,6 +7,14 @@
         <div class="pull-right">
           <span v-if="project.uid===$root.uid && project.editable==='Y'" class="glyphicon glyphicon-pencil" @click="editProject(project, $event)"></span>
         </div>
+        <div v-if="$root.runtime === 'cordova'" class="drawer-right btn-group">
+          <button type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+          <button type="button" class="btn btn-default" @click.stop="removeProject(project.id, $event)">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </div>
       </div>
       <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id">
         <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click="toggleTask(task, 1, $event)"></span>
@@ -84,6 +92,11 @@ export default {
       } else {
         $('.list-group-item-info:first').click()
       }
+      touch.on('.list-group-item-info', 'hold', function (evt) {
+        let _self = $('.drawer-right', evt.currentTarget)
+        $('.drawer-right').not(_self).removeClass('drawer-right-on')
+        _self.addClass('drawer-right-on')
+      })
       touch.on('.list-group-item:not(.list-group-item-info)', 'hold', function (evt) {
         let _self = $('.drawer-right', evt.currentTarget)
         $('.drawer-right').not(_self).removeClass('drawer-right-on')
@@ -99,6 +112,9 @@ export default {
         return
       }
       this.$router.push({ name: 'project', params: project })
+    },
+    removeProject (pid) {
+      console.log('TODO')
     },
     editTask (task, evt) {
       this.$router.push({ name: 'task', params: task })

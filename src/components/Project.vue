@@ -14,7 +14,7 @@
           </div>
           <div class="form-group">
             <div class="list-group">
-              <div class="list-group-item" v-for="(share, index) of shares" :key="share.uid">
+              <div class="list-group-item list-group-item-success" v-for="(share, index) of shares" :key="share.uid">
                 <button type="button" class="close" aria-label="Close" @click="removeShare(index)">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -24,7 +24,7 @@
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Tel..." v-model="tel">
+              <input type="text" class="form-control" placeholder="输入要分享的账号并添加..." v-model="tel" @keyup.enter="addShare">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="button" @click="addShare">
                   <span class="glyphicon glyphicon-plus"></span>
@@ -42,7 +42,7 @@
 @media screen and (min-width: 800px) {
   .project { margin-left: 250px; width: calc(100% - 250px); }
 }
-div.list-group-item { margin: 0 5px; box-shadow: 3px 3px #F4F4F4 }
+div.list-group-item { box-shadow: 3px 3px #F4F4F4 }
 .alert-info { margin-bottom: 1px; }
 </style>
 

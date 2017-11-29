@@ -37,14 +37,14 @@
   </div>
 </template>
 <style scoped>
-.task { position: relative; height: 100%; width: 100%; }
+.task { position: relative; height: 100%; width: 100%; overflow-y: auto; }
 @media screen and (min-width: 800px) {
   .task { margin-left: 250px; width: calc(100% - 250px); }
 }
 textarea { resize: none; }
 </style>
 <style>
-#modal-id .datepicker-inline { margin: 0 auto; }
+#modal-id .datepicker-inline { margin: 0 auto; font-size: 18px; }
 </style>
 
 <script>
@@ -99,17 +99,6 @@ export default {
       })
       $('#task_date').on('changeDate', () => {
         this.notify_date = $('#task_date').datepicker('getFormattedDate')
-        if (this.$root.runtime === 'cordova') {
-          let year = parseInt(this.notify_date.substr(0, 4))
-          let month = parseInt(this.notify_date.substr(5, 2)) - 1
-          let day = parseInt(this.notify_date.substr(8, 2))
-          window.cordova.plugins.notification.local.schedule({
-            id: this.id,
-            title: '提醒',
-            text: this.content,
-            trigger: { at: new Date(year, month, day, 17, 10) }
-          })
-        }
         $('#modal-id').modal('hide')
       })
     })
@@ -119,6 +108,20 @@ export default {
       this.$router.go(-1)
     },
     updateTask () {
+      if (this.content == null || this.content === '') {
+        alert('必须输入内容。')
+        return
+      }
+      if (this.$root.runtime === 'cordova') {
+        let date = new Date(Date.parse(this.notify_date))
+        date.setHours(9)
+        window.cordova.plugins.notification.local.schedule({
+          id: this.id,
+          title: '提醒',
+          text: this.content,
+          at: date
+        })
+      }
       this.$root.updateTask(this.id, this.pid, this.content, this.notify_date)
       this.$router.go(-1)
     },

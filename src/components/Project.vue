@@ -38,7 +38,7 @@
   </div>
 </template>
 <style scoped>
-.project { position: relative; height: 100%; width: 100%; }
+.project { position: relative; height: 100%; width: 100%; overflow-y: auto; }
 @media screen and (min-width: 800px) {
   .project { margin-left: 250px; width: calc(100% - 250px); }
 }

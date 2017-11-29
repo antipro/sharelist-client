@@ -2,12 +2,19 @@
   <div class="list-group">
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
-        @click="activeProject(project, $event)" @dblclick="editProject(project, $event)">
+        @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
         {{ project.name }}
-        <div class="pull-right">
-          <span v-if="project.uid===$root.uid && project.editable==='Y'" class="glyphicon glyphicon-pencil" @click="editProject(project, $event)"></span>
+        <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
+          <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
+              <span class="glyphicon glyphicon-pencil" ></span>
+            </button>
+            <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="removeProject(project.id, $event)">
+              <span class="glyphicon glyphicon-trash" ></span>
+            </button>
+          </div>
         </div>
-        <div v-if="$root.runtime === 'cordova'" class="drawer-right btn-group">
+        <div v-if="$root.runtime === 'cordova' && project.uid===$root.uid && project.editable==='Y'" class="drawer-right btn-group">
           <button type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
             <span class="glyphicon glyphicon-pencil"></span>
           </button>
@@ -15,7 +22,7 @@
             <span class="glyphicon glyphicon-trash"></span>
           </button>
         </div>
-      </div>
+      </div> <!-- /.list-group-item-info  -->
       <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id">
         <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click="toggleTask(task, 1, $event)"></span>
         <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click="toggleTask(task, 0, $event)"></span>
@@ -27,10 +34,10 @@
           <small v-else class="text-muted">无期限</small>
           <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
             <div class="btn-group btn-group-xs" role="group" aria-label="...">
-              <button type="button" class="rmbtn btn btn-default" @click="editTask(task, $event)">
+              <button type="button" class="btn btn-default" @click="editTask(task, $event)">
                 <span class="glyphicon glyphicon-pencil"></span>
               </button>
-              <button type="button" class="rmbtn btn btn-default" @click="removeTask(task, $event)">
+              <button type="button" class="btn btn-default" @click="removeTask(task, $event)">
                 <span class="glyphicon glyphicon-trash"></span>
               </button>
             </div>
@@ -44,7 +51,7 @@
             <span class="glyphicon glyphicon-trash"></span>
           </button>
         </div>
-      </div>
+      </div> <!-- /.list-group-item  -->
     </template>
   </div>
 </template>
@@ -114,7 +121,11 @@ export default {
       this.$router.push({ name: 'project', params: project })
     },
     removeProject (pid) {
-      console.log('TODO')
+      let bool = confirm('确认要删除吗?')
+      if (!bool) {
+        return
+      }
+      this.$root.removeProject(pid)
     },
     editTask (task, evt) {
       this.$router.push({ name: 'task', params: task })
@@ -134,11 +145,6 @@ export default {
       })
     },
     activeProject (project, evt) {
-      if ($('span.glyphicon-ok-circle', evt.currentTarget).length !== 0) {
-        return
-      }
-      $('span.glyphicon-ok-circle').remove()
-      $('<span>').addClass('glyphicon glyphicon-ok-circle').appendTo($('.pull-right', evt.currentTarget))
       this.active_pid = project.id
       this.active_pname = project.name
       this.$emit('activate', project.id, project.name)

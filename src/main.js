@@ -69,6 +69,20 @@ const store = new Vuex.Store({
       task.content = updatedTask.content
       task.notify_date = updatedTask.notify_date
     },
+    removeProject (state, pid) {
+      console.log(pid)
+      let idx = state.projects.findIndex(project => {
+        return project.id === pid
+      })
+      console.log(idx)
+      state.projects.splice(idx, 1)
+      state.tasks.forEach((task, idx) => {
+        if (task.pid === pid) {
+          state.tasks.splice(idx, 1)
+          console.log(idx)
+        }
+      })
+    },
     removeTask (state, id) {
       let idx = state.tasks.findIndex(task => {
         return task.id === id
@@ -130,6 +144,9 @@ function initSocket (uid, token) {
   })
   socket.on('task updated', (task) => {
     store.commit('updateTask', task)
+  })
+  socket.on('project removed', (pid) => {
+    store.commit('removeProject', pid)
   })
   socket.on('task removed', (id) => {
     store.commit('removeTask', id)
@@ -199,6 +216,11 @@ new Vue({
       this.$socket.emit('toggletask', {
         id,
         state,
+        pid
+      })
+    },
+    removeProject (pid) {
+      this.$socket.emit('removeproject', {
         pid
       })
     },

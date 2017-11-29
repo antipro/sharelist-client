@@ -5,7 +5,11 @@
       操作完成 <a class="pull-right" href="#" @click="restore">撤销</a>
     </div>
     <navibar ref="nav" :navtitle="active_gname" :tel="$root.tel" :uname="$root.uname">
-      <span slot="action" class="glyphicon glyphicon-refresh" @click="refresh"></span>
+      <div slot="action" class="btn-group">
+        <span class="glyphicon glyphicon-refresh" @click="refresh"></span>
+
+        <span class="glyphicon glyphicon-plus" @click="addProject"></span>
+      </div>
     </navibar>
     <div class="main">
       <keep-alive>
@@ -14,9 +18,12 @@
     </div>
     <div class="footer">
       <div class="input-group">
-        <input type="text" class="form-control input-lg" placeholder="新任务 ..." maxlength="255" v-model="content" @keyup.enter="add">
+        <input type="text" class="form-control input-lg" placeholder="新任务 ..." maxlength="255" v-model="content" @keyup.enter="addTask">
         <span class="input-group-addon">
-          <span class="glyphicon glyphicon-edit" @click="add"></span>
+          <span class="glyphicon glyphicon-edit" @click="addTask"></span>
+        </span>
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-plus" @click="addProject"></span>
         </span>
       </div><!-- /input-group -->
     </div>
@@ -85,7 +92,10 @@ export default {
       this.active_gid = gid
       this.active_gname = gname
     },
-    add () {
+    addProject () {
+      console.log('TODO')
+    },
+    addTask () {
       if (this.content.trim() !== '') {
         this.$root.addTask(this.active_gid, this.content.trim())
         this.content = ''

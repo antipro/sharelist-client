@@ -3,7 +3,7 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <slot name="header">
-        <a class="navbar-brand navbar-menu" href="#" @click="open" @touchmove.prevent>
+        <a class="navbar-brand navbar-menu" href="#" @click="open">
           <span class="glyphicon glyphicon-tasks"></span>
         </a>
       </slot>

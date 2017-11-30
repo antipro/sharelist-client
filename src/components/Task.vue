@@ -1,7 +1,7 @@
 <template>
   <div class="task">
     <navibar ref="nav" :navtitle="gname" :tel="$root.tel" :uname="$root.uname">
-      <a slot="header" class="navbar-brand" href="#" @click="back" @touchmove.prevent>
+      <a slot="header" class="navbar-brand" href="#" @click="back">
         <span class="glyphicon glyphicon-arrow-left"></span>
       </a>
       <span slot="action" class="glyphicon glyphicon-floppy-disk" @click="updateTask"></span>
@@ -112,7 +112,7 @@ export default {
         alert('必须输入内容。')
         return
       }
-      if (this.$root.runtime === 'cordova') {
+      if (this.$root.runtime === 'cordova' && this.notify_date) {
         let date = new Date(Date.parse(this.notify_date))
         date.setHours(9)
         window.cordova.plugins.notification.local.schedule({

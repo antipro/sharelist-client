@@ -1,7 +1,7 @@
 <template>
   <div class="project">
     <navibar ref="nav" navtitle="项目" :tel="$root.tel" :uname="$root.uname">
-      <a slot="header" class="navbar-brand" href="#" @click="back" @touchmove.prevent>
+      <a slot="header" class="navbar-brand" href="#" @click="back">
         <span class="glyphicon glyphicon-arrow-left"></span>
       </a>
       <span slot="action" class="glyphicon glyphicon-floppy-disk" @click="updateProject"></span>

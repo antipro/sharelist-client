@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     back () {
-      this.$router.replace('/')
+      this.$router.go(-1)
     },
     removeShare (index) {
       this.shares.splice(index, 1)

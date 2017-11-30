@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     back () {
-      this.$router.replace('/')
+      this.$router.go(-1)
     },
     updateTask () {
       if (this.content == null || this.content === '') {

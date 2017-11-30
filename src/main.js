@@ -70,16 +70,13 @@ const store = new Vuex.Store({
       task.notify_date = updatedTask.notify_date
     },
     removeProject (state, pid) {
-      console.log(pid)
       let idx = state.projects.findIndex(project => {
         return project.id === pid
       })
-      console.log(idx)
       state.projects.splice(idx, 1)
       state.tasks.forEach((task, idx) => {
         if (task.pid === pid) {
           state.tasks.splice(idx, 1)
-          console.log(idx)
         }
       })
     },
@@ -138,6 +135,9 @@ function initSocket (uid, token) {
   })
   socket.on('init', (all) => {
     store.commit('init', all)
+  })
+  socket.on('project added', (project) => {
+    store.commit('addProject', project)
   })
   socket.on('task added', (task) => {
     store.commit('addTask', task)
@@ -204,6 +204,12 @@ new Vue({
   methods: {
     refresh (fn) {
       this.$socket.emit('refresh', fn)
+    },
+    addProject (name) {
+      this.$socket.emit('addproject', {
+        uid: this.uid,
+        name
+      })
     },
     addTask (pid, content) {
       this.$socket.emit('addtask', {

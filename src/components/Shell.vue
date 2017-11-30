@@ -7,8 +7,6 @@
     <navibar ref="nav" :navtitle="active_gname" :tel="$root.tel" :uname="$root.uname">
       <div slot="action" class="btn-group">
         <span class="glyphicon glyphicon-refresh" @click="refresh"></span>
-
-        <span class="glyphicon glyphicon-plus" @click="addProject"></span>
       </div>
     </navibar>
     <div class="main">
@@ -18,12 +16,9 @@
     </div>
     <div class="footer">
       <div class="input-group">
-        <input type="text" class="form-control input-lg" placeholder="新任务 ..." maxlength="255" v-model="content" @keyup.enter="addTask">
+        <input type="text" class="form-control input-lg" v-bind:placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
         <span class="input-group-addon">
-          <span class="glyphicon glyphicon-edit" @click="addTask"></span>
-        </span>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-plus" @click="addProject"></span>
+          <span class="glyphicon glyphicon-edit" @click="add"></span>
         </span>
       </div><!-- /input-group -->
     </div>
@@ -64,15 +59,22 @@ span.glyphicon-refresh{
 import Navibar from '@/components/Navibar'
 import $ from 'jquery'
 
+const TIPS = {
+  NEW_PROJECT: '输入\'@\'符号开头的内容创建新项目',
+  NEW_TASK: '直接输入内容创建新任务'
+}
+
 export default {
   data () {
     return {
       active_gname: '',
       active_gid: null,
       content: '',
+      placeholder: TIPS.NEW_TASK,
       timeout_ptr: null,
       forward: null,
-      back: null
+      back: null,
+      tipPtr: 0
     }
   },
   persist: ['active_gid'],
@@ -83,23 +85,49 @@ export default {
     }
     let defaultPath = '/projectlist'
     this.$router.replace(defaultPath)
+    this.resetTip()
   },
   components: {
     Navibar
   },
   methods: {
+    resetTip () {
+      clearInterval(this.tipPtr)
+      this.tipPtr = setInterval(() => {
+        if (this.content !== '') {
+          return
+        }
+        if (this.placeholder === TIPS.NEW_TASK) {
+          this.placeholder = TIPS.NEW_PROJECT
+        } else {
+          this.placeholder = TIPS.NEW_TASK
+        }
+      }, 5000)
+    },
     activated (gid, gname) {
       this.active_gid = gid
       this.active_gname = gname
     },
-    addProject () {
-      console.log('TODO')
-    },
-    addTask () {
-      if (this.content.trim() !== '') {
-        this.$root.addTask(this.active_gid, this.content.trim())
-        this.content = ''
+    add () {
+      let content = this.content.trim()
+      if (content === '') {
+        return
       }
+      if (content.startsWith('@')) {
+        content = content.substr(1)
+        if (content === '') {
+          this.content = ''
+          this.placeholder = TIPS.NEW_PROJECT
+          this.resetTip()
+        } else {
+          this.$root.addProject(content)
+        }
+      } else {
+        this.$root.addTask(this.active_gid, content)
+        this.placeholder = TIPS.NEW_TASK
+        this.resetTip()
+      }
+      this.content = ''
     },
     shownotice (forward, back) {
       if (this.timeout_ptr !== null) {

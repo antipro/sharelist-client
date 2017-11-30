@@ -1,7 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 /* global SERVER_IP:true */
-/* eslint no-extend-native:off */
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuePersist from 'vue-persist'
@@ -9,40 +8,8 @@ import App from './App'
 import router from './router'
 import io from 'socket.io-client'
 import $ from 'jquery'
-import Promise from 'es6-promise'
 import axios from 'axios'
-
-if (window.Promise === undefined) {
-  window.Promise = Promise
-}
-
-if (Array.prototype.find === undefined) {
-  Array.prototype.find = function (val) {
-    for (let idx = 0; idx < this.length; idx++) {
-      const ele = this[idx]
-      if (typeof val === 'function' && val(ele)) {
-        return ele
-      } else if (ele === val) {
-        return ele
-      }
-    }
-    return undefined
-  }
-}
-
-if (Array.prototype.findIndex === undefined) {
-  Array.prototype.findIndex = function (val) {
-    for (let idx = 0; idx < this.length; idx++) {
-      const ele = this[idx]
-      if (typeof val === 'function' && val(ele)) {
-        return idx
-      } else if (ele === val) {
-        return idx
-      }
-    }
-    return undefined
-  }
-}
+import './backports.js'
 
 Vue.prototype.$axios = axios.create({
   baseURL: `http://${SERVER_IP}:3000/api/`,

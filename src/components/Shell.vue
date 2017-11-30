@@ -74,18 +74,27 @@ export default {
       timeout_ptr: null,
       forward: null,
       back: null,
-      tipPtr: 0
+      tipPtr: 0,
+      defaultChild: null
     }
   },
-  persist: ['active_gid'],
+  persist: ['active_gid', 'defaultChild'],
   created () {
     if (this.$root.token === '') {
       this.$router.replace('/login')
       return
     }
-    let defaultPath = '/projectlist'
-    this.$router.replace(defaultPath)
+    if (!this.defaultChild) {
+      this.defaultChild = 'projectlist'
+    }
+    this.$router.replace({ name: this.defaultChild })
     this.resetTip()
+  },
+  beforeRouteUpdate (to, from, next) {
+    if (['projectlist', 'datelist'].indexOf(to.name) > -1) {
+      this.defaultChild = to.name
+    }
+    next()
   },
   components: {
     Navibar

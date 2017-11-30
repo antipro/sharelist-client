@@ -11,8 +11,13 @@
               <span v-if="starup_hidden===false" class="chkbox glyphicon glyphicon-unchecked"></span>
               启动时隐藏
             </label>
+          </div>
         </div>
-        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>默认提醒时间</label>
+            <input type="text" v-model="notify_time"></div>
+          </div>
       </div>
     </div>
   </div>

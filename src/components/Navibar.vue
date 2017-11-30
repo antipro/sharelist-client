@@ -18,10 +18,10 @@
             </div>
           </div>
           <div class="list-group">
-            <router-link class="list-group-item" to="/projectlist" replace>
+            <router-link class="list-group-item" :to="{ name: 'projectlist' }" replace>
               <span class="glyphicon glyphicon-menu-hamburger"></span> 按项目查看
             </router-link>
-            <router-link class="list-group-item" to="/datelist" replace>
+            <router-link class="list-group-item" :to="{ name: 'datelist' }" replace>
               <span class="glyphicon glyphicon-calendar"></span> 按时间查看
             </router-link>
             <button type="button" class="list-group-item">

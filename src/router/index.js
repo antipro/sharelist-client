@@ -19,10 +19,12 @@ export default new Router({
       component: Shell,
       children: [
         {
+          name: 'projectlist',
           path: 'projectlist',
           component: ListByProject
         },
         {
+          name: 'datelist',
           path: 'datelist',
           component: ListByDate
         }

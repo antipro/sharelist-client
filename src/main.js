@@ -103,6 +103,7 @@ new Vue({
           break
         case 'electron':
           new Notification('Sharelist', {
+            icon: 'static/tray.png',
             body: task.content
           })
           break

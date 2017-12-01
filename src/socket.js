@@ -1,12 +1,12 @@
 /* global SERVER_IP:true */
 import io from 'socket.io-client'
 
-export default function (uid, token, store) {
+export default function ($vue, store) {
   let socket = io(`http://${SERVER_IP}:3000`, {
     transports: ['websocket'],
     query: {
-      token: token,
-      uid: uid
+      token: $vue.token,
+      uid: $vue.uid
     }
   })
   socket.on('init', (all) => {
@@ -49,6 +49,13 @@ export default function (uid, token, store) {
   })
   socket.on('project unshared', (pid) => {
     store.commit('removeUnshared', pid)
+  })
+  socket.on('preference updated', (preference) => {
+    store.commit('updatePreference', preference)
+  })
+  socket.on('task notified', task => {
+    console.log(new Date(), task)
+    $vue.showNotification(task)
   })
   return socket
 }

@@ -93,6 +93,31 @@ new Vue({
         notify_date: notifyDate
       })
     },
+    updatePreference (preference) {
+      this.$socket.emit('updatepreference', preference)
+    },
+    showNotification (task) {
+      switch (this.runtime) {
+        case 'browser':
+          alert(task.content)
+          break
+        case 'electron':
+          new Notification('Sharelist', {
+            body: task.content
+          })
+          break
+        case 'cordova': {
+          window.cordova.plugins.notification.local.schedule({
+            id: task.id,
+            title: 'Sharelist',
+            text: task.content
+          })
+          break
+        }
+        default:
+          console.log('unknown environment')
+      }
+    },
     logout () {
       this.token = ''
       this.uname = ''
@@ -118,8 +143,7 @@ new Vue({
     token (val) {
       if (val !== '') {
         console.log('socket connect')
-        console.log(typeof initSocket)
-        this.$socket = initSocket(this.uid, this.token, store)
+        this.$socket = initSocket(this, store)
         return
       }
       if (this.$socket !== null) {

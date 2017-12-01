@@ -17,6 +17,7 @@
     "axios": "^0.17.0",
     "bootstrap": "^3.3.7",
     "bootstrap-datepicker": "^1.7.1",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "es6-promise": "^4.1.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",

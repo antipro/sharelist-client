@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     tasks: [],
-    projects: []
+    projects: [],
+    preference: {}
   },
   mutations: {
     addTask (state, task) {
@@ -44,10 +45,12 @@ export default new Vuex.Store({
     init (state, all) {
       state.tasks = all.tasks
       state.projects = all.projects
+      state.preference = all.preference
     },
     clear (state) {
       state.tasks = []
       state.projects = []
+      state.preference = {}
     },
     addProject (state, project) {
       state.projects.push(project)
@@ -56,6 +59,11 @@ export default new Vuex.Store({
       state.projects.find(project => {
         return project.id === updatedProject.id
       }).name = updatedProject.name
+    },
+    updatePreference (state, preference) {
+      for (let prop in preference) {
+        state.preference[prop] = preference[prop]
+      }
     },
     addShared (state, all) {
       let pid = all.project.id

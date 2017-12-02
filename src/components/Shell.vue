@@ -17,7 +17,7 @@
     <div class="footer">
       <div class="input-group">
         <input type="text" class="form-control input-lg" v-bind:placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
-        <span class="input-group-addon">
+        <span class="input-group-addon" style="padding: 6px 18px;">
           <span class="glyphicon glyphicon-edit" @click="add"></span>
         </span>
       </div><!-- /input-group -->

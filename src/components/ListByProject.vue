@@ -23,6 +23,7 @@
           </button>
         </div>
       </div> <!-- /.list-group-item-info  -->
+      <transition-group name="slide-fade" v-bind:key="project.id">
       <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id">
         <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click="toggleTask(task, 1, $event)"></span>
         <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click="toggleTask(task, 0, $event)"></span>
@@ -52,6 +53,7 @@
           </button>
         </div>
       </div> <!-- /.list-group-item  -->
+      </transition-group>
     </template>
   </div>
 </template>
@@ -71,6 +73,23 @@ div.drawer-right span.glyphicon-trash { color: red; }
 
 p.lead { margin-bottom: 0px; overflow: hidden; font-weight: 400; }
 p.wrap { white-space: nowrap; text-overflow: ellipsis; }
+
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+.slide-fade-move {
+  transition: transform 1s;
+}
 </style>
 
 <script>

@@ -11,15 +11,26 @@ export default function ($vue, store) {
   })
   socket.on('init', (all) => {
     store.commit('init', all)
+    if ($vue.runtime === 'cordova') {
+      all.tasks.forEach(task => {
+        $vue.schedule(task)
+      })
+    }
   })
   socket.on('project added', (project) => {
     store.commit('addProject', project)
   })
   socket.on('task added', (task) => {
     store.commit('addTask', task)
+    if ($vue.runtime === 'cordova') {
+      $vue.schedule(task)
+    }
   })
   socket.on('task updated', (task) => {
     store.commit('updateTask', task)
+    if ($vue.runtime === 'cordova') {
+      $vue.schedule(task)
+    }
   })
   socket.on('project removed', (pid) => {
     store.commit('removeProject', pid)
@@ -27,8 +38,11 @@ export default function ($vue, store) {
   socket.on('task removed', (id) => {
     store.commit('removeTask', id)
   })
-  socket.on('task toggled', (id, state1) => {
-    store.commit('toggleTask', { id, state1 })
+  socket.on('task toggled', (task) => {
+    store.commit('toggleTask', task)
+    if ($vue.runtime === 'cordova') {
+      $vue.schedule(task)
+    }
   })
   socket.on('project updated', (project) => {
     store.commit('updateProject', project)

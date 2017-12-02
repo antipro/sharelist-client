@@ -14,11 +14,10 @@ export default new Vuex.Store({
       state.tasks.push(task)
     },
     updateTask (state, updatedTask) {
-      let task = state.tasks.find(task => {
+      let idx = state.tasks.findIndex(task => {
         return task.id === updatedTask.id
       })
-      task.content = updatedTask.content
-      task.notify_date = updatedTask.notify_date
+      state.tasks.splice(idx, 1, updatedTask)
     },
     removeProject (state, pid) {
       let idx = state.projects.findIndex(project => {
@@ -37,10 +36,11 @@ export default new Vuex.Store({
       })
       state.tasks.splice(idx, 1)
     },
-    toggleTask (state, { id, state1 }) {
-      state.tasks.find(task => {
-        return task.id === id
-      }).state = state1
+    toggleTask (state, updatedTask) {
+      let idx = state.tasks.findIndex(task => {
+        return task.id === updatedTask.id
+      })
+      state.tasks.splice(idx, 1, updatedTask)
     },
     init (state, all) {
       state.tasks = all.tasks

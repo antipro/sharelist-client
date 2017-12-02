@@ -15,14 +15,14 @@
           <div class="form-group">
             <label for="notify_time">默认提醒时间</label>
             <div class="input-group">
-              <input type="text" v-model="notify_time" class="form-control input-lg" readonly placeholder="09:00" @focus="showDlg">
+              <input type="text" v-model="notify_time" class="form-control input-lg" readonly placeholder="09:00" @focus="showTimeDlg">
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="modal fade" id="modal-id" @click="hideDlg">
+    <div class="modal fade" id="time_modal" @click="hideTimeDlg">
       <div class="modal-dialog" @click.stop>
         <div class="modal-content">
           <div class="modal-body">
@@ -72,7 +72,7 @@ export default {
       ipc.send('preference-get-message')
     }
     $(() => {
-      $('#modal-id').modal({
+      $('#time_modal').modal({
         backdrop: false,
         show: false
       })
@@ -101,13 +101,13 @@ export default {
       this.$root.updatePreference({
         notify_time: $('#task_time').data('DateTimePicker').date().format('HH:mm')
       })
-      this.hideDlg()
+      this.hideTimeDlg()
     },
-    showDlg () {
-      $('#modal-id').modal('show')
+    showTimeDlg () {
+      $('#time_modal').modal('show')
     },
-    hideDlg () {
-      $('#modal-id').modal('hide')
+    hideTimeDlg () {
+      $('#time_modal').modal('hide')
     }
   },
   components: {

@@ -85,12 +85,13 @@ new Vue({
         shares
       })
     },
-    updateTask (id, pid, content, notifyDate) {
+    updateTask (id, pid, content, notifyDate, notifyTime) {
       this.$socket.emit('updatetask', {
         id,
         pid,
         content,
-        notify_date: notifyDate
+        notify_date: notifyDate,
+        notify_time: notifyTime
       })
     },
     updatePreference (preference) {
@@ -107,17 +108,34 @@ new Vue({
             body: task.content
           })
           break
-        case 'cordova': {
-          window.cordova.plugins.notification.local.schedule({
-            id: task.id,
-            title: 'Sharelist',
-            text: task.content
-          })
-          break
-        }
+        // case 'cordova':
+        //   window.cordova.plugins.notification.local.schedule({
+        //     id: task.id,
+        //     title: 'Sharelist',
+        //     text: task.content
+        //   })
+        //   break
         default:
           console.log('unknown environment')
       }
+    },
+    /**
+     * schedule task(cordova only)
+     * @param {*} task
+     */
+    schedule (task) {
+      let futureTime = Date.parse(task.notify_date + ' ' +
+          (task.notify_time === null ? this.$store.state.preference.notify_time : task.notify_time) + ':00')
+      let currentTime = Date.now()
+      if (futureTime < currentTime) {
+        return
+      }
+      window.cordova.plugins.notification.local.schedule({
+        id: task.id,
+        title: 'Sharelist',
+        text: task.content,
+        at: new Date(futureTime)
+      })
     },
     logout () {
       this.token = ''

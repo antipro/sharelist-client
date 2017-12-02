@@ -14,9 +14,17 @@
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="text" v-model="notify_date" class="form-control input-lg" readonly @focus="showDlg" placeholder="提醒时间">
+              <input type="text" v-model="notify_date" class="form-control input-lg" readonly @focus="showDateDlg" placeholder="提醒日期">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-remove" @click="clearDate"></span>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg" placeholder="提醒时间">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-remove" @click="clearTime"></span>
               </span>
             </div>
           </div>
@@ -24,7 +32,7 @@
       </div>
     </div>
     
-    <div class="modal fade" id="modal-id" @click="hideDlg">
+    <div class="modal fade" id="date_modal" @click="hideDateDlg">
       <div class="modal-dialog" @click.stop>
         <div class="modal-content">
           <div class="modal-body">
@@ -33,7 +41,18 @@
         </div>
       </div>
     </div>
-    
+    <div class="modal fade" id="time_modal" @click="hideDateDlg">
+      <div class="modal-dialog" @click.stop>
+        <div class="modal-content">
+          <div class="modal-body">
+            <div id="task_time"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="saveTime">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -44,7 +63,7 @@
 textarea { resize: none; }
 </style>
 <style>
-#modal-id .datepicker-inline { margin: 0 auto; font-size: 18px; }
+#date_modal .datepicker-inline { margin: 0 auto; font-size: 18px; }
 </style>
 
 <script>
@@ -55,6 +74,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'
 import 'bootstrap-datepicker/js/bootstrap-datepicker'
 import 'bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN'
+import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
+import 'eonasdan-bootstrap-datetimepicker'
 
 export default {
   name: 'task',
@@ -64,7 +85,8 @@ export default {
       pid: null,
       content: null,
       gname: '',
-      notify_date: ''
+      notify_date: '',
+      notify_time: ''
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -87,8 +109,15 @@ export default {
     if (this.$route.params.notify_date) {
       this.notify_date = this.$route.params.notify_date
     }
+    if (this.$route.params.notify_time) {
+      this.notify_time = this.$route.params.notify_time
+    }
     $(() => {
-      $('#modal-id').modal({
+      $('#date_modal').modal({
+        backdrop: false,
+        show: false
+      })
+      $('#time_modal').modal({
         backdrop: false,
         show: false
       })
@@ -97,9 +126,16 @@ export default {
         format: 'yyyy-mm-dd',
         todayHighlight: true
       })
+      $('#task_time').datetimepicker({
+        defaultDate: new Date(),
+        format: 'HH:mm',
+        stepping: 5,
+        inline: true,
+        sideBySide: true
+      })
       $('#task_date').on('changeDate', () => {
         this.notify_date = $('#task_date').datepicker('getFormattedDate')
-        $('#modal-id').modal('hide')
+        $('#date_modal').modal('hide')
       })
     })
   },
@@ -112,27 +148,30 @@ export default {
         alert('必须输入内容。')
         return
       }
-      if (this.$root.runtime === 'cordova' && this.notify_date) {
-        let date = new Date(Date.parse(this.notify_date))
-        date.setHours(9)
-        window.cordova.plugins.notification.local.schedule({
-          id: this.id,
-          title: '提醒',
-          text: this.content,
-          at: date
-        })
-      }
-      this.$root.updateTask(this.id, this.pid, this.content, this.notify_date)
+      this.$root.updateTask(this.id, this.pid, this.content, this.notify_date, this.notify_time)
       this.$router.go(-1)
+    },
+    saveTime () {
+      this.notify_time = $('#task_time').data('DateTimePicker').date().format('HH:mm')
+      this.hideTimeDlg()
     },
     clearDate () {
       this.notify_date = ''
     },
-    showDlg () {
-      $('#modal-id').modal('show')
+    clearTime () {
+      this.notify_time = ''
     },
-    hideDlg () {
-      $('#modal-id').modal('hide')
+    showDateDlg () {
+      $('#date_modal').modal('show')
+    },
+    hideDateDlg () {
+      $('#date_modal').modal('hide')
+    },
+    showTimeDlg () {
+      $('#time_modal').modal('show')
+    },
+    hideTimeDlg () {
+      $('#time_modal').modal('hide')
     }
   },
   components: {

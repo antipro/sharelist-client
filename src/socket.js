@@ -12,7 +12,7 @@ export default function ($vue, store) {
   socket.on('init', (all) => {
     store.commit('init', all)
     if ($vue.runtime === 'cordova') {
-      all.tasks.forEach(task => {
+      store.state.tasks.forEach(task => {
         $vue.schedule(task)
       })
     }
@@ -33,9 +33,19 @@ export default function ($vue, store) {
     }
   })
   socket.on('project removed', (pid) => {
+    if ($vue.runtime === 'cordova') {
+      store.state.tasks.forEach(task => {
+        if (task.pid === pid) {
+          $vue.clearSchedule(task.id)
+        }
+      })
+    }
     store.commit('removeProject', pid)
   })
   socket.on('task removed', (id) => {
+    if ($vue.runtime === 'cordova') {
+      $vue.clearSchedule(id)
+    }
     store.commit('removeTask', id)
   })
   socket.on('task toggled', (task) => {
@@ -59,16 +69,32 @@ export default function ($vue, store) {
         return
       }
       store.commit('addShared', res.data)
+      if ($vue.runtime === 'cordova') {
+        res.data.tasks.forEach(task => {
+          $vue.schedule(task)
+        })
+      }
     })
   })
   socket.on('project unshared', (pid) => {
+    if ($vue.runtime === 'cordova') {
+      store.state.tasks.forEach(task => {
+        if (task.pid === pid) {
+          $vue.clearSchedule(task.id)
+        }
+      })
+    }
     store.commit('removeUnshared', pid)
   })
   socket.on('preference updated', (preference) => {
     store.commit('updatePreference', preference)
+    if ($vue.runtime === 'cordova') {
+      store.state.tasks.forEach(task => {
+        $vue.schedule(task)
+      })
+    }
   })
   socket.on('task notified', task => {
-    console.log(new Date(), task)
     $vue.showNotification(task)
   })
   return socket

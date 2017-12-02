@@ -124,6 +124,10 @@ new Vue({
      * @param {*} task
      */
     schedule (task) {
+      if (task.state === 1) {
+        this.clearSchedule(task.id)
+        return
+      }
       let futureTime = Date.parse(task.notify_date + ' ' +
           (task.notify_time === null ? this.$store.state.preference.notify_time : task.notify_time) + ':00')
       let currentTime = Date.now()
@@ -136,6 +140,21 @@ new Vue({
         text: task.content,
         at: new Date(futureTime)
       })
+    },
+    clearSchedule (id) {
+      window.cordova.plugins.notification.local.cancel(id)
+    },
+    scheduleAll () {
+      window.cordova.plugins.notification.local.cancel(
+        store.state.tasks.map(task => {
+          return task.id
+        }),
+        () => {
+          store.state.tasks.forEach(task => {
+            this.schedule(task)
+          })
+        }
+      )
     },
     logout () {
       this.token = ''

@@ -111,8 +111,8 @@ export default {
       })
     },
     expandContent (evt) {
-      $('p.lead').not(evt.target).addClass('wrap')
-      $(evt.target).toggleClass('wrap')
+      $('p.lead').not(evt.currentTarget).addClass('wrap')
+      $(evt.currentTarget).toggleClass('wrap')
     },
     editProject (project, evt) {
       if (project.uid !== this.$root.uid) {

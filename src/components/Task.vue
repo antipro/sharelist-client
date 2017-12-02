@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div class="modal fade" id="time_modal" @click="hideDateDlg">
+    <div class="modal fade" id="time_modal" @click="hideTimeDlg">
       <div class="modal-dialog" @click.stop>
         <div class="modal-content">
           <div class="modal-body">

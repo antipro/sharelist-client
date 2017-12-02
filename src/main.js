@@ -128,6 +128,9 @@ new Vue({
         this.clearSchedule(task.id)
         return
       }
+      if (task.notify_date === null) {
+        return
+      }
       let futureTime = Date.parse(task.notify_date + ' ' +
           (task.notify_time === null ? this.$store.state.preference.notify_time : task.notify_time) + ':00')
       let currentTime = Date.now()

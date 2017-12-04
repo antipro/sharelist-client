@@ -11,7 +11,7 @@
     </navibar>
     <div class="main">
       <keep-alive>
-        <router-view @activate="activated"></router-view>
+        <router-view @activate="activated" :content="content"></router-view>
       </keep-alive>
     </div>
     <div class="footer">

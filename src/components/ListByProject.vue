@@ -104,6 +104,7 @@ export default {
       active_pid: null
     }
   },
+  props: [ 'content' ],
   persist: ['active_pid', 'active_pname'],
   updated () {
     this.initDom()
@@ -181,7 +182,7 @@ export default {
       $('.pull-right', evt.target).css('visibility', 'hidden')
     },
     search (task) {
-      let term = this.$parent.content
+      let term = this.content
       if (term === '' || !term.startsWith('#')) {
         return true
       }

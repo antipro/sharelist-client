@@ -20,7 +20,7 @@
               </span>
             </div>
           </div>
-          <div class="form-group">
+          <div v-show="notify_date" class="form-group">
             <div class="input-group">
               <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg" placeholder="提醒时间">
               <span class="input-group-addon">

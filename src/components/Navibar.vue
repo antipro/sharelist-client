@@ -24,9 +24,6 @@
             <router-link class="list-group-item" :to="{ name: 'datelist' }" replace>
               <span class="glyphicon glyphicon-calendar"></span> 按时间查看
             </router-link>
-            <button type="button" class="list-group-item">
-              <span class="glyphicon glyphicon-search"></span> 搜索
-            </button>
             <button type="button" class="list-group-item" @click="$root.logout">
               <span class="glyphicon glyphicon-log-out"></span> 登出
             </button>
@@ -102,7 +99,8 @@ export default {
       $('body').animate({ paddingLeft: '250px' }, 'normal')
     },
     close () {
-      if (window.screen.availWidth >= 800) {
+      console.log(window.screen.availWidth)
+      if (window.innerWidth >= 800) {
         return
       }
       $('.side-action').animate({ left: '-250px' }, 'normal', () => {

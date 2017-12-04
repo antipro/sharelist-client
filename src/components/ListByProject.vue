@@ -3,7 +3,7 @@
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
         @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
-        {{ project.name }}
+         {{ project.name }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
@@ -167,6 +167,8 @@ export default {
       this.active_pid = project.id
       this.active_pname = project.name
       this.$emit('activate', project.id, project.name)
+      $('.glyphicon-ok-circle').remove()
+      $('<span>').addClass('glyphicon').addClass('glyphicon-ok-circle').prependTo(evt.currentTarget)
     },
     mousein (evt) {
       $('.pull-right', evt.target).css('visibility', '')
@@ -202,7 +204,9 @@ export default {
           } else if (a.notify_date === null && b.notify_date === null) {
             return a.ctime > b.ctime
           } else {
-            return a.notify_date > b.notify_date
+            let aTime = Date.parse(a.notify_date + ' ' + (a.notify_time === null ? this.$store.state.preference.notify_time : a.notify_time) + ':00')
+            let bTime = Date.parse(b.notify_date + ' ' + (b.notify_time === null ? this.$store.state.preference.notify_time : b.notify_time) + ':00')
+            return aTime - bTime
           }
         })
       })

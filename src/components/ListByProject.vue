@@ -24,7 +24,7 @@
         </div>
       </div> <!-- /.list-group-item-info  -->
       <transition-group name="slide-fade" v-bind:key="project.id">
-        <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id" @click="activeTask(task, $event)">
+        <div class="list-group-item" v-for="task in project.tasks" v-show="search(task)" v-bind:key="task.id" @click="activeTask(task, $event)">
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
           <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
@@ -80,7 +80,7 @@ p.wrap { white-space: nowrap; text-overflow: ellipsis; }
   transition: all .3s ease;
 }
 .slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active for below version 2.1.8 */ {
@@ -88,7 +88,7 @@ p.wrap { white-space: nowrap; text-overflow: ellipsis; }
   opacity: 0;
 }
 .slide-fade-move {
-  transition: transform 1s;
+  transition: transform .5s;
 }
 </style>
 
@@ -179,6 +179,18 @@ export default {
     },
     mouseout (evt) {
       $('.pull-right', evt.target).css('visibility', 'hidden')
+    },
+    search (task) {
+      let term = this.$parent.content
+      if (term === '' || !term.startsWith('#')) {
+        return true
+      }
+      term = term.substr(1)
+      if (task.content.indexOf(term) > -1) {
+        return true
+      } else {
+        return false
+      }
     }
   },
   computed: {

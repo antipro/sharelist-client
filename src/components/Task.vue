@@ -124,10 +124,19 @@ export default {
       $('#task_date').datepicker({
         language: 'zh-CN',
         format: 'yyyy-mm-dd',
-        todayHighlight: true
+        todayHighlight: true,
+        todayBtn: true
       })
+      if (this.notify_date !== '') {
+        $('#task_date').datepicker('setDate', this.notify_date)
+      }
+      let defaultTime = new Date()
+      if (this.notify_time !== '') {
+        defaultTime = this.notify_date + ' ' + this.notify_time
+      }
+      console.log(this.notify_time)
       $('#task_time').datetimepicker({
-        defaultDate: new Date(),
+        defaultDate: defaultTime,
         format: 'HH:mm',
         stepping: 5,
         inline: true,

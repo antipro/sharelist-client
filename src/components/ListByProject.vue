@@ -24,35 +24,35 @@
         </div>
       </div> <!-- /.list-group-item-info  -->
       <transition-group name="slide-fade" v-bind:key="project.id">
-      <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id">
-        <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click="toggleTask(task, 1, $event)"></span>
-        <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click="toggleTask(task, 0, $event)"></span>
-        <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
-          <p class="lead wrap" @click="expandContent" @dblclick="editTask(task, $event)">
-            {{ task.content }}
-          </p>
-          <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ task.notify_time }}</small>
-          <small v-else class="text-muted">无期限</small>
-          <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
-            <div class="btn-group btn-group-xs" role="group" aria-label="...">
-              <button type="button" class="btn btn-default" @click="editTask(task, $event)">
-                <span class="glyphicon glyphicon-pencil"></span>
-              </button>
-              <button type="button" class="btn btn-default" @click="removeTask(task, $event)">
-                <span class="glyphicon glyphicon-trash"></span>
-              </button>
+        <div class="list-group-item" v-for="task in project.tasks" v-bind:key="task.id" @click="activeTask(task, $event)">
+          <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
+          <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
+          <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
+            <p class="lead wrap" @click="expandContent" @dblclick="editTask(task, $event)">
+              {{ task.content }}
+            </p>
+            <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ task.notify_time }}</small>
+            <small v-else class="text-muted">无期限</small>
+            <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
+              <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" @click="editTask(task, $event)">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button type="button" class="btn btn-default" @click="removeTask(task, $event)">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div v-if="$root.runtime === 'cordova'" class="drawer-right btn-group">
-          <button type="button" class="btn btn-default" @click.stop="editTask(task, $event)">
-            <span class="glyphicon glyphicon-pencil"></span>
-          </button>
-          <button type="button" class="btn btn-default" @click.stop="removeTask(task, $event)">
-            <span class="glyphicon glyphicon-trash"></span>
-          </button>
-        </div>
-      </div> <!-- /.list-group-item  -->
+          <div v-if="$root.runtime === 'cordova'" class="drawer-right btn-group">
+            <button type="button" class="btn btn-default" @click.stop="editTask(task, $event)">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            <button type="button" class="btn btn-default" @click.stop="removeTask(task, $event)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </div>
+        </div> <!-- /.list-group-item  -->
       </transition-group>
     </template>
   </div>
@@ -169,6 +169,10 @@ export default {
       this.$emit('activate', project.id, project.name)
       $('.glyphicon-ok-circle').remove()
       $('<span>').addClass('glyphicon').addClass('glyphicon-ok-circle').prependTo(evt.currentTarget)
+      $('.drawer-right').removeClass('drawer-right-on')
+    },
+    activeTask (task, evt) {
+      $('.drawer-right').removeClass('drawer-right-on')
     },
     mousein (evt) {
       $('.pull-right', evt.target).css('visibility', '')

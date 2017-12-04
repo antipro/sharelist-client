@@ -59,10 +59,11 @@ span.glyphicon-refresh{
 import Navibar from '@/components/Navibar'
 import $ from 'jquery'
 
-const TIPS = {
-  NEW_PROJECT: '输入\'@\'符号开头的内容创建新项目',
-  NEW_TASK: '直接输入内容创建新任务'
-}
+const TIPS = [
+  '直接输入内容创建新任务',
+  '输入\'@\'符号开头的内容创建新项目',
+  '输入\'#\'符号开头的内容搜索项目'
+]
 
 export default {
   data () {
@@ -70,7 +71,7 @@ export default {
       active_gname: '',
       active_gid: null,
       content: '',
-      placeholder: TIPS.NEW_TASK,
+      placeholder: TIPS[0],
       timeout_ptr: null,
       forward: null,
       back: null,
@@ -88,7 +89,16 @@ export default {
       this.defaultChild = 'projectlist'
     }
     this.$router.replace({ name: this.defaultChild })
-    this.resetTip()
+    let iter = 0
+    setInterval(() => {
+      if (this.content !== '') {
+        return
+      }
+      this.placeholder = TIPS[iter++]
+      if (iter === TIPS.length) {
+        iter = 0
+      }
+    }, 5000)
   },
   beforeRouteUpdate (to, from, next) {
     if (['projectlist', 'datelist'].indexOf(to.name) > -1) {
@@ -100,19 +110,6 @@ export default {
     Navibar
   },
   methods: {
-    resetTip () {
-      clearInterval(this.tipPtr)
-      this.tipPtr = setInterval(() => {
-        if (this.content !== '') {
-          return
-        }
-        if (this.placeholder === TIPS.NEW_TASK) {
-          this.placeholder = TIPS.NEW_PROJECT
-        } else {
-          this.placeholder = TIPS.NEW_TASK
-        }
-      }, 5000)
-    },
     activated (gid, gname) {
       this.active_gid = gid
       this.active_gname = gname
@@ -126,15 +123,11 @@ export default {
         content = content.substr(1)
         if (content === '') {
           this.content = ''
-          this.placeholder = TIPS.NEW_PROJECT
-          this.resetTip()
         } else {
           this.$root.addProject(content)
         }
       } else {
         this.$root.addTask(this.active_gid, content)
-        this.placeholder = TIPS.NEW_TASK
-        this.resetTip()
       }
       this.content = ''
     },

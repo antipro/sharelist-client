@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="background: #ffffff url('static/snow.jpeg')">
     <router-view style="-webkit-app-region: no-drag;" />
   </div>
 </template>

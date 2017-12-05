@@ -8,10 +8,10 @@
         </a>
       </slot>
       <div class="side-modal" @click="close">
-        <div class="side-action" style="text-align: left;">
+        <div class="side-action" style="text-align: left; background: #ffffff url('static/snow.jpeg')">
           <div class="row" style="margin-bottom: 50px;">
             <div class="col-xs-12" style="text-align: center;">
-              <router-link class="list-group-item" to="/preference">
+              <router-link class="list-group-item" to="/preference" style="border: none;">
                 <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">
               </router-link>
               <h3>{{ tel }}<br><small>{{ uname }}</small></h3>
@@ -54,6 +54,7 @@
   display: flex; flex-direction: column; justify-content: center; }
 .side-modal { -webkit-app-region: no-drag; overflow: hidden; display: none; z-index: 1050; }
 .side-modal-on { position: fixed;	right: 0px;	left: 0px; top: 0px; bottom: 0px;	display: block; background-color: rgba(52, 52, 52, 0.5); }
+.list-group-item { background: transparent; }
 @media screen and (min-width: 800px) {
   .navbar .navbar-menu { display: none; }
   .navbar .navbar-text { margin-left: 15px; }

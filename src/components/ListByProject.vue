@@ -183,7 +183,7 @@ export default {
     },
     search (task) {
       let term = this.content
-      if (term === '' || !term.startsWith('#')) {
+      if (term === '' || !term.startsWith('~')) {
         return true
       }
       term = term.substr(1)

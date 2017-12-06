@@ -3,7 +3,7 @@
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
         @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
-         {{ project.name }}
+         {{ project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="editProject(project, $event)">

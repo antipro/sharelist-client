@@ -14,7 +14,7 @@
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="text" v-model="notify_date" class="form-control input-lg" readonly @focus="showDateDlg" placeholder="提醒日期">
+              <input type="text" v-model="notify_date" class="form-control input-lg" readonly @focus="showDateDlg" placeholder="Date For Notification">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-remove" @click="clearDate"></span>
               </span>
@@ -22,7 +22,7 @@
           </div>
           <div v-show="notify_date" class="form-group">
             <div class="input-group">
-              <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg" placeholder="提醒时间">
+              <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg" placeholder="Time For Notification">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-remove" @click="clearTime"></span>
               </span>
@@ -73,7 +73,6 @@ import 'bootstrap/dist/js/bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'
 import 'bootstrap-datepicker/js/bootstrap-datepicker'
-import 'bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN'
 import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
 import 'eonasdan-bootstrap-datetimepicker'
 
@@ -90,7 +89,6 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    // 刷新页面就返回列表
     if (from.path === '/') {
       next('/')
     } else {
@@ -122,7 +120,6 @@ export default {
         show: false
       })
       $('#task_date').datepicker({
-        language: 'zh-CN',
         format: 'yyyy-mm-dd',
         todayHighlight: true,
         todayBtn: true
@@ -154,7 +151,7 @@ export default {
     },
     updateTask () {
       if (this.content == null || this.content === '') {
-        alert('必须输入内容。')
+        alert('Content is required.')
         return
       }
       this.$root.updateTask(this.id, this.pid, this.content, this.notify_date, this.notify_time)

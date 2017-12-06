@@ -1,6 +1,6 @@
 <template>
   <div class="preference">
-    <navibar ref="nav" navtitle="设置" :tel="$root.tel" :uname="$root.uname">
+    <navibar ref="nav" navtitle="Preference" :tel="$root.tel" :uname="$root.uname">
     </navibar>
     <div class="container-fluid" style="margin-top: 20px;">
       <div class="row">
@@ -9,11 +9,11 @@
             <label class="input-lg" @click="toggle">
               <span v-if="starup_hidden===true" class="chkbox glyphicon glyphicon-check" ></span>
               <span v-if="starup_hidden===false" class="chkbox glyphicon glyphicon-unchecked"></span>
-              启动时隐藏
+              Hidden On Startup
             </label>
           </div>
           <div class="form-group">
-            <label for="notify_time">默认提醒时间</label>
+            <label for="notify_time">Default Time For Notification</label>
             <div class="input-group">
               <input type="text" v-model="notify_time" class="form-control input-lg" readonly placeholder="09:00" @focus="showTimeDlg">
             </div>
@@ -29,7 +29,7 @@
             <div id="task_time"></div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="saveTime">确定</button>
+            <button type="button" class="btn btn-primary" @click="saveTime">Save</button>
           </div>
         </div>
       </div>

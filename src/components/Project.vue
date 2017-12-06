@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <navibar ref="nav" navtitle="项目" :tel="$root.tel" :uname="$root.uname">
+    <navibar ref="nav" navtitle="Project" :tel="$root.tel" :uname="$root.uname">
       <a slot="header" class="navbar-brand" href="#" @click="back">
         <span class="glyphicon glyphicon-arrow-left"></span>
       </a>
@@ -24,7 +24,7 @@
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="tel" class="form-control" placeholder="输入要分享的账号并添加..." v-model="tel" @keyup.stop.enter="addShare">
+              <input type="tel" class="form-control" placeholder="Telephone Number" v-model="tel" @keyup.stop.enter="addShare">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="button" @click="addShare">
                   <span class="glyphicon glyphicon-plus"></span>
@@ -60,7 +60,6 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    // 刷新页面就返回列表
     if (from.path === '/') {
       next('/')
     } else {
@@ -98,7 +97,7 @@ export default {
     addShare () {
       let tel = this.tel.trim()
       if (tel === this.$root.tel) {
-        alert('不能添加本号码。')
+        alert('Can not add yourself.')
         return
       }
       if (tel === '') {
@@ -106,7 +105,7 @@ export default {
       }
       this.shares.push({
         uid: 0,
-        uname: '<新用户>',
+        uname: '<New User>',
         tel: this.tel.trim()
       })
       this.tel = ''

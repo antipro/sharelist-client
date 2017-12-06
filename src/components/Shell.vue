@@ -60,9 +60,9 @@ import Navibar from '@/components/Navibar'
 import $ from 'jquery'
 
 const TIPS = [
-  '直接输入内容创建新任务',
-  '输入\'@\'符号开头的内容创建新项目',
-  '输入\'~\'符号开头的内容搜索项目'
+  'Input content to create task',
+  'Input @content to create project',
+  'Input ~content to search in tasks'
 ]
 
 export default {

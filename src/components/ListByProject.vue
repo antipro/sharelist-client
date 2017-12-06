@@ -32,7 +32,7 @@
               {{ task.content }}
             </p>
             <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ task.notify_time }}</small>
-            <small v-else class="text-muted">无期限</small>
+            <small v-else class="text-muted">No Date</small>
             <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
               <div class="btn-group btn-group-xs" role="group" aria-label="...">
                 <button type="button" class="btn btn-default" @click="editTask(task, $event)">
@@ -74,16 +74,13 @@ div.drawer-right span.glyphicon-trash { color: red; }
 p.lead { margin-bottom: 0px; overflow: hidden; font-weight: 400; }
 p.wrap { white-space: nowrap; text-overflow: ellipsis; }
 
-/* 可以设置不同的进入和离开动画 */
-/* 设置持续时间和动画函数 */
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
 .slide-fade-leave-active {
   transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active for below version 2.1.8 */ {
+.slide-fade-enter, .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
 }
@@ -141,7 +138,7 @@ export default {
       this.$router.push({ name: 'project', params: project })
     },
     removeProject (pid) {
-      let bool = confirm('确认要删除吗?')
+      let bool = confirm('Remove?')
       if (!bool) {
         return
       }

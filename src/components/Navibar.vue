@@ -19,16 +19,16 @@
           </div>
           <div class="list-group">
             <router-link class="list-group-item" :to="{ name: 'projectlist' }" replace>
-              <span class="glyphicon glyphicon-menu-hamburger"></span> 按项目查看
+              <span class="glyphicon glyphicon-menu-hamburger"></span> Group By Project
             </router-link>
             <router-link class="list-group-item" :to="{ name: 'datelist' }" replace>
-              <span class="glyphicon glyphicon-calendar"></span> 按时间查看
+              <span class="glyphicon glyphicon-calendar"></span> Group By Date
             </router-link>
             <button type="button" class="list-group-item" @click="$root.logout">
-              <span class="glyphicon glyphicon-log-out"></span> 登出
+              <span class="glyphicon glyphicon-log-out"></span> Logout
             </button>
             <button v-if="$root.runtime !== 'browser'" type="button" class="list-group-item" @click="$root.exit">
-              <span class="glyphicon glyphicon-off"></span> 退出
+              <span class="glyphicon glyphicon-off"></span> Exit
             </button>
           </div>
         </div>

@@ -4,7 +4,7 @@
       <div class="login-panel panel panel-default">
         <div class="panel-heading">
           <img alt="Brand" src="../assets/logo.png" style="max-height: 25px;">
-          <span>登录</span>
+          <span>Sharelist</span>
         </div>
         <div class="panel-body">
           <form role="form"  @keyup.enter="login" autocomplete="off">
@@ -15,7 +15,7 @@
               <div class="form-group">
                 <input class="form-control" placeholder="Password" v-model="pwd" id="password" name="password" type="password" value="">
               </div>
-              <button type="button" @click="login" class="btn btn-lg btn-primary btn-block">登录</button>
+              <button type="button" @click="login" class="btn btn-lg btn-primary btn-block">Login</button>
             </fieldset>
           </form>
         </div>

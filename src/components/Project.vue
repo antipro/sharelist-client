@@ -111,7 +111,6 @@ export default {
       this.tel = ''
     },
     updateProject () {
-      console.log('update')
       this.$root.updateProject(this.pid, this.pname, this.shares)
       this.$router.go(-1)
     }

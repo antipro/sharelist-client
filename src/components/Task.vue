@@ -131,7 +131,6 @@ export default {
       if (this.notify_time !== '') {
         defaultTime = this.notify_date + ' ' + this.notify_time
       }
-      console.log(this.notify_time)
       $('#task_time').datetimepicker({
         defaultDate: defaultTime,
         format: 'HH:mm',
@@ -163,6 +162,7 @@ export default {
     },
     clearDate () {
       this.notify_date = ''
+      this.notify_time = ''
     },
     clearTime () {
       this.notify_time = ''

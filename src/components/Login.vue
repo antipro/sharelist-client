@@ -46,7 +46,7 @@ export default {
   methods: {
     login (e) {
       if (this.tel === '' || this.pwd === '') {
-        alert('请输入用户名和密码')
+        alert('Please input your tel and password')
         return
       }
       this.$axios.get('/login', {

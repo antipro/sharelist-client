@@ -101,7 +101,6 @@ export default {
       $('body').animate({ paddingLeft: '250px' }, 'normal')
     },
     close () {
-      console.log(window.screen.availWidth)
       if (window.innerWidth >= 800) {
         return
       }

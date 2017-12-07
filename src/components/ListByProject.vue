@@ -216,7 +216,9 @@ export default {
           } else if (a.notify_date !== null && b.notify_date === null) {
             return -1
           } else if (a.notify_date === null && b.notify_date === null) {
-            return a.ctime > b.ctime
+            let aTime = Date.parse(a.ctime)
+            let bTime = Date.parse(b.ctime)
+            return aTime - bTime
           } else {
             let aTime = Date.parse(a.notify_date + ' ' + (a.notify_time === null ? this.$store.state.preference.notify_time : a.notify_time) + ':00')
             let bTime = Date.parse(b.notify_date + ' ' + (b.notify_time === null ? this.$store.state.preference.notify_time : b.notify_time) + ':00')

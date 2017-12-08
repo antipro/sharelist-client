@@ -26,6 +26,13 @@ export default {
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
       'require_tel_and_pwd': 'Please input your tel and password.',
+      'not_logged_in': 'Not logged in.',
+      'user_not_existed': 'User Not Existed.',
+      'login_error': 'Lonin Error.',
+      'query_error': 'Query Error.',
+      'add_error': 'Add Error.',
+      'update_error': 'Update Error.',
+      'remove_error': 'Remove Error.',
       'common_tip_01': 'Enter content to create task',
       'common_tip_02': 'Enter @content to create project',
       'common_tip_03': 'Enter ~content to search tasks'
@@ -58,6 +65,13 @@ export default {
     message: {
       'can_not_add_yourself': '不能添加您自己。',
       'require_tel_and_pwd': '请输入您的电话号码和密码。',
+      'not_logged_in': '未登录。',
+      'user_not_existed': '用户不存在。',
+      'login_error': '登录出错。',
+      'query_error': '查询出错。',
+      'add_error': '添加出错。',
+      'update_error': '更新出错。',
+      'remove_error': '删除出错。',
       'common_tip_01': '输入内容以创建任务',
       'common_tip_02': '输入\'@\'开头的内容以创建项目',
       'common_tip_03': '输入\'～\'开头的内容以搜索任务'

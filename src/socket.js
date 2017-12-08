@@ -65,7 +65,7 @@ export default function ($vue, store) {
     }).then((response) => {
       let res = response.data
       if (res.state === '001') {
-        alert(res.msg)
+        alert($vue.$t(res.msg))
         return
       }
       store.commit('addShared', res.data)
@@ -96,6 +96,9 @@ export default function ($vue, store) {
   })
   socket.on('task notified', task => {
     $vue.showNotification(task)
+  })
+  socket.on('error event', (msg) => {
+    alert($vue.$t(msg))
   })
   return socket
 }

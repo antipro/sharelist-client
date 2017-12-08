@@ -57,7 +57,7 @@ export default {
       }).then((response) => {
         let res = response.data
         if (res.state === '001') {
-          alert(res.msg)
+          alert(this.$t(res.msg))
           return
         }
         this.$root.tel = this.tel

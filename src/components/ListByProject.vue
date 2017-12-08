@@ -32,7 +32,7 @@
               {{ task.content }}
             </p>
             <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ task.notify_time }}</small>
-            <small v-else class="text-muted">No Date</small>
+            <small v-else class="text-muted">{{ $t('ui.no_date') }}</small>
             <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
               <div class="btn-group btn-group-xs" role="group" aria-label="...">
                 <button type="button" class="btn btn-default" @click="editTask(task, $event)">
@@ -138,7 +138,7 @@ export default {
       this.$router.push({ name: 'project', params: project })
     },
     removeProject (pid) {
-      let bool = confirm('Remove?')
+      let bool = confirm(this.$t('ui.confirm_to_remove'))
       if (!bool) {
         return
       }

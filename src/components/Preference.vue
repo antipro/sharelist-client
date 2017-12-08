@@ -1,6 +1,6 @@
 <template>
   <div class="preference">
-    <navibar ref="nav" navtitle="Preference" :tel="$root.tel" :uname="$root.uname">
+    <navibar ref="nav" :navtitle="$t('ui.preference')" :tel="$root.tel" :uname="$root.uname">
     </navibar>
     <div class="container-fluid" style="margin-top: 20px;">
       <div class="row">
@@ -9,13 +9,13 @@
             <label class="input-lg" @click="toggle">
               <span v-if="starup_hidden===true" class="chkbox glyphicon glyphicon-check" ></span>
               <span v-if="starup_hidden===false" class="chkbox glyphicon glyphicon-unchecked"></span>
-              Hidden On Startup
+              {{ $t('ui.hidden_on_startup') }}
             </label>
           </div>
           <div class="form-group">
-            <label for="notify_time">Default Time For Notification</label>
+            <label for="notify_time">{{ $t('ui.default_time_for_notification') }}</label>
             <div class="input-group">
-              <input type="text" v-model="notify_time" class="form-control input-lg" readonly placeholder="09:00" @focus="showTimeDlg">
+              <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg">
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@
             <div id="task_time"></div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="saveTime">Save</button>
+            <button type="button" class="btn btn-primary" @click="saveTime">{{ $t('ui.confirm') }}</button>
           </div>
         </div>
       </div>

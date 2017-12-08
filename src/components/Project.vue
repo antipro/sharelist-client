@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <navibar ref="nav" navtitle="Project" :tel="$root.tel" :uname="$root.uname">
+    <navibar ref="nav" :navtitle="$t('ui.project')" :tel="$root.tel" :uname="$root.uname">
       <a slot="header" class="navbar-brand" href="#" @click="back">
         <span class="glyphicon glyphicon-arrow-left"></span>
       </a>
@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <input type="text" v-model="pname" class="form-control">
+            <input type="text" v-model="pname" class="form-control" :placeholder="$t('ui.project_name')">
           </div>
           <div class="form-group">
             <div class="list-group">
@@ -24,7 +24,7 @@
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="tel" class="form-control" placeholder="Telephone Number" v-model="tel" @keyup.stop.enter="addShare">
+              <input type="tel" class="form-control" :placeholder="$t('ui.telno')" v-model="tel" @keyup.stop.enter="addShare">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="button" @click="addShare">
                   <span class="glyphicon glyphicon-plus"></span>
@@ -97,7 +97,7 @@ export default {
     addShare () {
       let tel = this.tel.trim()
       if (tel === this.$root.tel) {
-        alert('Can not add yourself.')
+        alert(this.$t('message.can_not_add_yourself'))
         return
       }
       if (tel === '') {
@@ -105,7 +105,7 @@ export default {
       }
       this.shares.push({
         uid: 0,
-        uname: '<New User>',
+        uname: this.$t('ui.new_user'),
         tel: this.tel.trim()
       })
       this.tel = ''

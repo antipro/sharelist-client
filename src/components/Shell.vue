@@ -2,7 +2,7 @@
   <div class="shell">
     <div class="notice alert alert-warning alert-dismissible" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      操作完成 <a class="pull-right" href="#" @click="restore">撤销</a>
+      {{ $t('ui.operation_finished') }} <a class="pull-right" href="#" @click="restore">{{ $t('ui.operation_restore') }}</a>
     </div>
     <navibar ref="nav" :navtitle="active_gname" :tel="$root.tel" :uname="$root.uname">
       <div slot="action" class="btn-group">
@@ -16,7 +16,7 @@
     </div>
     <div class="footer">
       <div class="input-group">
-        <input type="text" class="form-control input-lg" v-bind:placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
+        <input type="text" class="form-control input-lg" :placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
         <span class="input-group-addon" style="padding: 6px 18px;">
           <span class="glyphicon glyphicon-edit" @click="add"></span>
         </span>
@@ -34,7 +34,7 @@
 .footer { position: absolute; bottom: 0px; left: 0px; height: 50px; width: 100%; padding: 2px 0px; }
 .footer * { border-radius: 0; }
 .footer .input-group { margin: 0 5px; }
-.notice { position: absolute; display: none; top: 0; margin: 0 auto; width: 200px; left: 0; right: 0; z-index: 1050; }
+.notice { position: absolute; display: none; top: 0; margin: 0 auto; width: 250px; left: 0; right: 0; z-index: 1050; }
 @keyframes rotate {
   0%   { transform: rotate(0deg); }
   10%  { transform: rotate(36deg); }
@@ -59,19 +59,13 @@ span.glyphicon-refresh{
 import Navibar from '@/components/Navibar'
 import $ from 'jquery'
 
-const TIPS = [
-  'Input content to create task',
-  'Input @content to create project',
-  'Input ~content to search in tasks'
-]
-
 export default {
   data () {
     return {
       active_gname: '',
       active_gid: null,
       content: '',
-      placeholder: TIPS[0],
+      placeholder: '',
       timeout_ptr: null,
       forward: null,
       back: null,
@@ -89,6 +83,11 @@ export default {
       this.defaultChild = 'projectlist'
     }
     this.$router.replace({ name: this.defaultChild })
+    const TIPS = [
+      this.$t('message.common_tip_01'),
+      this.$t('message.common_tip_02'),
+      this.$t('message.common_tip_03')
+    ]
     let iter = 0
     setInterval(() => {
       if (this.content !== '') {

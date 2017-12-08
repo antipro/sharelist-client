@@ -4,18 +4,18 @@
       <div class="login-panel panel panel-default">
         <div class="panel-heading">
           <img alt="Brand" src="../assets/logo.png" style="max-height: 25px;">
-          <span>Sharelist</span>
+          <span>{{ $t('ui.app_name') }}</span>
         </div>
         <div class="panel-body">
           <form role="form"  @keyup.enter="login" autocomplete="off">
             <fieldset>
               <div class="form-group">
-                <input class="form-control" placeholder="Tel" v-model="tel" name="tel" type="tel" autofocus="">
+                <input class="form-control" :placeholder="$t('ui.telno')" v-model="tel" name="tel" type="tel" autofocus="">
               </div>
               <div class="form-group">
-                <input class="form-control" placeholder="Password" v-model="pwd" id="password" name="password" type="password" value="">
+                <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" id="password" name="password" type="password" value="">
               </div>
-              <button type="button" @click="login" class="btn btn-lg btn-primary btn-block">Login</button>
+              <button type="button" @click="login" class="btn btn-lg btn-primary btn-block">{{ $t('ui.login') }}</button>
             </fieldset>
           </form>
         </div>
@@ -46,7 +46,7 @@ export default {
   methods: {
     login (e) {
       if (this.tel === '' || this.pwd === '') {
-        alert('Please input your tel and password')
+        alert(this.$t('message.require_tel_and_pwd'))
         return
       }
       this.$axios.get('/login', {
@@ -68,9 +68,6 @@ export default {
       }).catch((error) => {
         console.log(error)
       })
-    },
-    updated (e) {
-      console.log(this.$http)
     }
   }
 }

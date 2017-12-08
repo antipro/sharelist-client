@@ -14,7 +14,7 @@
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="text" v-model="notify_date" class="form-control input-lg" readonly @focus="showDateDlg" placeholder="Date For Notification">
+              <input type="text" v-model="notify_date" class="form-control input-lg" readonly @focus="showDateDlg" :placeholder="$t('ui.date_for_notification')">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-remove" @click="clearDate"></span>
               </span>
@@ -22,7 +22,7 @@
           </div>
           <div v-show="notify_date" class="form-group">
             <div class="input-group">
-              <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg" placeholder="Time For Notification">
+              <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg" :placeholder="$t('ui.time_for_notification')">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-remove" @click="clearTime"></span>
               </span>
@@ -48,7 +48,7 @@
             <div id="task_time"></div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="saveTime">确定</button>
+            <button type="button" class="btn btn-primary" @click="saveTime">{{ $t('ui.confirm') }}</button>
           </div>
         </div>
       </div>
@@ -73,6 +73,7 @@ import 'bootstrap/dist/js/bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'
 import 'bootstrap-datepicker/js/bootstrap-datepicker'
+import 'bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN'
 import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
 import 'eonasdan-bootstrap-datetimepicker'
 
@@ -120,6 +121,7 @@ export default {
         show: false
       })
       $('#task_date').datepicker({
+        language: navigator.language,
         format: 'yyyy-mm-dd',
         todayHighlight: true,
         todayBtn: true

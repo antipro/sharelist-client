@@ -19,16 +19,16 @@
           </div>
           <div class="list-group">
             <router-link class="list-group-item" :to="{ name: 'projectlist' }" replace>
-              <span class="glyphicon glyphicon-menu-hamburger"></span> Group By Project
+              <span class="glyphicon glyphicon-menu-hamburger"></span> {{ $t('ui.group_by_project') }}
             </router-link>
             <router-link class="list-group-item" :to="{ name: 'datelist' }" replace>
-              <span class="glyphicon glyphicon-calendar"></span> Group By Date
+              <span class="glyphicon glyphicon-calendar"></span> {{ $t('ui.group_by_date') }}
             </router-link>
             <button type="button" class="list-group-item" @click="$root.logout">
-              <span class="glyphicon glyphicon-log-out"></span> Logout
+              <span class="glyphicon glyphicon-log-out"></span> {{ $t('ui.logout') }}
             </button>
             <button v-if="$root.runtime !== 'browser'" type="button" class="list-group-item" @click="$root.exit">
-              <span class="glyphicon glyphicon-off"></span> Exit
+              <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
             </button>
           </div>
         </div>
@@ -56,6 +56,7 @@
 .side-modal-on { position: fixed;	right: 0px;	left: 0px; top: 0px; bottom: 0px;	display: block; background-color: rgba(52, 52, 52, 0.5); }
 .list-group-item { background: transparent; }
 .portrait:hover { background: transparent; }
+.portrait:focus { background: transparent; }
 @media screen and (min-width: 800px) {
   .navbar .navbar-menu { display: none; }
   .navbar .navbar-text { margin-left: 15px; }

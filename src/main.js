@@ -2,7 +2,10 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 /* global SERVER_IP:true */
 /* eslint-disable no-new */
+/* eslint-disable no-eval */
 import Vue from 'vue'
+import VueI18n from 'vue-i18n'
+import translation from './locale'
 import VuePersist from 'vue-persist'
 import App from './App'
 import router from './router'
@@ -17,13 +20,21 @@ Vue.prototype.$axios = axios.create({
   timeout: 5000
 })
 
+Vue.use(VueI18n)
 Vue.use(VuePersist)
 Vue.config.productionTip = false
+
+const i18n = new VueI18n({
+  locale: navigator.language,
+  messages: translation,
+  fallbackLocale: 'en'
+})
 
 new Vue({
   el: '#app',
   store,
   router,
+  i18n,
   template: '<App/>',
   data: {
     uid: '',
@@ -38,6 +49,8 @@ new Vue({
     var userAgent = navigator.userAgent.toLowerCase()
     if (userAgent.indexOf('electron/') > -1) {
       this.runtime = 'electron'
+      const ipc = eval('require(\'electron\')').ipcRenderer
+      ipc.send('language', navigator.language)
     }
     $.getScript('cordova.js').done(() => {
       this.runtime = 'cordova'
@@ -139,7 +152,7 @@ new Vue({
       }
       window.cordova.plugins.notification.local.schedule({
         id: task.id,
-        title: 'Sharelist',
+        title: this.$t('ui.app_name'),
         text: task.content,
         at: new Date(futureTime)
       })

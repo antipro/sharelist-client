@@ -8,10 +8,14 @@
     </navibar>
     <div class="container-fluid" style="margin-top: 20px; overflow-y:auto;">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-group">
             <textarea rows="15" maxlength="255" class="form-control input-lg" id="task_content" v-model="content" ></textarea>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
           <div class="form-group">
             <div class="input-group">
               <input type="text" v-model="notify_date" class="form-control input-lg" readonly @focus="showDateDlg" :placeholder="$t('ui.date_for_notification')">
@@ -20,6 +24,8 @@
               </span>
             </div>
           </div>
+        </div>
+        <div class="col-md-6">
           <div v-show="notify_date" class="form-group">
             <div class="input-group">
               <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg" :placeholder="$t('ui.time_for_notification')">

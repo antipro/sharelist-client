@@ -11,9 +11,7 @@
         <div class="side-action" style="text-align: left; background: #ffffff url('static/snow.jpeg')">
           <div class="row" style="margin-bottom: 50px;">
             <div class="col-xs-12" style="text-align: center;">
-              <router-link class="list-group-item portrait" to="/preference" style="border: none;">
-                <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">
-              </router-link>
+              <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">
               <h3>{{ tel }}<br><small>{{ uname }}</small></h3>
             </div>
           </div>
@@ -23,6 +21,9 @@
             </router-link>
             <router-link class="list-group-item" :to="{ name: 'datelist' }" replace>
               <span class="glyphicon glyphicon-calendar"></span> {{ $t('ui.group_by_date') }}
+            </router-link>
+            <router-link class="list-group-item" :to="{ name: 'preference' }">
+              <span class="glyphicon glyphicon-calendar"></span> {{ $t('ui.preference') }}
             </router-link>
             <button type="button" class="list-group-item" @click="$root.logout">
               <span class="glyphicon glyphicon-log-out"></span> {{ $t('ui.logout') }}
@@ -54,9 +55,6 @@
   display: flex; flex-direction: column; justify-content: center; }
 .side-modal { -webkit-app-region: no-drag; overflow: hidden; display: none; z-index: 1050; }
 .side-modal-on { position: fixed;	right: 0px;	left: 0px; top: 0px; bottom: 0px;	display: block; background-color: rgba(52, 52, 52, 0.5); }
-.list-group-item { background: transparent; }
-.portrait:hover { background: transparent; }
-.portrait:focus { background: transparent; }
 @media screen and (min-width: 800px) {
   .navbar .navbar-menu { display: none; }
   .navbar .navbar-text { margin-left: 15px; }

@@ -9,6 +9,7 @@ import Project from '@/components/Project'
 import Task from '@/components/Task'
 import Preference from '@/components/Preference'
 import Login from '@/components/Login'
+import Signup from '@/components/Signup'
 
 Vue.use(Router)
 
@@ -46,8 +47,14 @@ export default new Router({
       component: Preference
     },
     {
+      name: 'login',
       path: '/login',
       component: Login
+    },
+    {
+      name: 'signup',
+      path: '/signup',
+      component: Signup
     }
   ]
 })

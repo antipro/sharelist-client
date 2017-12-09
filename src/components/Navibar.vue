@@ -23,7 +23,7 @@
               <span class="glyphicon glyphicon-calendar"></span> {{ $t('ui.group_by_date') }}
             </router-link>
             <router-link class="list-group-item" :to="{ name: 'preference' }">
-              <span class="glyphicon glyphicon-calendar"></span> {{ $t('ui.preference') }}
+              <span class="glyphicon glyphicon-cog"></span> {{ $t('ui.preference') }}
             </router-link>
             <button type="button" class="list-group-item" @click="$root.logout">
               <span class="glyphicon glyphicon-log-out"></span> {{ $t('ui.logout') }}

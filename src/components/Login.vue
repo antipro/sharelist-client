@@ -7,16 +7,19 @@
           <span>{{ $t('ui.app_name') }}</span>
         </div>
         <div class="panel-body">
-          <form role="form"  @keyup.enter="login" autocomplete="off">
-            <fieldset>
-              <div class="form-group">
-                <input class="form-control" :placeholder="$t('ui.email')" v-model="email" name="email" type="email" autofocus="">
+          <form role="form"  @keyup.enter="login">
+            <div class="form-group">
+              <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="email" autofocus>
+            </div>
+            <div class="form-group">
+              <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password" value="">
+            </div>
+            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+              <div class="btn-group" role="group">
+                <button type="button" @click="login" class="btn btn-lg btn-primary">{{ $t('ui.login') }}</button>
               </div>
-              <div class="form-group">
-                <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" id="password" name="password" type="password" value="">
-              </div>
-              <button type="button" @click="login" class="btn btn-lg btn-primary btn-block">{{ $t('ui.login') }}</button>
-            </fieldset>
+              <router-link role="button" class="btn btn-lg btn-default" :to="{ name: 'signup' }">{{ $t('ui.signup') }}</router-link>
+            </div>
           </form>
         </div>
       </div>

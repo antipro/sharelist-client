@@ -4,6 +4,8 @@ export default {
       'app_name': 'Sharelist',
       'group_by_project': 'Group By Project',
       'group_by_date': 'Group By Date',
+      'signup': 'Sign Up',
+      'next': 'Next',
       'login': 'Login',
       'logout': 'Logout',
       'exit': 'Exit',
@@ -14,20 +16,24 @@ export default {
       'date_for_notification': 'Date For Notification',
       'time_for_notification': 'Time For Notification',
       'email': 'Email Address',
+      'username': 'User Name',
       'pwd': 'Password',
+      'repwd': 'Confirm Password',
       'project_name': 'Project Name',
       'preference': 'Preference',
       'new_user': '<New User>',
       'project': 'Project',
       'confirm': 'Confirm',
       'confirm_to_remove': 'Remove?',
-      'no_date': 'No Date'
+      'no_date': 'No Date',
+      'verify_code': 'Verify Code'
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
       'require_email_and_pwd': 'Please input your email and password.',
       'not_logged_in': 'Not logged in.',
       'user_not_existed': 'User Not Existed.',
+      'user_already_existed': 'User Already Existed.',
       'login_error': 'Lonin Error.',
       'query_error': 'Query Error.',
       'add_error': 'Add Error.',
@@ -35,7 +41,9 @@ export default {
       'remove_error': 'Remove Error.',
       'common_tip_01': 'Enter content to create task',
       'common_tip_02': 'Enter @content to create project',
-      'common_tip_03': 'Enter ~content to search tasks'
+      'common_tip_03': 'Enter ~content to search tasks',
+      'mail_failure': 'Mail Failed, Please checkout whether this email address works fine.',
+      'signup_ok': 'Sign Up Success.'
     }
   },
   'zh-CN': {
@@ -43,6 +51,8 @@ export default {
       'app_name': '共享清单',
       'group_by_project': '按项目分组',
       'group_by_date': '按日期分组',
+      'signup': '注册',
+      'next': '下一步',
       'login': '登录',
       'logout': '登出',
       'exit': '退出',
@@ -53,20 +63,24 @@ export default {
       'date_for_notification': '提醒日期',
       'time_for_notification': '提醒时间',
       'email': '电子邮件地址',
+      'username': '用户名称',
       'pwd': '密码',
+      'repwd': '确认密码',
       'project_name': '项目名称',
       'project': '项目',
       'preference': '偏好设置',
       'new_user': '<新用户>',
       'confirm': '确定',
       'confirm_to_remove': '确定要删除吗？',
-      'no_date': '没有日期'
+      'no_date': '没有日期',
+      'verify_code': '验证码'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',
       'require_email_and_pwd': '请输入您的电子邮件地址和密码。',
       'not_logged_in': '未登录。',
       'user_not_existed': '用户不存在。',
+      'user_already_existed': '用户已经存在。',
       'login_error': '登录出错。',
       'query_error': '查询出错。',
       'add_error': '添加出错。',
@@ -74,7 +88,9 @@ export default {
       'remove_error': '删除出错。',
       'common_tip_01': '输入内容以创建任务',
       'common_tip_02': '输入\'@\'开头的内容以创建项目',
-      'common_tip_03': '输入\'～\'开头的内容以搜索任务'
+      'common_tip_03': '输入\'～\'开头的内容以搜索任务',
+      'mail_failure': '邮件发送失败，请检查电子邮件是否工作正常。',
+      'signup_ok': '注册成功。'
     }
   }
 }

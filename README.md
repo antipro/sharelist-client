@@ -1,6 +1,6 @@
 # Sharelist
 
-> A todo list application with share function accross telephone number.
+> A todo list application with share function accross email address.
 
 ## Related Project
 

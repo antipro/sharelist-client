@@ -1,6 +1,6 @@
 <template>
   <div class="preference">
-    <navibar ref="nav" :navtitle="$t('ui.preference')" :tel="$root.tel" :uname="$root.uname">
+    <navibar ref="nav" :navtitle="$t('ui.preference')" :email="$root.email" :uname="$root.uname">
     </navibar>
     <div class="container-fluid" style="margin-top: 20px;">
       <div class="row">

@@ -10,7 +10,7 @@
           <form role="form"  @keyup.enter="login" autocomplete="off">
             <fieldset>
               <div class="form-group">
-                <input class="form-control" :placeholder="$t('ui.telno')" v-model="tel" name="tel" type="tel" autofocus="">
+                <input class="form-control" :placeholder="$t('ui.email')" v-model="email" name="email" type="email" autofocus="">
               </div>
               <div class="form-group">
                 <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" id="password" name="password" type="password" value="">
@@ -34,7 +34,7 @@ export default {
   name: 'login',
   data () {
     return {
-      tel: this.$root.tel,
+      email: this.$root.email,
       pwd: ''
     }
   },
@@ -45,13 +45,13 @@ export default {
   },
   methods: {
     login (e) {
-      if (this.tel === '' || this.pwd === '') {
-        alert(this.$t('message.require_tel_and_pwd'))
+      if (this.email === '' || this.pwd === '') {
+        alert(this.$t('message.require_email_and_pwd'))
         return
       }
       this.$axios.get('/login', {
         params: {
-          tel: this.tel,
+          email: this.email,
           pwd: this.pwd
         }
       }).then((response) => {
@@ -60,7 +60,7 @@ export default {
           alert(this.$t(res.msg))
           return
         }
-        this.$root.tel = this.tel
+        this.$root.email = this.email
         this.$root.uid = res.data.uid
         this.$root.uname = res.data.uname
         this.$root.token = res.data.token

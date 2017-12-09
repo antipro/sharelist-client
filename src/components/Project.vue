@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <navibar ref="nav" :navtitle="$t('ui.project')" :tel="$root.tel" :uname="$root.uname">
+    <navibar ref="nav" :navtitle="$t('ui.project')" :email="$root.email" :uname="$root.uname">
       <a slot="header" class="navbar-brand" href="#" @click="back">
         <span class="glyphicon glyphicon-arrow-left"></span>
       </a>
@@ -18,13 +18,13 @@
                 <button type="button" class="close" aria-label="Close" @click="removeShare(index)">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <span>{{ share.tel }} <small>{{ share.uname }}</small></span>
+                <span>{{ share.email }} <small>{{ share.uname }}</small></span>
               </div>
             </div>
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="tel" class="form-control" :placeholder="$t('ui.telno')" v-model="tel" @keyup.stop.enter="addShare">
+              <input type="email" class="form-control" :placeholder="$t('ui.email')" v-model="email" @keyup.stop.enter="addShare">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="button" @click="addShare">
                   <span class="glyphicon glyphicon-plus"></span>
@@ -56,7 +56,7 @@ export default {
       pid: null,
       pname: null,
       shares: [],
-      tel: ''
+      email: ''
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -95,20 +95,20 @@ export default {
       this.shares.splice(index, 1)
     },
     addShare () {
-      let tel = this.tel.trim()
-      if (tel === this.$root.tel) {
+      let email = this.email.trim()
+      if (email === this.$root.email) {
         alert(this.$t('message.can_not_add_yourself'))
         return
       }
-      if (tel === '') {
+      if (email === '') {
         return
       }
       this.shares.push({
         uid: 0,
         uname: this.$t('ui.new_user'),
-        tel: this.tel.trim()
+        email: this.email.trim()
       })
-      this.tel = ''
+      this.email = ''
     },
     updateProject () {
       this.$root.updateProject(this.pid, this.pname, this.shares)

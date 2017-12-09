@@ -38,12 +38,12 @@ new Vue({
   template: '<App/>',
   data: {
     uid: '',
-    tel: '',
+    email: '',
     uname: '',
     token: '',
     runtime: 'browser'
   },
-  persist: ['uid', 'tel', 'uname', 'token'],
+  persist: ['uid', 'email', 'uname', 'token'],
   components: { App },
   mounted () {
     var userAgent = navigator.userAgent.toLowerCase()
@@ -175,7 +175,7 @@ new Vue({
     logout () {
       this.token = ''
       this.uname = ''
-      this.tel = ''
+      this.email = ''
       this.uid = ''
       this.$store.commit('clear')
       this.$router.replace('/login')

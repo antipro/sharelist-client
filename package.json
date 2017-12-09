@@ -1,7 +1,7 @@
 {
   "name": "sharelist",
   "version": "1.0.0",
-  "description": "A todo list application with share function accross telephone number.",
+  "description": "A todo list application with share function accross email address.",
   "author": {
     "name": "antipro",
     "email": "antipro@163.com"

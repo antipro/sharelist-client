@@ -1,6 +1,6 @@
 <template>
   <div class="task">
-    <navibar ref="nav" :navtitle="gname" :tel="$root.tel" :uname="$root.uname">
+    <navibar ref="nav" :navtitle="gname" :email="$root.email" :uname="$root.uname">
       <a slot="header" class="navbar-brand" href="#" @click="back">
         <span class="glyphicon glyphicon-arrow-left"></span>
       </a>

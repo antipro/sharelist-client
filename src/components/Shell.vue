@@ -4,7 +4,7 @@
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       {{ $t('ui.operation_finished') }} <a class="pull-right" href="#" @click="restore">{{ $t('ui.operation_restore') }}</a>
     </div>
-    <navibar ref="nav" :navtitle="active_gname" :tel="$root.tel" :uname="$root.uname">
+    <navibar ref="nav" :navtitle="active_gname" :email="$root.email" :uname="$root.uname">
       <div slot="action" class="btn-group">
         <span class="glyphicon glyphicon-refresh" @click="refresh"></span>
       </div>

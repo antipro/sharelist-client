@@ -12,7 +12,7 @@
           <div class="row" style="margin-bottom: 50px;">
             <div class="col-xs-12" style="text-align: center;">
               <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">
-              <h3>{{ tel }}<br><small>{{ uname }}</small></h3>
+              <h3>{{ email }}<br><small>{{ uname }}</small></h3>
             </div>
           </div>
           <div class="list-group">
@@ -72,7 +72,7 @@ export default {
       online: true
     }
   },
-  props: ['navtitle', 'tel', 'uname'],
+  props: ['navtitle', 'email', 'uname'],
   mounted () {
     if (navigator.onLine) {
       this.online = true

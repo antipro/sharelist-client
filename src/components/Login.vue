@@ -1,33 +1,43 @@
 <template>
-  <div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
-      <div class="login-panel panel panel-default">
-        <div class="panel-heading">
-          <img alt="Brand" src="../assets/logo.png" style="max-height: 25px;">
-          <span>{{ $t('ui.app_name') }}</span>
-        </div>
-        <div class="panel-body">
-          <form role="form"  @keyup.enter="login">
-            <div class="form-group">
-              <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="email" autofocus>
-            </div>
-            <div class="form-group">
-              <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password" value="">
-            </div>
-            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-              <div class="btn-group" role="group">
-                <button type="button" @click="login" class="btn btn-lg btn-primary">{{ $t('ui.login') }}</button>
+  <div>
+    <nav class="navbar navbar-default">
+      <p class="navbar-brand" style="float:right;">
+        <button v-if="$root.runtime !== 'browser'" type="button" class="btn btn-default" @click="$root.exit">
+          <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
+        </button>
+      </p>
+    </nav>
+    <div class="row">
+      <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+          <div class="panel-heading">
+            <img alt="Brand" src="../assets/logo.png" style="max-height: 25px;">
+            <span>{{ $t('ui.app_name') }}</span>
+          </div>
+          <div class="panel-body">
+            <form role="form"  @keyup.enter="login">
+              <div class="form-group">
+                <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="email" autofocus>
               </div>
-              <router-link role="button" class="btn btn-lg btn-default" :to="{ name: 'signup' }">{{ $t('ui.signup') }}</router-link>
-            </div>
-          </form>
+              <div class="form-group">
+                <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password" value="">
+              </div>
+              <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                  <button type="button" @click="login" class="btn btn-lg btn-primary">{{ $t('ui.login') }}</button>
+                </div>
+                <router-link role="button" class="btn btn-lg btn-default" :to="{ name: 'signup' }">{{ $t('ui.signup') }}</router-link>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-    </div><!-- /.col-->
-  </div><!-- /.row -->
+      </div><!-- /.col-->
+    </div><!-- /.row -->
+  </div>
 </template>
 
 <style scoped>
+.navbar { background: transparent; border: none; }
 div.row { margin-top: 100px; }
 div#app { margin-left: 0; }
 </style>

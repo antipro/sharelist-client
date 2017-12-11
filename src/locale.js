@@ -43,7 +43,8 @@ export default {
       'common_tip_02': 'Enter @content to create project',
       'common_tip_03': 'Enter ~content to search tasks',
       'mail_failure': 'Mail Failed, Please checkout whether this email address works fine.',
-      'signup_ok': 'Sign Up Success.'
+      'signup_ok': 'Sign Up Success.',
+      'verify_email': 'The Verification Code you received is {code}, Please Do not Tell anybody else.'
     }
   },
   'zh-CN': {
@@ -90,7 +91,8 @@ export default {
       'common_tip_02': '输入\'@\'开头的内容以创建项目',
       'common_tip_03': '输入\'～\'开头的内容以搜索任务',
       'mail_failure': '邮件发送失败，请检查电子邮件是否工作正常。',
-      'signup_ok': '注册成功。'
+      'signup_ok': '注册成功。',
+      'verify_email': '您收到的验证码是 {code}， 请不要告诉其他人。'
     }
   }
 }

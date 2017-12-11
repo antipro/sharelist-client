@@ -24,8 +24,10 @@ Vue.use(VueI18n)
 Vue.use(VuePersist)
 Vue.config.productionTip = false
 
+let locale = navigator.language
+
 const i18n = new VueI18n({
-  locale: navigator.language,
+  locale: locale,
   messages: translation,
   fallbackLocale: 'en'
 })
@@ -41,9 +43,10 @@ new Vue({
     email: '',
     uname: '',
     token: '',
-    runtime: 'browser'
+    runtime: 'browser',
+    locale
   },
-  persist: ['uid', 'email', 'uname', 'token'],
+  persist: ['uid', 'email', 'uname', 'token', 'locale'],
   components: { App },
   mounted () {
     var userAgent = navigator.userAgent.toLowerCase()

@@ -1,45 +1,58 @@
 <template>
-  <div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
-      <div class="login-panel panel panel-default">
-        <div class="panel-body">
-          <form role="form" @keyup.enter="signup">
-            <div class="form-group has-feedback" :class="emailClassObj">
-              <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="text">
-              <span v-if="email && emailValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-              <span v-if="email && !emailValidated" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-            </div>
-            <div class="form-group">
-              <input class="form-control" :placeholder="$t('ui.username')" v-model="username" type="text">
-            </div>
-            <div class="form-group">
-              <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password">
-            </div>
-            <div class="form-group has-feedback" :class="pwdClassObj">
-              <input class="form-control" :placeholder="$t('ui.repwd')" v-model="repwd" type="password">
-              <span v-if="repwd && pwdValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-              <span v-if="repwd && !pwdValidated" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-            </div>
-            <div v-show="mailSended" class="form-group has-feedback" :class="{ 'has-error': isError }">
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon3">{{ $t('ui.verify_code') }}</span>
-                <input type="text" class="form-control" v-model="verifyCode">
-                <span v-show="isError" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+  <div>
+    <nav class="navbar navbar-default">
+      <p class="navbar-brand btn-group" style="float:right;">
+        <router-link class="btn btn-default" :to="{ name: 'login' }" replace>
+          <span class="glyphicon glyphicon-log-in"></span> {{ $t('ui.login') }}
+        </router-link>
+        <button v-if="$root.runtime !== 'browser'" type="button" class="btn btn-default" @click="$root.exit">
+          <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
+        </button>
+      </p>
+    </nav>
+    <div class="row">
+      <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+          <div class="panel-body">
+            <form role="form" @keyup.enter="signup">
+              <div class="form-group has-feedback" :class="emailClassObj">
+                <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="text">
+                <span v-if="email && emailValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span v-if="email && !emailValidated" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
               </div>
-            </div>
-            <div v-show="isInProgress" class="progress">
-              <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%">
+              <div class="form-group">
+                <input class="form-control" :placeholder="$t('ui.username')" v-model="username" type="text">
               </div>
-            </div>
-            <button v-show="!mailSended" type="button" @click="next" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.next') }}</button>
-            <button v-show="mailSended" type="button" @click="signup" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.signup') }}</button>
-          </form>
+              <div class="form-group">
+                <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password">
+              </div>
+              <div class="form-group has-feedback" :class="pwdClassObj">
+                <input class="form-control" :placeholder="$t('ui.repwd')" v-model="repwd" type="password">
+                <span v-if="repwd && pwdValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span v-if="repwd && !pwdValidated" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+              </div>
+              <div v-show="mailSended" class="form-group has-feedback" :class="{ 'has-error': isError }">
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon3">{{ $t('ui.verify_code') }}</span>
+                  <input type="text" class="form-control" v-model="verifyCode">
+                  <span v-show="isError" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div v-show="isInProgress" class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%">
+                </div>
+              </div>
+              <button v-show="!mailSended" type="button" @click="next" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.next') }}</button>
+              <button v-show="mailSended" type="button" @click="signup" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.signup') }}</button>
+            </form>
+          </div>
         </div>
-      </div>
-    </div><!-- /.col-->
-  </div><!-- /.row -->
+      </div><!-- /.col-->
+    </div><!-- /.row -->
+  </div>
 </template>
 <style>
+.navbar { background: transparent; border: none; }
 div.row { margin-top: 100px; }
 </style>
 
@@ -67,7 +80,8 @@ export default {
       this.isInProgress = true
       this.$axios.get('/verifycode', {
         params: {
-          email: this.email
+          email: this.email,
+          mailcontent: this.$t('message.verify_email')
         }
       }).then((response) => {
         this.isInProgress = false
@@ -90,11 +104,13 @@ export default {
       }
       this.isInProgress = true
       this.$axios.get('/signup', {
-        email: this.email,
-        username: this.username,
-        pwd: this.pwd,
-        verifyCode: this.verifyCode,
-        uuid: this.uuid
+        params: {
+          email: this.email,
+          username: this.username,
+          pwd: this.pwd,
+          verifycode: this.verifyCode,
+          uuid: this.uuid
+        }
       }).then((response) => {
         this.isInProgress = false
         let res = response.data

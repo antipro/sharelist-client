@@ -17,7 +17,7 @@ import store from './store'
 
 Vue.prototype.$axios = axios.create({
   baseURL: `http://${SERVER_IP}:3000/api/`,
-  timeout: 5000
+  timeout: 10000
 })
 
 Vue.use(VueI18n)

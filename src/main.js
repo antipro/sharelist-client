@@ -52,8 +52,6 @@ new Vue({
     var userAgent = navigator.userAgent.toLowerCase()
     if (userAgent.indexOf('electron/') > -1) {
       this.runtime = 'electron'
-      const ipc = eval('require(\'electron\')').ipcRenderer
-      ipc.send('language', navigator.language)
     }
     $.getScript('cordova.js').done(() => {
       this.runtime = 'cordova'

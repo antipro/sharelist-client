@@ -51,7 +51,7 @@
     </div><!-- /.row -->
   </div>
 </template>
-<style>
+<style scoped>
 .navbar { background: transparent; border: none; }
 div.row { margin-top: 100px; }
 </style>

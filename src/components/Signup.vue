@@ -81,7 +81,9 @@ export default {
       this.$axios.get('/verifycode', {
         params: {
           email: this.email,
-          mailcontent: this.$t('message.verify_email')
+          mailcontent: this.$t('message.verify_email'),
+          mailsubject: this.$t('ui.verify_code'),
+          mailsender: this.$t('ui.app_name')
         }
       }).then((response) => {
         this.isInProgress = false

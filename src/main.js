@@ -82,7 +82,7 @@ new Vue({
           break
         case 'datelist':
           this.$socket.emit('addtask', {
-            pid: 0,
+            pid: this.$store.state.ungroupPid,
             uid: this.uid,
             content,
             notify_date: this.$store.state.activeDate

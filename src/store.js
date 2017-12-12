@@ -8,7 +8,8 @@ export default new Vuex.Store({
     tasks: [],
     projects: [],
     preference: {},
-    activePid: 0
+    activePid: 0,
+    ungroupPid: 0
   },
   mutations: {
     addTask (state, task) {
@@ -52,6 +53,10 @@ export default new Vuex.Store({
       state.preference = all.preference
       state.activePid = 0
       state.activeDate = null
+      let upgroupProject = all.projects.find(project => {
+        return project.name === ''
+      })
+      state.ungroupPid = upgroupProject.id
     },
     clear (state) {
       state.tasks = []
@@ -59,6 +64,7 @@ export default new Vuex.Store({
       state.preference = {}
       state.activePid = 0
       state.activeDate = null
+      state.ungroupPid = 0
     },
     addProject (state, project) {
       state.projects.push(project)

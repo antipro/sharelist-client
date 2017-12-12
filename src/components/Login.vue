@@ -2,6 +2,10 @@
   <div>
     <nav class="navbar navbar-default">
       <p class="navbar-brand" style="float:right;">
+        <select v-model="$root.locale" class="form-control" style="width: auto; float: left;">
+          <option value='en'>English</option>
+          <option value='zh-CN'>简体中文</option>
+        </select>
         <button v-if="$root.runtime !== 'browser'" type="button" class="btn btn-default" @click="$root.exit">
           <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
         </button>

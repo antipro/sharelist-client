@@ -18,6 +18,13 @@
               <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg">
             </div>
           </div>
+          <div class="form-group">
+            <label for="locale">{{ $t('ui.default_locale') }}</label>
+            <select v-model="$root.locale" class="form-control input-lg">
+              <option value='en'>English</option>
+              <option value='zh-CN'>简体中文</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>

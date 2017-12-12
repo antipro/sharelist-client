@@ -24,10 +24,8 @@ Vue.use(VueI18n)
 Vue.use(VuePersist)
 Vue.config.productionTip = false
 
-let locale = navigator.language
-
 const i18n = new VueI18n({
-  locale: locale,
+  locale: 'en',
   messages: translation,
   fallbackLocale: 'en'
 })
@@ -44,10 +42,15 @@ new Vue({
     uname: '',
     token: '',
     runtime: 'browser',
-    locale
+    locale: ''
   },
   persist: ['uid', 'email', 'uname', 'token', 'locale'],
   components: { App },
+  created () {
+    if (this.locale === '') {
+      this.locale = navigator.language
+    }
+  },
   mounted () {
     var userAgent = navigator.userAgent.toLowerCase()
     if (userAgent.indexOf('electron/') > -1) {
@@ -205,6 +208,15 @@ new Vue({
         console.log('socket disconnect')
         this.$socket.disconnect()
       }
+    },
+    locale (val) {
+      this.$i18n.locale = val
+      if (this.token === '') {
+        return
+      }
+      this.updatePreference({
+        locale: val
+      })
     }
   }
 })

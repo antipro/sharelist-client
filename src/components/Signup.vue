@@ -1,7 +1,11 @@
 <template>
   <div>
     <nav class="navbar navbar-default">
-      <p class="navbar-brand btn-group" style="float:right;">
+      <p class="navbar-brand btn-group" role="group" style="float:right;">
+        <select v-model="$root.locale" class="form-control" style="width: auto; float: left;">
+          <option value='en'>English</option>
+          <option value='zh-CN'>简体中文</option>
+        </select>
         <router-link class="btn btn-default" :to="{ name: 'login' }" replace>
           <span class="glyphicon glyphicon-log-in"></span> {{ $t('ui.login') }}
         </router-link>

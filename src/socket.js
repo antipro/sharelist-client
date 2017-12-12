@@ -16,6 +16,9 @@ export default function ($vue, store) {
         $vue.schedule(task)
       })
     }
+    if (all.preference.locale !== null) {
+      $vue.locale = all.preference.locale
+    }
   })
   socket.on('project added', (project) => {
     store.commit('addProject', project)

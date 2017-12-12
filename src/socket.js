@@ -16,7 +16,7 @@ export default function ($vue, store) {
         $vue.schedule(task)
       })
     }
-    if (all.preference.locale !== null) {
+    if (all.preference.locale) {
       $vue.locale = all.preference.locale
     }
   })

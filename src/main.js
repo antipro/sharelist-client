@@ -70,12 +70,27 @@ new Vue({
         name
       })
     },
-    addTask (pid, content) {
-      this.$socket.emit('addtask', {
-        pid,
-        uid: this.uid,
-        content
-      })
+    addTask (source, content) {
+      switch (source) {
+        case 'projectlist':
+          this.$socket.emit('addtask', {
+            pid: this.$store.state.activePid,
+            uid: this.uid,
+            content,
+            notify_date: null
+          })
+          break
+        case 'datelist':
+          this.$socket.emit('addtask', {
+            pid: 0,
+            uid: this.uid,
+            content,
+            notify_date: this.$store.state.activeDate
+          })
+          break
+        default:
+          console.log('not implemented')
+      }
     },
     toggleTask (id, state, pid) {
       this.$socket.emit('toggletask', {

@@ -27,7 +27,8 @@ export default {
       'confirm_to_remove': 'Remove?',
       'no_date': 'No Date',
       'verify_code': 'Verify Code',
-      'default_locale': 'Default Language'
+      'default_locale': 'Default Language',
+      'ungrouped': 'Ungrouped'
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
@@ -76,7 +77,8 @@ export default {
       'confirm_to_remove': '确定要删除吗？',
       'no_date': '没有日期',
       'verify_code': '验证码',
-      'default_locale': '默认语言'
+      'default_locale': '默认语言',
+      'ungrouped': '未分组'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',

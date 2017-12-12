@@ -3,7 +3,7 @@
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
         @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
-         {{ project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
+         {{ project.name===''?$t('ui.ungrouped'):project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
@@ -95,14 +95,7 @@ import touch from 'touchjs'
 
 export default {
   name: 'projectlist',
-  data () {
-    return {
-      active_pname: '',
-      active_pid: null
-    }
-  },
   props: [ 'content' ],
-  persist: ['active_pid', 'active_pname'],
   updated () {
     this.initDom()
   },
@@ -111,8 +104,9 @@ export default {
   },
   methods: {
     initDom () {
-      if (this.active_pid !== null && $('.list-group-item-info[data-pid="' + this.active_pid + '"]').length !== 0) {
-        $('.list-group-item-info[data-pid="' + this.active_pid + '"]').click()
+      let activePid = this.$store.state.activePid
+      if (activePid !== 0 && $('.list-group-item-info[data-pid="' + activePid + '"]').length !== 0) {
+        $('.list-group-item-info[data-pid="' + activePid + '"]').click()
       } else {
         $('.list-group-item-info:first').click()
       }
@@ -162,9 +156,8 @@ export default {
       })
     },
     activeProject (project, evt) {
-      this.active_pid = project.id
-      this.active_pname = project.name
-      this.$emit('activate', project.id, project.name)
+      this.$store.commit('activeProject', project.id)
+      this.$emit('changegroup', project.name)
       $('.glyphicon-ok-circle').remove()
       $('<span>').addClass('glyphicon').addClass('glyphicon-ok-circle').prependTo(evt.currentTarget)
       $('.drawer-right').removeClass('drawer-right-on')
@@ -193,9 +186,6 @@ export default {
   },
   computed: {
     projects () {
-      if (this.$store.state.tasks.length === 0) {
-        return []
-      }
       this.$store.state.projects.forEach((project) => {
         project.tasks = []
         this.$store.state.tasks.forEach((task) => {

@@ -11,7 +11,7 @@
     </navibar>
     <div class="main">
       <keep-alive>
-        <router-view @activate="activated" :content="content"></router-view>
+        <router-view @changegroup="groupchanged" :content="content"></router-view>
       </keep-alive>
     </div>
     <div class="footer">
@@ -73,7 +73,7 @@ export default {
       defaultChild: null
     }
   },
-  persist: ['active_gid', 'defaultChild'],
+  persist: ['defaultChild'],
   created () {
     if (this.$root.token === '') {
       this.$router.replace('/login')
@@ -109,8 +109,7 @@ export default {
     Navibar
   },
   methods: {
-    activated (gid, gname) {
-      this.active_gid = gid
+    groupchanged (gname) {
       this.active_gname = gname
     },
     add () {
@@ -126,7 +125,7 @@ export default {
           this.$root.addProject(content)
         }
       } else {
-        this.$root.addTask(this.active_gid, content)
+        this.$root.addTask(this.defaultChild, content)
       }
       this.content = ''
     },

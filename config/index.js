@@ -11,8 +11,8 @@ try {
   console.error('Content like this:')
   console.error(`'use strict'
   module.exports = {
-    dev: '"ip or domain of sharelist-server for development"',
-    prod: '"ip or domain of sharelist-server for production"'
+    dev: '"ip or domain of sharelist-server for development(with port)"',
+    prod: '"ip or domain of sharelist-server for production(with port)"'
   }`)
   throw error
 }

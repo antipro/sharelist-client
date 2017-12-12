@@ -1,6 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-/* global SERVER_IP:true */
+/* global SERVER_ADDRESS:true */
 /* eslint-disable no-new */
 /* eslint-disable no-eval */
 import Vue from 'vue'
@@ -16,7 +16,7 @@ import initSocket from './socket'
 import store from './store'
 
 Vue.prototype.$axios = axios.create({
-  baseURL: `http://${SERVER_IP}:3000/api/`,
+  baseURL: `http://${SERVER_ADDRESS}/api/`,
   timeout: 10000
 })
 

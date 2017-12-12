@@ -11,6 +11,17 @@
 * [sharelist-cordova](https://gitee.com/antipro/sharelist-cordova)
   > mobile wrapper
 
+## Preparation
+
+create config/server.js, like this:
+``` javascript
+'use strict'
+module.exports = {
+  dev: '"127.0.0.1:3000"',
+  prod: '"172.104.112.9:3000"'
+}
+```
+
 ## Build Setup
 
 ``` bash
@@ -25,4 +36,4 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
-
+```

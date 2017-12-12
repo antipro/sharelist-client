@@ -1,8 +1,8 @@
-/* global SERVER_IP:true */
+/* global SERVER_ADDRESS:true */
 import io from 'socket.io-client'
 
 export default function ($vue, store) {
-  let socket = io(`http://${SERVER_IP}:3000`, {
+  let socket = io(`http://${SERVER_ADDRESS}`, {
     transports: ['websocket'],
     query: {
       token: $vue.token,

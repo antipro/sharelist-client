@@ -8,7 +8,6 @@ export default new Vuex.Store({
     tasks: [],
     projects: [],
     preference: {},
-    activePid: 0,
     ungroupPid: 0
   },
   mutations: {
@@ -32,9 +31,6 @@ export default new Vuex.Store({
         }
       })
     },
-    activeProject (state, pid) {
-      state.activePid = pid
-    },
     removeTask (state, id) {
       let idx = state.tasks.findIndex(task => {
         return task.id === id
@@ -51,7 +47,6 @@ export default new Vuex.Store({
       state.tasks = all.tasks
       state.projects = all.projects
       state.preference = all.preference
-      state.activePid = 0
       state.activeDate = null
       let upgroupProject = all.projects.find(project => {
         return project.name === ''
@@ -62,7 +57,6 @@ export default new Vuex.Store({
       state.tasks = []
       state.projects = []
       state.preference = {}
-      state.activePid = 0
       state.activeDate = null
       state.ungroupPid = 0
     },

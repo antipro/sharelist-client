@@ -11,7 +11,7 @@
     </navibar>
     <div class="main">
       <keep-alive>
-        <router-view @changegroup="groupchanged" :content="content"></router-view>
+        <router-view ref="tasklist" @changegroup="groupchanged" :content="content"></router-view>
       </keep-alive>
     </div>
     <div class="footer">
@@ -125,7 +125,7 @@ export default {
           this.$root.addProject(content)
         }
       } else {
-        this.$root.addTask(this.defaultChild, content)
+        this.$refs.tasklist.addTask()
       }
       this.content = ''
     },

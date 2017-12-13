@@ -3,7 +3,7 @@
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
         @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
-         {{ project.name===''?$t('ui.ungrouped'):project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
+        <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
@@ -14,7 +14,7 @@
             </button>
           </div>
         </div>
-        <div v-if="$root.runtime === 'cordova' && project.uid===$root.uid && project.editable==='Y'" class="drawer-right btn-group">
+        <div v-if="$root.runtime==='cordova' && project.uid===$root.uid && project.editable==='Y'" class="drawer-right btn-group">
           <button type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
             <span class="glyphicon glyphicon-pencil"></span>
           </button>
@@ -33,7 +33,7 @@
             </p>
             <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ task.notify_time }}</small>
             <small v-else class="text-muted">{{ $t('ui.no_date') }}</small>
-            <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
+            <div v-if="$root.runtime!=='cordova'" class="pull-right" style="visibility: hidden">
               <div class="btn-group btn-group-xs" role="group" aria-label="...">
                 <button type="button" class="btn btn-default" @click="editTask(task, $event)">
                   <span class="glyphicon glyphicon-pencil"></span>
@@ -44,7 +44,7 @@
               </div>
             </div>
           </div>
-          <div v-if="$root.runtime === 'cordova'" class="drawer-right btn-group">
+          <div v-if="$root.runtime==='cordova'" class="drawer-right btn-group">
             <button type="button" class="btn btn-default" @click.stop="editTask(task, $event)">
               <span class="glyphicon glyphicon-pencil"></span>
             </button>
@@ -96,6 +96,16 @@ import touch from 'touchjs'
 export default {
   name: 'projectlist',
   props: [ 'content' ],
+  data () {
+    return {
+      activePid: 0
+    }
+  },
+  created () {
+    if (sessionStorage['activePid']) {
+      this.activePid = sessionStorage['activePid']
+    }
+  },
   updated () {
     this.initDom()
   },
@@ -104,9 +114,8 @@ export default {
   },
   methods: {
     initDom () {
-      let activePid = this.$store.state.activePid
-      if (activePid !== 0 && $('.list-group-item-info[data-pid="' + activePid + '"]').length !== 0) {
-        $('.list-group-item-info[data-pid="' + activePid + '"]').click()
+      if (this.activePid !== 0 && $('.list-group-item-info[data-pid="' + this.activePid + '"]').length !== 0) {
+        $('.list-group-item-info[data-pid="' + this.activePid + '"]').click()
       } else {
         $('.list-group-item-info:first').click()
       }
@@ -156,14 +165,20 @@ export default {
       })
     },
     activeProject (project, evt) {
-      this.$store.commit('activeProject', project.id)
+      this.activePid = project.id
       this.$emit('changegroup', project.name)
-      $('.glyphicon-ok-circle').remove()
-      $('<span>').addClass('glyphicon').addClass('glyphicon-ok-circle').prependTo(evt.currentTarget)
       $('.drawer-right').removeClass('drawer-right-on')
     },
     activeTask (task, evt) {
       $('.drawer-right').removeClass('drawer-right-on')
+    },
+    addTask () {
+      this.$root.addTask({
+        pid: this.activePid,
+        uid: this.$root.uid,
+        content: this.content,
+        notify_date: null
+      })
     },
     mousein (evt) {
       $('.pull-right', evt.target).css('visibility', '')
@@ -220,6 +235,11 @@ export default {
         return a.id > b.id
       })
       return this.$store.state.projects
+    }
+  },
+  watch: {
+    activePid (val) {
+      sessionStorage.setItem('activePid', val)
     }
   }
 }

@@ -14,9 +14,7 @@
           </div>
           <div class="form-group">
             <label for="notify_time">{{ $t('ui.default_time_for_notification') }}</label>
-            <div class="input-group">
-              <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg">
-            </div>
+            <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg">
           </div>
           <div class="form-group">
             <label for="locale">{{ $t('ui.default_locale') }}</label>
@@ -24,6 +22,18 @@
               <option value='en'>English</option>
               <option value='zh-CN'>简体中文</option>
             </select>
+          </div>
+          <div class="form-group has-feedback" :class="{ 'has-error': uname==='' }">
+            <label for="locale">{{ $t('ui.username') }}</label>
+            <div class="input-group">
+              <div class="input-group">
+                <input type="text" class="form-control input-lg" maxlength="50" v-model="uname" @keyup.enter="saveName">
+                <span v-show="uname===''" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+              </div>
+              <span class="input-group-addon" style="padding: 6px 18px;">
+                <span class="glyphicon glyphicon-floppy-save" @click="saveName"></span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -67,7 +77,8 @@ export default {
   name: 'preference',
   data () {
     return {
-      starup_hidden: false
+      starup_hidden: false,
+      uname: this.$root.uname
     }
   },
   created () {
@@ -115,6 +126,15 @@ export default {
     },
     hideTimeDlg () {
       $('#time_modal').modal('hide')
+    },
+    saveName () {
+      if (this.uname === '') {
+        return
+      }
+      this.$root.uname = this.uname
+      this.$root.updatePreference({
+        name: this.uname
+      })
     }
   },
   components: {

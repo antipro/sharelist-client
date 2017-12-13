@@ -69,7 +69,6 @@ export default {
       timeout_ptr: null,
       forward: null,
       back: null,
-      tipPtr: 0,
       defaultChild: null
     }
   },
@@ -83,19 +82,14 @@ export default {
       this.defaultChild = 'projectlist'
     }
     this.$router.replace({ name: this.defaultChild })
-    let TIPS = [
-      this.$t('message.common_tip_01'),
-      this.$t('message.common_tip_02'),
-      this.$t('message.common_tip_03')
-    ]
-    let iter = 0
+    let iter = 1
     setInterval(() => {
       if (this.content !== '') {
         return
       }
-      this.placeholder = TIPS[iter++]
-      if (iter === TIPS.length) {
-        iter = 0
+      this.placeholder = this.$root.$t('message.common_tip_0' + iter++)
+      if (iter === 3) {
+        iter = 1
       }
     }, 5000)
   },

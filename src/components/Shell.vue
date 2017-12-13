@@ -83,7 +83,7 @@ export default {
       this.defaultChild = 'projectlist'
     }
     this.$router.replace({ name: this.defaultChild })
-    const TIPS = [
+    let TIPS = [
       this.$t('message.common_tip_01'),
       this.$t('message.common_tip_02'),
       this.$t('message.common_tip_03')

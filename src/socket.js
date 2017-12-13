@@ -10,6 +10,14 @@ export default function ($vue, store) {
     }
   })
   socket.on('init', (all) => {
+    all.projects.push({
+      id: 0,
+      uid: $vue.uid,
+      uname: $vue.uname,
+      name: $vue.$t('ui.ungrouped'),
+      editable: 'N',
+      control: ''
+    })
     store.commit('init', all)
     if ($vue.runtime === 'cordova') {
       store.state.tasks.forEach(task => {

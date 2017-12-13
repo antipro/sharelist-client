@@ -47,9 +47,11 @@ new Vue({
   persist: ['uid', 'email', 'uname', 'token', 'locale'],
   components: { App },
   created () {
+    console.log('root created', this.locale)
     if (this.locale === '') {
       this.locale = navigator.language
     }
+    this.$i18n.locale = this.locale
   },
   mounted () {
     var userAgent = navigator.userAgent.toLowerCase()
@@ -66,7 +68,6 @@ new Vue({
     },
     addProject (name) {
       this.$socket.emit('addproject', {
-        uid: this.uid,
         name
       })
     },

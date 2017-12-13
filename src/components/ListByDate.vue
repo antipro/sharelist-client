@@ -8,8 +8,7 @@ export default {
   methods: {
     addTask () {
       this.$root.addTask({
-        pid: this.$store.state.ungroupPid,
-        uid: this.$root.uid,
+        pid: 0,
         content: this.content,
         notify_date: this.$store.state.activeDate
       })

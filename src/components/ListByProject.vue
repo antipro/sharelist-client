@@ -175,7 +175,6 @@ export default {
     addTask () {
       this.$root.addTask({
         pid: this.activePid,
-        uid: this.$root.uid,
         content: this.content,
         notify_date: null
       })

@@ -14,7 +14,7 @@ export default function ($vue, store) {
       id: 0,
       uid: $vue.uid,
       uname: $vue.uname,
-      name: $vue.$t('ui.ungrouped'),
+      name: '',
       editable: 'N',
       control: ''
     })

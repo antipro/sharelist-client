@@ -66,7 +66,7 @@ export default {
       'date_for_notification': '提醒日期',
       'time_for_notification': '提醒时间',
       'email': '电子邮件地址',
-      'username': '用户名称',
+      'username': '用户名',
       'pwd': '密码',
       'repwd': '确认密码',
       'project_name': '项目名称',

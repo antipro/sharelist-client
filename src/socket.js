@@ -91,6 +91,9 @@ export default function ($vue, store) {
   })
   socket.on('preference updated', (preference) => {
     store.commit('updatePreference', preference)
+    if (preference['name']) {
+      $vue.uname = preference['name']
+    }
     if ($vue.runtime === 'cordova') {
       store.state.tasks.forEach(task => {
         $vue.schedule(task)

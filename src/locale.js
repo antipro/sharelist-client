@@ -24,7 +24,6 @@ export default {
       'new_user': '<New User>',
       'project': 'Project',
       'confirm': 'Confirm',
-      'confirm_to_remove': 'Remove?',
       'no_date': 'No Date',
       'verify_code': 'Verify Code',
       'default_locale': 'Default Language',
@@ -46,7 +45,9 @@ export default {
       'common_tip_03': 'Enter ~content to search tasks',
       'mail_failure': 'Mail Failed, Please checkout whether this email address works fine.',
       'signup_ok': 'Sign Up Success.',
-      'verify_email': 'The Verification Code you received is {code}, Please Do not Tell anybody else.'
+      'verify_email': 'The Verification Code you received is {code}, Please Do not Tell anybody else.',
+      'confirm_to_remove': 'Remove?',
+      'confirm_to_exit': 'Exit?'
     }
   },
   'zh-CN': {
@@ -74,7 +75,6 @@ export default {
       'preference': '偏好设置',
       'new_user': '<新用户>',
       'confirm': '确定',
-      'confirm_to_remove': '确定要删除吗？',
       'no_date': '没有日期',
       'verify_code': '验证码',
       'default_locale': '默认语言',
@@ -96,7 +96,9 @@ export default {
       'common_tip_03': '输入\'～\'开头的内容以搜索任务',
       'mail_failure': '邮件发送失败，请检查电子邮件是否工作正常。',
       'signup_ok': '注册成功。',
-      'verify_email': '您收到的验证码是 {code}， 请不要告诉其他人。'
+      'verify_email': '您收到的验证码是 {code}， 请不要告诉其他人。',
+      'confirm_to_remove': '确定要删除吗？',
+      'confirm_to_exit': '确定要退出吗？'
     }
   }
 }

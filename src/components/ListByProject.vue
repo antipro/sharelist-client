@@ -141,7 +141,7 @@ export default {
       this.$router.push({ name: 'project', params: project })
     },
     removeProject (pid) {
-      let bool = confirm(this.$t('ui.confirm_to_remove'))
+      let bool = confirm(this.$t('message.confirm_to_remove'))
       if (!bool) {
         return
       }

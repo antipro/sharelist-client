@@ -182,6 +182,10 @@ new Vue({
       this.$router.replace('/login')
     },
     exit () {
+      let bool = confirm(this.$t('message.confirm_to_exit'))
+      if (!bool) {
+        return
+      }
       switch (this.runtime) {
         case 'electron':
           window.close()

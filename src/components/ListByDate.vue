@@ -97,7 +97,7 @@ export default {
       if (this.activeNotifyDate !== null && $('.list-group-item-info[data-date="' + this.activeNotifyDate + '"]').length !== 0) {
         $('.list-group-item-info[data-date="' + this.activeNotifyDate + '"]').click()
       } else {
-        $('.list-group-item-info:first').click()
+        $('.list-group-item-info:last').click()
       }
       touch.on('.list-group-item:not(.list-group-item-info)', 'hold', function (evt) {
         let _self = $('.drawer-right', evt.currentTarget)
@@ -127,7 +127,6 @@ export default {
       })
     },
     activeDate (date, $evt) {
-      console.log(date)
       this.activeNotifyDate = date.notify_date
       this.$emit('changegroup', date.notify_date)
     },
@@ -163,10 +162,6 @@ export default {
   computed: {
     dates () {
       let dates = []
-      dates.push({
-        notify_date: null,
-        tasks: []
-      })
       this.$store.state.tasks.forEach(task => {
         let date = dates.find(date => {
           return date.notify_date === task.notify_date

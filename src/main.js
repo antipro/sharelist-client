@@ -191,6 +191,7 @@ new Vue({
       this.email = ''
       this.uid = ''
       this.$store.commit('clear')
+      sessionStorage.clear()
       this.$router.replace('/login')
     },
     exit () {

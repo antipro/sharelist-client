@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     groupchanged (gname) {
-      this.active_gname = gname
+      this.active_gname = gname === '' ? this.$t('ui.ungrouped') : gname
     },
     add () {
       let content = this.content.trim()

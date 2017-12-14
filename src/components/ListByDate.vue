@@ -13,8 +13,8 @@
             <p class="lead wrap" @click="expandContent" @dblclick="editTask(task, $event)">
               {{ task.content }}
             </p>
-            <small v-if="task.pname" class="text-muted">{{ task.pname }}</small>
-            <small v-else class="text-muted">{{ $t('ui.no_date') }}</small>
+            <small v-if="task.pname" class="text-muted">{{ task.pname }} {{ task.notify_time }}</small>
+            <small v-else class="text-muted">{{ $t('ui.ungrouped') }} {{ task.notify_time }}</small>
             <div v-if="$root.runtime!=='cordova'" class="pull-right" style="visibility: hidden">
               <div class="btn-group btn-group-xs" role="group" aria-label="...">
                 <button type="button" class="btn btn-default" @click="editTask(task, $event)">
@@ -127,6 +127,7 @@ export default {
       })
     },
     activeDate (date, $evt) {
+      console.log(date)
       this.activeNotifyDate = date.notify_date
       this.$emit('changegroup', date.notify_date)
     },

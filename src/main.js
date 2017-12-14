@@ -47,7 +47,6 @@ new Vue({
   persist: ['uid', 'email', 'uname', 'token', 'locale'],
   components: { App },
   created () {
-    console.log('root created', this.locale)
     if (this.locale === '') {
       this.locale = navigator.language
     }

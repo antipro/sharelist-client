@@ -71,12 +71,6 @@ new Vue({
             history.back()
           }
         }, false)
-        document.addEventListener('pause', evt => {
-          console.log('pause', evt)
-        }, false)
-        document.addEventListener('resume', evt => {
-          console.log('resume', evt)
-        }, false)
       }, false)
     })
   },

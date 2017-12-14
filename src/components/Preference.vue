@@ -26,10 +26,8 @@
           <div class="form-group has-feedback" :class="{ 'has-error': uname==='' }">
             <label for="locale">{{ $t('ui.username') }}</label>
             <div class="input-group">
-              <div class="input-group">
-                <input type="text" class="form-control input-lg" maxlength="50" v-model="uname" @keyup.enter="saveName">
-                <span v-show="uname===''" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-              </div>
+              <input type="text" class="form-control input-lg" maxlength="50" v-model="uname" @keyup.enter="saveName">
+              <span v-show="uname===''" class="glyphicon glyphicon-warning-sign form-control-feedback" style="right: 52px;" aria-hidden="true"></span>
               <span class="input-group-addon" style="padding: 6px 18px;">
                 <span class="glyphicon glyphicon-floppy-save" @click="saveName"></span>
               </span>

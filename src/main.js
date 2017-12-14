@@ -60,6 +60,25 @@ new Vue({
     }
     $.getScript('cordova.js').done(() => {
       this.runtime = 'cordova'
+      document.addEventListener('deviceready', () => {
+        document.addEventListener('backbutton', evt => {
+          if (location.href.indexOf('list') > -1) {
+            navigator.Backbutton.goHome(function () {
+              console.log('go home success')
+            }, function () {
+              console.log('go home fail')
+            })
+          } else {
+            history.back()
+          }
+        }, false)
+        document.addEventListener('pause', evt => {
+          console.log('pause', evt)
+        }, false)
+        document.addEventListener('resume', evt => {
+          console.log('resume', evt)
+        }, false)
+      }, false)
     })
   },
   methods: {

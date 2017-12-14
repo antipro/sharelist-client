@@ -127,7 +127,7 @@ export default {
         show: false
       })
       $('#task_date').datepicker({
-        language: navigator.language,
+        language: this.$root.locale,
         format: 'yyyy-mm-dd',
         todayHighlight: true,
         todayBtn: true

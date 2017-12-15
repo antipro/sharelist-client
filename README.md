@@ -37,3 +37,7 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
+## Preview
+![Desktop](http://onmdsye1w.bkt.clouddn.com/sharelist-electron.png)
+![Android](http://onmdsye1w.bkt.clouddn.com/sharelist-cordova1.png)
+![Android](http://onmdsye1w.bkt.clouddn.com/sharelist-cordova2.png)

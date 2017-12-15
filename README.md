@@ -38,6 +38,12 @@ npm run build
 npm run build --report
 ```
 ## Preview
+### Desktop(Deepin Linux)
+
 ![Desktop](http://onmdsye1w.bkt.clouddn.com/sharelist-electron.png)
+
+### Mobile(Android)
+
 ![Android](http://onmdsye1w.bkt.clouddn.com/sharelist-cordova1.png)
+
 ![Android](http://onmdsye1w.bkt.clouddn.com/sharelist-cordova2.png)

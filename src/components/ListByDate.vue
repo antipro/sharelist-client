@@ -121,7 +121,7 @@ export default {
         $item.css({ display: 'none' })
       })
       this.$parent.shownotice(() => {
-        this.$root.removeTask(task.id, task.pid)
+        this.$root.removeTask(task.id, task.pid, task.content)
       }, () => {
         $item.css({ display: 'block' })
       })

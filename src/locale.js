@@ -47,7 +47,16 @@ export default {
       'signup_ok': 'Sign Up Success.',
       'verify_email': 'The Verification Code you received is {code}, Please Do not Tell anybody else.',
       'confirm_to_remove': 'Remove?',
-      'confirm_to_exit': 'Exit?'
+      'confirm_to_exit': 'Exit?',
+      'task_updated_by_other': 'Task updated by {0}',
+      'task_added_by_other': 'New task added by {0}',
+      'task_removed_by_other': 'Task removed by {0}',
+      'task_finished_by_other': 'Task finished by {0}',
+      'task_resumed_by_other': 'Task resumed by {0}',
+      'project_shared': '{0} shares project with you',
+      'project_unshared': '{0} unshares project with you',
+      'project_updated_by_other': 'Project updated by {0}',
+      'project_removed_by_other': 'Project removed by {0}'
     }
   },
   'zh-CN': {
@@ -98,7 +107,16 @@ export default {
       'signup_ok': '注册成功。',
       'verify_email': '您收到的验证码是 {code}， 请不要告诉其他人。',
       'confirm_to_remove': '确定要删除吗？',
-      'confirm_to_exit': '确定要退出吗？'
+      'confirm_to_exit': '确定要退出吗？',
+      'task_updated_by_other': '任务被 {0} 更新了。',
+      'task_added_by_other': '{0} 添加了新任务',
+      'task_removed_by_other': '{0} 移除了任务',
+      'task_finished_by_other': '{0} 完成了任务',
+      'task_resumed_by_other': '{0} 恢复了任务',
+      'project_shared': '{0} 和您分享了项目',
+      'project_unshared': '{0} 取消了和您的分享',
+      'project_updated_by_other': '项目被 {0} 更新了',
+      'project_removed_by_other': '{0} 移除了项目'
     }
   }
 }

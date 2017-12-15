@@ -9,7 +9,7 @@
             <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
               <span class="glyphicon glyphicon-pencil" ></span>
             </button>
-            <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="removeProject(project.id, $event)">
+            <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="removeProject(project, $event)">
               <span class="glyphicon glyphicon-trash" ></span>
             </button>
           </div>
@@ -18,7 +18,7 @@
           <button type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
             <span class="glyphicon glyphicon-pencil"></span>
           </button>
-          <button type="button" class="btn btn-default" @click.stop="removeProject(project.id, $event)">
+          <button type="button" class="btn btn-default" @click.stop="removeProject(project, $event)">
             <span class="glyphicon glyphicon-trash"></span>
           </button>
         </div>
@@ -140,12 +140,12 @@ export default {
       }
       this.$router.push({ name: 'project', params: project })
     },
-    removeProject (pid) {
+    removeProject (project) {
       let bool = confirm(this.$t('message.confirm_to_remove'))
       if (!bool) {
         return
       }
-      this.$root.removeProject(pid)
+      this.$root.removeProject(project.id, project.name)
     },
     editTask (task, evt) {
       this.$router.push({ name: 'task', params: task })
@@ -159,7 +159,7 @@ export default {
         $item.css({ display: 'none' })
       })
       this.$parent.shownotice(() => {
-        this.$root.removeTask(task.id, task.pid)
+        this.$root.removeTask(task.id, task.pid, task.content)
       }, () => {
         $item.css({ display: 'block' })
       })

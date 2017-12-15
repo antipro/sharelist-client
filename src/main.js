@@ -93,15 +93,17 @@ new Vue({
         pid
       })
     },
-    removeProject (pid) {
+    removeProject (pid, pname) {
       this.$socket.emit('removeproject', {
-        pid
+        pid,
+        pname
       })
     },
-    removeTask (id, pid) {
+    removeTask (id, pid, content) {
       this.$socket.emit('removetask', {
         id,
-        pid
+        pid,
+        content
       })
     },
     updateProject (pid, pname, shares) {
@@ -123,13 +125,35 @@ new Vue({
     updatePreference (preference) {
       this.$socket.emit('updatepreference', preference)
     },
+    showMessage (title, content) {
+      switch (this.runtime) {
+        case 'browser':
+          alert(title + '\n' + content)
+          break
+        case 'electron':
+          new Notification(title, {
+            icon: 'static/tray.png',
+            body: content
+          })
+          break
+        case 'cordova':
+          window.cordova.plugins.notification.local.schedule({
+            title,
+            text: content
+          })
+          break
+        default:
+          console.log('unknown environment')
+      }
+    },
     showNotification (task) {
       switch (this.runtime) {
         case 'browser':
           alert(task.content)
           break
         case 'electron':
-          new Notification('Sharelist', {
+          let title = task.pname ? task.pname : this.$t('ui.ungrouped')
+          new Notification(title, {
             icon: 'static/tray.png',
             body: task.content
           })
@@ -163,9 +187,10 @@ new Vue({
       if (futureTime < currentTime) {
         return
       }
+      let title = task.pname === '' ? this.$t('ui.ungrouped') : task.pname
       window.cordova.plugins.notification.local.schedule({
         id: task.id,
-        title: this.$t('ui.app_name'),
+        title,
         text: task.content,
         at: new Date(futureTime)
       })

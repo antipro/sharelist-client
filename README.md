@@ -45,5 +45,4 @@ npm run build --report
 ### Mobile(Android)
 
 ![Android](http://onmdsye1w.bkt.clouddn.com/sharelist-cordova1.png)
-
 ![Android](http://onmdsye1w.bkt.clouddn.com/sharelist-cordova2.png)

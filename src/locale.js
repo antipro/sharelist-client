@@ -28,6 +28,7 @@ export default {
       'no_date': 'No Date',
       'verify_code': 'Verify Code',
       'default_locale': 'Default Language',
+      'today': '(Today)',
       'ungrouped': 'Ungrouped'
     },
     message: {
@@ -90,6 +91,7 @@ export default {
       'no_date': '没有日期',
       'verify_code': '验证码',
       'default_locale': '默认语言',
+      'today': '（今天）',
       'ungrouped': '未分组'
     },
     message: {

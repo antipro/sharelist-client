@@ -31,7 +31,7 @@
             <p class="lead wrap" @click="expandContent" @dblclick="editTask(task, $event)">
               {{ task.content }}
             </p>
-            <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ task.notify_time }}</small>
+            <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ today(task.notify_date) }} {{ task.notify_time }}</small>
             <small v-else class="text-muted">{{ $t('ui.no_date') }}</small>
             <div v-if="$root.runtime!=='cordova'" class="pull-right" style="visibility: hidden">
               <div class="btn-group btn-group-xs" role="group" aria-label="...">
@@ -195,6 +195,14 @@ export default {
         return true
       } else {
         return false
+      }
+    },
+    today (notifyDate) {
+      notifyDate = new Date(Date.parse(notifyDate))
+      console.log(notifyDate)
+      let today = new Date()
+      if (notifyDate.getFullYear() === today.getFullYear() && notifyDate.getMonth() === today.getMonth() && notifyDate.getDate() === today.getDate()) {
+        return this.$t('ui.today')
       }
     }
   },

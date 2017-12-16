@@ -3,7 +3,8 @@
     <template v-for="date in dates">
       <div class="list-group-item list-group-item-info" v-bind:key="date.notify_date" v-bind:data-name="date.notify_date" v-bind:data-date="date.notify_date"
         @click="activeDate(date, $event)">
-        <span v-show="activeNotifyDate === date.notify_date" class="glyphicon glyphicon-ok-circle"></span> {{ date.notify_date===null?$t('ui.ungrouped'):date.notify_date }}
+        <span v-show="activeNotifyDate === date.notify_date" class="glyphicon glyphicon-ok-circle"></span> 
+        {{ date.notify_date===null?$t('ui.ungrouped'):date.notify_date }} {{ today(date.notify_date) }}
       </div>
       <transition-group name="slide-fade" v-bind:key="date.notify_date">
         <div class="list-group-item" v-for="task in date.tasks" v-show="search(task)" v-bind:key="task.id" @click="activeTask(task, $event)">
@@ -156,6 +157,14 @@ export default {
         return true
       } else {
         return false
+      }
+    },
+    today (notifyDate) {
+      notifyDate = new Date(Date.parse(notifyDate))
+      console.log(notifyDate)
+      let today = new Date()
+      if (notifyDate.getFullYear() === today.getFullYear() && notifyDate.getMonth() === today.getMonth() && notifyDate.getDate() === today.getDate()) {
+        return this.$t('ui.today')
       }
     }
   },

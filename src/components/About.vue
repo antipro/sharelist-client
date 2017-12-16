@@ -14,8 +14,10 @@
           </p>
           <h4>Author</h4>
           <strong>antipro</strong><br/>
+          <strong>Mailbox</strong><br>
           <a href="mailto:antipro@163.com">antipro@163.com</a><br/>
-          <a href="https://gitee.com/antipro/events">Homepage</a>
+          <strong>Homepage</strong><br>
+          <a href="https://gitee.com/antipro">https://gitee.com/antipro</a>
           <h4>FAQ</h4>
           <dl>
             <dt>Software License</dt>

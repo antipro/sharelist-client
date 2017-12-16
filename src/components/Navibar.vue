@@ -8,7 +8,7 @@
         </a>
       </slot>
       <div class="side-modal" @click="close">
-        <div class="side-action" style="text-align: left; background: #ffffff url('static/snow.jpeg')">
+        <div class="side-action" style="text-align: left; background: #ffffff url('static/background.jpg')">
           <div class="row" style="margin-bottom: 50px;">
             <div class="col-xs-12" style="text-align: center;">
               <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">

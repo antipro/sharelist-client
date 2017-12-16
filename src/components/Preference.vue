@@ -1,6 +1,9 @@
 <template>
   <div class="preference">
     <navibar ref="nav" :navtitle="$t('ui.preference')" :email="$root.email" :uname="$root.uname">
+      <a slot="header" class="navbar-brand navbar-menu" href="#" @click="back">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+      </a>
     </navibar>
     <div class="container-fluid" style="margin-top: 20px;">
       <div class="row">

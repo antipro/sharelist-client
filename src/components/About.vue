@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <navibar ref="nav" :navtitle="$t('ui.about')" :email="$root.email" :uname="$root.uname">
-      <a slot="header" class="navbar-brand" href="#" @click="back">
+      <a slot="header" class="navbar-brand navbar-menu" href="#" @click="back">
         <span class="glyphicon glyphicon-arrow-left"></span>
       </a>
     </navibar>

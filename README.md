@@ -13,7 +13,7 @@
 
 ## Preparation
 
-create config/server.js, like below:
+create ./config/server.js, like below:
 ``` javascript
 'use strict'
 module.exports = {

@@ -13,12 +13,12 @@
 
 ## Preparation
 
-create config/server.js, like this:
+create config/server.js, like below:
 ``` javascript
 'use strict'
 module.exports = {
-  dev: '"127.0.0.1:3000"',
-  prod: '"172.104.112.9:3000"'
+  dev: '"IP:PORT"',
+  prod: '"IP:PORT"'
 }
 ```
 

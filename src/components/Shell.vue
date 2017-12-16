@@ -67,6 +67,7 @@ export default {
       content: '',
       placeholder: '',
       timeout_ptr: null,
+      interval_ptr: null,
       forward: null,
       back: null,
       defaultChild: null
@@ -82,16 +83,21 @@ export default {
       this.defaultChild = 'projectlist'
     }
     this.$router.replace({ name: this.defaultChild })
-    let iter = 1
-    setInterval(() => {
+    let iter = this.tips()
+    this.interval_ptr = setInterval(() => {
       if (this.content !== '') {
         return
       }
-      this.placeholder = this.$root.$t('message.common_tip_0' + iter++)
-      if (iter === 3) {
-        iter = 1
+      let next = iter.next()
+      if (next.done) {
+        iter = this.tips()
+        next = iter.next()
       }
+      this.placeholder = next.value
     }, 5000)
+  },
+  beforeDestroy () {
+    clearInterval(this.interval_ptr)
   },
   beforeRouteUpdate (to, from, next) {
     if (['projectlist', 'datelist'].indexOf(to.name) > -1) {
@@ -153,6 +159,14 @@ export default {
       this.$root.refresh(() => {
         $('span.glyphicon-refresh').css('animation-name', '')
       })
+    },
+    * tips () {
+      yield this.$t('message.common_tip_01')
+      yield this.$t('message.common_tip_02')
+      yield this.$t('message.common_tip_03')
+      if (this.$root.runtime === 'cordova') {
+        yield this.$t('message.cordova_tip_01')
+      }
     },
     detect (evt) {
       let elements = document.querySelectorAll('.list-group-item-info')

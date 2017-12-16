@@ -186,12 +186,12 @@ export default {
       $('.pull-right', evt.target).css('visibility', 'hidden')
     },
     search (task) {
-      let term = this.content
+      let term = this.content.toLowerCase()
       if (term === '' || !term.startsWith('~')) {
         return true
       }
       term = term.substr(1)
-      if (task.content.indexOf(term) > -1) {
+      if (task.content.toLowerCase().indexOf(term) > -1) {
         return true
       } else {
         return false

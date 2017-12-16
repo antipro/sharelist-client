@@ -10,6 +10,7 @@ import Task from '@/components/Task'
 import Preference from '@/components/Preference'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
+import About from '@/components/About'
 
 Vue.use(Router)
 
@@ -55,6 +56,11 @@ export default new Router({
       name: 'signup',
       path: '/signup',
       component: Signup
+    },
+    {
+      name: 'about',
+      path: '/about',
+      component: About
     }
   ]
 })

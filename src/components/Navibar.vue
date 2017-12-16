@@ -25,6 +25,9 @@
             <router-link class="list-group-item" :to="{ name: 'preference' }">
               <span class="glyphicon glyphicon-cog"></span> {{ $t('ui.preference') }}
             </router-link>
+            <router-link class="list-group-item" :to="{ name: 'about' }">
+              <span class="glyphicon glyphicon-info-sign"></span> {{ $t('ui.about') }}
+            </router-link>
             <button type="button" class="list-group-item" @click="$root.logout">
               <span class="glyphicon glyphicon-log-out"></span> {{ $t('ui.logout') }}
             </button>

@@ -13,6 +13,8 @@
 
 ## Preparation
 
+start server according to guide of [sharelist-server](https://gitee.com/antipro/sharelist-server)
+
 create ./config/server.js, like below:
 ``` javascript
 'use strict'

@@ -138,6 +138,8 @@ new Vue({
           break
         case 'cordova':
           window.cordova.plugins.notification.local.schedule({
+            icon: 'res://icon',
+            smallIcon: 'res://icon',
             title,
             text: content
           })
@@ -154,7 +156,6 @@ new Vue({
         case 'electron':
           let title = task.pname ? task.pname : this.$t('ui.ungrouped')
           new Notification(title, {
-            icon: 'static/tray.png',
             body: task.content
           })
           break
@@ -189,6 +190,8 @@ new Vue({
       }
       let title = task.pname === '' ? this.$t('ui.ungrouped') : task.pname
       window.cordova.plugins.notification.local.schedule({
+        icon: 'res://icon',
+        smallIcon: 'res://icon',
         id: task.id,
         title,
         text: task.content,

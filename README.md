@@ -2,6 +2,22 @@
 
 > A todo list application with share function accross email address.
 
+## Features
+
+* group tasks by project or date
+* multi-platfrom
+  * Android
+  * iOS(theoretically)
+  * Linux
+  * Windows(theoretically)
+  * Mac(theoretically)
+* use email address to share list with other people email
+* schedule and receive notification both on mobile and desktop
+* receive notification when other people change tasks and projects
+* support language
+ * en
+ * zh_CN
+
 ## Related Project
 
 * [sharelist-server](https://gitee.com/antipro/sharelist-server)

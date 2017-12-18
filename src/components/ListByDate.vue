@@ -161,7 +161,6 @@ export default {
     },
     today (notifyDate) {
       notifyDate = new Date(Date.parse(notifyDate))
-      console.log(notifyDate)
       let today = new Date()
       if (notifyDate.getFullYear() === today.getFullYear() && notifyDate.getMonth() === today.getMonth() && notifyDate.getDate() === today.getDate()) {
         return this.$t('ui.today')

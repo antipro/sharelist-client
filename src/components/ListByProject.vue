@@ -28,9 +28,7 @@
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
           <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
-            <p class="lead wrap" @click="expandContent" @dblclick="editTask(task, $event)">
-              {{ task.content }}
-            </p>
+            <pre class="lead wrap" @click="expandContent">{{ task.content }}</pre>
             <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ today(task.notify_date) }} {{ task.notify_time }}</small>
             <small v-else class="text-muted">{{ $t('ui.no_date') }}</small>
             <div v-if="$root.runtime!=='cordova'" class="pull-right" style="visibility: hidden">
@@ -71,8 +69,8 @@ div.drawer-right .btn { flex-grow: 1; }
 div.drawer-right span.glyphicon-pencil { color: #7ed321; }
 div.drawer-right span.glyphicon-trash { color: red; }
 
-p.lead { margin-bottom: 0px; overflow: hidden; font-weight: 400; }
-p.wrap { white-space: nowrap; text-overflow: ellipsis; }
+pre.lead { white-space: pre-wrap; margin-bottom: 0px; overflow: hidden; font-weight: 400; background-color: transparent; border: none; padding: 0; font-family: inherit; }
+pre.wrap { white-space: nowrap; text-overflow: ellipsis; }
 
 .slide-fade-enter-active {
   transition: all .3s ease;
@@ -131,7 +129,7 @@ export default {
       })
     },
     expandContent (evt) {
-      $('p.lead').not(evt.currentTarget).addClass('wrap')
+      $('pre.lead').not(evt.currentTarget).addClass('wrap')
       $(evt.currentTarget).toggleClass('wrap')
     },
     editProject (project, evt) {

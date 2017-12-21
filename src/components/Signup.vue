@@ -41,10 +41,10 @@
                   <input type="text" class="form-control" v-model="verifyCode">
                   <span v-show="isError" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
                 </div>
+                <p class="help-block">{{ $t('message.verifycode_guide') }}</p>
               </div>
               <div v-show="isInProgress" class="progress">
-                <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%">
-                </div>
+                <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
               </div>
               <button v-show="!mailSended" type="button" @click="next" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.next') }}</button>
               <button v-show="mailSended" type="button" @click="signup" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.signup') }}</button>

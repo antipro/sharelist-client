@@ -59,7 +59,8 @@ export default {
       'project_shared': '{0} shares project with you',
       'project_unshared': '{0} unshares project with you',
       'project_updated_by_other': 'Project updated by {0}',
-      'project_removed_by_other': 'Project removed by {0}'
+      'project_removed_by_other': 'Project removed by {0}',
+      'verifycode_guide': 'We have sent a message with a verification code to your mailbox. please open the mailbox and copy the received verification code here.'
     }
   },
   'zh-CN': {
@@ -122,7 +123,8 @@ export default {
       'project_shared': '{0} 和您分享了项目',
       'project_unshared': '{0} 取消了和您的分享',
       'project_updated_by_other': '项目被 {0} 更新了',
-      'project_removed_by_other': '{0} 移除了项目'
+      'project_removed_by_other': '{0} 移除了项目',
+      'verifycode_guide': '我们已经向您的邮箱发送了一封带有验证码的邮件，请打开邮箱并将接收到的验证码复制到此处。'
     }
   }
 }

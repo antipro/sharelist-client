@@ -6,6 +6,9 @@
         <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">
+              <span class="glyphicon glyphicon-arrow-up" ></span>
+            </button>
             <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
               <span class="glyphicon glyphicon-pencil" ></span>
             </button>
@@ -15,6 +18,9 @@
           </div>
         </div>
         <div v-if="$root.runtime==='cordova' && project.uid===$root.uid && project.editable==='Y'" class="drawer-right btn-group">
+          <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">
+            <span class="glyphicon glyphicon-arrow-up" ></span>
+          </button>
           <button type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
             <span class="glyphicon glyphicon-pencil"></span>
           </button>
@@ -96,7 +102,8 @@ export default {
   props: [ 'content' ],
   data () {
     return {
-      activePid: 0
+      activePid: 0,
+      topPid: 0
     }
   },
   created () {
@@ -177,6 +184,9 @@ export default {
         notify_date: null
       })
     },
+    setTop (pid) {
+      this.topPid = pid
+    },
     mousein (evt) {
       $('.pull-right', evt.target).css('visibility', '')
     },
@@ -236,6 +246,13 @@ export default {
         })
       })
       this.$store.state.projects.sort((a, b) => {
+        console.log(this.topPid)
+        if (a.id === this.topPid) {
+          return 1
+        }
+        if (b.id === this.topPid) {
+          return 1
+        }
         return a.id > b.id
       })
       return this.$store.state.projects

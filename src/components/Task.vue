@@ -36,6 +36,15 @@
           </div>
         </div>
       </div>
+      <div v-if="$root.runtime === 'cordova'" class="row">
+        <div class="col-xs-12">
+          <div v-show="isInProgress" class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
+          </div>
+          <record ref="record" @getContent="contentGet" @recognizing="isInProgress = true" @recognized="isInProgress = false"></record>
+          <button v-show="isInProgress === false" class="btn btn-primary btn-lg btn-block" @click="startRecord"><span class="glyphicon glyphicon-record"></span> {{ $t('ui.speech_recognition') }}</button>
+        </div>
+      </div>
     </div>
     
     <div class="modal fade" id="date_modal" @click="hideDateDlg">
@@ -74,6 +83,7 @@ textarea { resize: none; }
 
 <script>
 import Navibar from '@/components/Navibar'
+import Record from '@/components/Record'
 import $ from 'jquery'
 import 'bootstrap/dist/js/bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -92,7 +102,9 @@ export default {
       content: null,
       gname: '',
       notify_date: '',
-      notify_time: ''
+      notify_time: '',
+      mediaRecorder: null,
+      isInProgress: false
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -186,10 +198,16 @@ export default {
     },
     hideTimeDlg () {
       $('#time_modal').modal('hide')
+    },
+    startRecord () {
+      this.$refs.record.startRecord()
+    },
+    contentGet (text) {
+      this.content += text
     }
   },
   components: {
-    Navibar
+    Navibar, Record
   }
 }
 </script>

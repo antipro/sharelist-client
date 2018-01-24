@@ -9,6 +9,7 @@ export default {
       'login': 'Login',
       'logout': 'Logout',
       'exit': 'Exit',
+      'finish_recording': 'Finish Recording',
       'operation_finished': 'Operation Finished',
       'operation_restore': 'Restore',
       'hidden_on_startup': 'Hidden On Startup',
@@ -29,7 +30,10 @@ export default {
       'verify_code': 'Verify Code',
       'default_locale': 'Default Language',
       'today': '(Today)',
-      'ungrouped': 'Ungrouped'
+      'ungrouped': 'Ungrouped',
+      'candidate': 'Candidate',
+      'recording': 'Recording...',
+      'speech_recognition': 'Speech Recognition'
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
@@ -60,7 +64,8 @@ export default {
       'project_unshared': '{0} unshares project with you',
       'project_updated_by_other': 'Project updated by {0}',
       'project_removed_by_other': 'Project removed by {0}',
-      'verifycode_guide': 'We have sent a message with a verification code to your mailbox. please open the mailbox and copy the received verification code here.'
+      'verifycode_guide': 'We have sent a message with a verification code to your mailbox. please open the mailbox and copy the received verification code here.',
+      'speech_recognition': '语音识别'
     }
   },
   'zh-CN': {
@@ -73,6 +78,7 @@ export default {
       'login': '登录',
       'logout': '登出',
       'exit': '退出',
+      'finish_recording': '结束录音',
       'operation_finished': '操作完成',
       'operation_restore': '撤销',
       'hidden_on_startup': '启动时隐藏',
@@ -93,7 +99,9 @@ export default {
       'verify_code': '验证码',
       'default_locale': '默认语言',
       'today': '（今天）',
-      'ungrouped': '未分组'
+      'ungrouped': '未分组',
+      'candidate': '候选',
+      'recording': '正在录音...'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',

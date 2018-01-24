@@ -64,8 +64,7 @@ export default {
       'project_unshared': '{0} unshares project with you',
       'project_updated_by_other': 'Project updated by {0}',
       'project_removed_by_other': 'Project removed by {0}',
-      'verifycode_guide': 'We have sent a message with a verification code to your mailbox. please open the mailbox and copy the received verification code here.',
-      'speech_recognition': '语音识别'
+      'verifycode_guide': 'We have sent a message with a verification code to your mailbox. please open the mailbox and copy the received verification code here.'
     }
   },
   'zh-CN': {
@@ -101,7 +100,8 @@ export default {
       'today': '（今天）',
       'ungrouped': '未分组',
       'candidate': '候选',
-      'recording': '正在录音...'
+      'recording': '正在录音...',
+      'speech_recognition': '语音识别'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',

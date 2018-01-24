@@ -121,7 +121,7 @@ export default {
         this.$emit('recognizing')
         axios({
           method: 'post',
-          url: 'http://vop.baidu.com/server_api?lan=' + lan + 'cuid=' + cuid + '&token=24.7fd075ee583a8021ebe4930893b59b03.2592000.1518941300.282335-10716330',
+          url: 'http://vop.baidu.com/server_api?lan=' + lan + '&cuid=' + cuid + '&token=24.7fd075ee583a8021ebe4930893b59b03.2592000.1518941300.282335-10716330',
           headers: {
             'Content-Type': 'audio/amr; rate=8000'
           },

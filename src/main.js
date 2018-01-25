@@ -24,7 +24,7 @@ Vue.use(VueI18n)
 Vue.use(VuePersist)
 Vue.config.productionTip = false
 Vue.config.errorHandler = (err, vm, info) => {
-  console.error('Error Handler: ', err)
+  console.error('Error Handler: ', err, vm, info)
 }
 
 const i18n = new VueI18n({

@@ -3,7 +3,7 @@
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
         @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
-        <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.id }}|{{ project.name===''?$t('ui.ungrouped'):project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
+        <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">
@@ -216,15 +216,23 @@ export default {
   },
   computed: {
     projects () {
-      this.$store.state.projects.forEach((project) => {
-        project.tasks = []
+      let projects = this.$store.state.projects.map((project) => {
+        let projectProxy = {}
+        Object.keys(project).forEach(key => {
+          projectProxy[key] = project[key]
+        })
+        projectProxy.tasks = []
         this.$store.state.tasks.forEach((task) => {
-          if (task.pid === project.id) {
-            task.gname = project.name
-            project.tasks.push(task)
+          if (task.pid === projectProxy.id) {
+            let taskProxy = {}
+            Object.keys(task).forEach(key => {
+              taskProxy[key] = task[key]
+            })
+            taskProxy.gname = projectProxy.name
+            projectProxy.tasks.push(taskProxy)
           }
         })
-        project.tasks.sort((a, b) => {
+        projectProxy.tasks.sort((a, b) => {
           if (a.state < b.state) {
             return -1
           }
@@ -245,17 +253,19 @@ export default {
             return aTime - bTime
           }
         })
+        return projectProxy
       })
-      this.$store.state.projects.sort((a, b) => {
-        if (a.id === this.topPid) {
+      let topPid = this.topPid
+      projects.sort((a, b) => {
+        if (a.id === topPid) { // a should smaller/negative
           return -1
         }
-        if (b.id === this.topPid) {
+        if (b.id === topPid) { // b should smaller/positive
           return 1
         }
-        return a.id - b.id
+        return a.id - b.id // no top project/compare them
       })
-      return this.$store.state.projects
+      return projects
     }
   },
   watch: {

@@ -179,7 +179,11 @@ export default {
           }
           dates.push(date)
         }
-        date.tasks.push(task)
+        let taskProxy = {}
+        Object.keys(task).forEach(key => {
+          taskProxy[key] = task[key]
+        })
+        date.tasks.push(taskProxy)
       })
       dates.forEach(date => {
         date.tasks.sort((a, b) => {

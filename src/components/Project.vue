@@ -73,7 +73,6 @@ export default {
     }
     this.pid = this.$route.params.id
     this.pname = this.$route.params.name
-
     this.$axios.get('/shares/' + this.pid, {
       headers: {
         TOKEN: this.$root.token

@@ -29,7 +29,7 @@
           </button>
         </div>
       </div> <!-- /.list-group-item-info  -->
-      <transition-group name="slide-fade" v-bind:key="project.id">
+      <transition-group name="slide-fade" v-bind:key="project.id + '_slide'">
         <div class="list-group-item" v-for="task in project.tasks" v-show="search(task)" v-bind:key="task.id" @click="activeTask(task, $event)">
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
@@ -185,7 +185,6 @@ export default {
       })
     },
     setTop (pid) {
-      console.log('seted')
       this.topPid = pid
     },
     mousein (evt) {

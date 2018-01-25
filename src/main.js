@@ -14,6 +14,7 @@ import axios from 'axios'
 import './backports'
 import initSocket from './socket'
 import store from './store'
+import fundebug from 'fundebug-javascript'
 
 Vue.prototype.$axios = axios.create({
   baseURL: `${SERVER_URL}/api/`,
@@ -23,10 +24,27 @@ Vue.prototype.$axios = axios.create({
 Vue.use(VueI18n)
 Vue.use(VuePersist)
 Vue.config.productionTip = false
-Vue.config.errorHandler = (err, vm, info) => {
-  console.error('Error Handler: ', err, vm, info)
+fundebug.apikey = '7cdad64bb66764b020b49afe0887c080f6307ba789cd9911ffb1926ba5751b4a'
+function formatComponentName (vm) {
+  if (vm.$root === vm) {
+    return 'root'
+  }
+  var name = vm._isVue ? (vm.$options && vm.$options.name) || (vm.$options && vm.$options._componentTag) : vm.name
+  return (name ? 'component <' + name + '>' : 'anonymous component') + (vm._isVue && vm.$options && vm.$options.__file ? ' at ' + (vm.$options && vm.$options.__file) : '')
 }
 
+Vue.config.errorHandler = function (err, vm, info) {
+  var componentName = formatComponentName(vm)
+  var propsData = vm.$options && vm.$options.propsData
+  fundebug.notifyError(err, {
+    metaData: {
+      runtime: vm.$root.runtime,
+      componentName: componentName,
+      propsData: propsData,
+      info: info
+    }
+  })
+}
 const i18n = new VueI18n({
   locale: 'en',
   messages: translation,

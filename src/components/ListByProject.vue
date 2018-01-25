@@ -3,7 +3,7 @@
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
         @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
-        <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
+        <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.id }}|{{ project.name===''?$t('ui.ungrouped'):project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">
@@ -185,6 +185,7 @@ export default {
       })
     },
     setTop (pid) {
+      console.log('seted')
       this.topPid = pid
     },
     mousein (evt) {
@@ -246,14 +247,13 @@ export default {
         })
       })
       this.$store.state.projects.sort((a, b) => {
-        console.log(this.topPid)
         if (a.id === this.topPid) {
-          return 1
+          return -1
         }
         if (b.id === this.topPid) {
           return 1
         }
-        return a.id > b.id
+        return a.id - b.id
       })
       return this.$store.state.projects
     }

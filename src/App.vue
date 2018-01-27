@@ -13,10 +13,12 @@
   -ms-user-select:none;
   user-select:none;
 }
+/* global style */
 div#app { -webkit-app-region: drag; overflow: hidden; height: 100%; position: relative; width: 100vw; }
 div#app .form-control { border-radius: 0; }
 div#app .btn { border-radius: 0; }
 div#app .input-group-addon { border-radius: 0; }
+div#app .list-group-item { border-radius: 0; }
 div#app .list-group-item a { border-radius: 0; }
 </style>
 

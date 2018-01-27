@@ -58,9 +58,9 @@ npm run build --report
 ## Preview
 ### Desktop(Deepin Linux)
 
-![Desktop](http://onmdsye1w.bkt.clouddn.com/sharelist-electron.png)
+![Desktop](http://onmdsye1w.bkt.clouddn.com/sharelist-electron2.png)
 
 ### Mobile(Android)
 
-![Android](http://onmdsye1w.bkt.clouddn.com/sharelist-cordova1.png)
-![Android](http://onmdsye1w.bkt.clouddn.com/sharelist-cordova2.png)
+![Android](http://onmdsye1w.bkt.clouddn.com/sharelist-cordova3.png)
+![Android](http://onmdsye1w.bkt.clouddn.com/sharelist-cordova4.png)

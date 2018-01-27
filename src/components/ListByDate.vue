@@ -44,7 +44,7 @@ div.list-group-item-info { background-color: #beffb2; font-weight: 600; font-siz
 span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; color: #51c4f1; }
 div.content { margin-left: 35px; position: relative; }
 div.pull-right span.glyphicon { margin: 0 5px; }
-div.drawer-right { position: absolute; top: 0; right: 0; bottom: 0; width: 100px; background-color: #F4F4F4; 
+div.drawer-right { position: absolute; top: 0; right: 0; bottom: 0; background-color: #F4F4F4; 
   display: none; }
 div.drawer-right-on { display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: flex-end; }
 div.drawer-right .btn { flex-grow: 1; }

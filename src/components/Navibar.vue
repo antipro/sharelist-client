@@ -9,11 +9,9 @@
       </slot>
       <div class="side-modal" @click="close">
         <div class="side-action" style="text-align: left; background: #ffffff url('static/background.jpg')">
-          <div class="row" style="margin-bottom: 50px;">
-            <div class="col-xs-12" style="text-align: center;">
-              <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">
-              <h3>{{ email }}<br><small>{{ uname }}</small></h3>
-            </div>
+          <div style="margin-bottom: 50px; text-align: center; padding: 0 15px;">
+            <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">
+            <h3>{{ email }}<br><small>{{ uname }}</small></h3>
           </div>
           <div class="list-group">
             <router-link class="list-group-item" :to="{ name: 'projectlist' }" replace>
@@ -56,6 +54,7 @@
 .navbar .navbar-brand:focus { color: #FFF; }
 .side-action { position: absolute; width: 250px; top: 0px; bottom: 0px; left: -250px; background-color: #f9f7f6;
   display: flex; flex-direction: column; justify-content: center; }
+.side-action h3 { word-wrap: break-word; }
 .side-modal { -webkit-app-region: no-drag; overflow: hidden; display: none; z-index: 1050; }
 .side-modal-on { position: fixed;	right: 0px;	left: 0px; top: 0px; bottom: 0px;	display: block; background-color: rgba(52, 52, 52, 0.5); }
 @media screen and (min-width: 800px) {

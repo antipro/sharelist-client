@@ -17,7 +17,7 @@
     <div class="footer">
       <div class="input-group">
         <input type="text" class="form-control input-lg" :placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
-        <span class="input-group-addon" style="padding: 6px 18px;">
+        <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
           <span class="glyphicon glyphicon-edit" @click="add"></span>
         </span>
       </div><!-- /input-group -->
@@ -32,7 +32,6 @@
 }
 .main { position: absolute; top: 50px; bottom: 50px; left: 0px; width: 100%; margin: 0px; overflow-y: auto; }
 .footer { position: absolute; bottom: 0px; left: 0px; height: 50px; width: 100%; padding: 2px 0px; }
-.footer * { border-radius: 0; }
 .footer .input-group { margin: 0 5px; }
 .notice { position: absolute; display: none; top: 0; margin: 0 auto; width: 250px; left: 0; right: 0; z-index: 1050; }
 @keyframes rotate {

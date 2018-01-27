@@ -1,7 +1,7 @@
 <template>
   <div class="list-group">
     <template v-for="project in projects">
-      <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
+      <div class="list-group-item list-group-item-info bg-danger" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
         @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
         <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
@@ -64,7 +64,7 @@
 
 <style scoped>
 div.list-group-item { margin: 0 5px; box-shadow: 3px 3px #F4F4F4 }
-div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); font-weight: 600; font-size: 16px; margin-top: 10px; }
+div.list-group-item-info { background-color: #beffb2; font-weight: 600; font-size: 16px; margin-top: 10px; }
 span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; color: #51c4f1; }
 div.content { margin-left: 35px; position: relative; }
 div.pull-right span.glyphicon { margin: 0 5px; }

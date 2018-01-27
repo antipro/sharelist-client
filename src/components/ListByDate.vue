@@ -40,7 +40,7 @@
 </template>
 <style scoped>
 div.list-group-item { margin: 0 5px; box-shadow: 3px 3px #F4F4F4 }
-div.list-group-item-info { background: linear-gradient(to bottom right, #d9edf7, #FFFFFF); font-weight: 600; font-size: 16px; margin-top: 10px; }
+div.list-group-item-info { background-color: #beffb2; font-weight: 600; font-size: 16px; margin-top: 10px; }
 span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; color: #51c4f1; }
 div.content { margin-left: 35px; position: relative; }
 div.pull-right span.glyphicon { margin: 0 5px; }

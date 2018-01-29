@@ -206,7 +206,7 @@ new Vue({
       }
       // Notify Time (with timezone offset)
       let futureTime = Date.parse(task.notify_date + ' ' +
-          (task.notify_time === null ? this.$store.state.preference.notify_time : task.notify_time) + ':00') + (-3600 * 1000 * (this.$root.timezone - 8))
+          (task.notify_time === null ? this.$store.state.preference.notify_time : task.notify_time) + ':00') + (-3600 * 1000 * (this.timezone - 8))
       let currentTime = Date.now()
       if (futureTime < currentTime) {
         return

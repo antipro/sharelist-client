@@ -26,6 +26,14 @@
               <option value='zh-CN'>简体中文</option>
             </select>
           </div>
+          <div class="form-group">
+            <label for="locale">{{ $t('ui.default_timezone') }}</label>
+            <select v-model="$root.timezone" class="form-control input-lg">
+              <option v-for="n in 12" :key="'+' + n" :value="n - 13">{{ 'UTC' + (n - 13) }}</option>
+              <option value="0">UTC+0</option>
+              <option v-for="n in 13" :key="'-' + n" :value="n">{{ 'UTC+' + n }}</option>
+            </select>
+          </div>
           <div class="form-group has-feedback" :class="{ 'has-error': uname==='' }">
             <label for="locale">{{ $t('ui.username') }}</label>
             <div class="input-group">

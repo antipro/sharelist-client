@@ -112,6 +112,7 @@ export default {
         this.isError = true
         return
       }
+      let timezone = new Date().getTimezoneOffset() / -60
       this.isInProgress = true
       this.$axios.get('/signup', {
         params: {
@@ -119,7 +120,8 @@ export default {
           username: this.username,
           pwd: this.pwd,
           verifycode: this.verifyCode,
-          uuid: this.uuid
+          uuid: this.uuid,
+          timezone
         }
       }).then((response) => {
         this.isInProgress = false

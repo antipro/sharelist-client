@@ -63,9 +63,10 @@ new Vue({
     uname: '',
     token: '',
     runtime: 'browser',
-    locale: ''
+    locale: '',
+    timezone: ''
   },
-  persist: ['uid', 'email', 'uname', 'token', 'locale'],
+  persist: ['uid', 'email', 'uname', 'token', 'locale', 'timezone'],
   components: { App },
   created () {
     if (this.locale === '') {
@@ -279,6 +280,14 @@ new Vue({
       }
       this.updatePreference({
         locale: val
+      })
+    },
+    timezone (val) {
+      if (this.token === '') {
+        return
+      }
+      this.updatePreference({
+        timezone: val
       })
     }
   }

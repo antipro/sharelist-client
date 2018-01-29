@@ -90,6 +90,7 @@ export default {
         this.$root.uid = res.data.uid
         this.$root.uname = res.data.uname
         this.$root.token = res.data.token
+        this.$root.timezone = res.data.timezone
         this.$router.replace('/')
       }).catch((error) => {
         this.isInProgress = false

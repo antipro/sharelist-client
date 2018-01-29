@@ -2,14 +2,14 @@
   <div>
     <nav class="navbar navbar-default">
       <p class="navbar-brand btn-group" role="group" style="float:right;">
-        <select v-model="$root.locale" class="form-control" style="width: auto; float: left;">
+        <select v-model="$root.locale" class="form-control input-lg" style="width: auto; float: left;">
           <option value='en'>English</option>
           <option value='zh-CN'>简体中文</option>
         </select>
-        <router-link class="btn btn-default" :to="{ name: 'login' }" replace>
+        <router-link class="btn btn-lg btn-default" :to="{ name: 'login' }" replace>
           <span class="glyphicon glyphicon-log-in"></span> {{ $t('ui.login') }}
         </router-link>
-        <button v-if="$root.runtime !== 'browser'" type="button" class="btn btn-default" @click="$root.exit">
+        <button v-if="$root.runtime !== 'browser'" type="button" class="btn btn-lg btn-default" @click="$root.exit">
           <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
         </button>
       </p>
@@ -19,23 +19,23 @@
         <div class="login-panel panel panel-default">
           <div class="panel-body">
             <form role="form" @keyup.enter="signup">
-              <div class="form-group has-feedback" :class="emailClassObj">
+              <div class="form-group form-group-lg has-feedback" :class="emailClassObj">
                 <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="text">
                 <span v-if="email && emailValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                 <span v-if="email && !emailValidated" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-lg">
                 <input class="form-control" :placeholder="$t('ui.username')" v-model="username" type="text">
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-lg">
                 <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password">
               </div>
-              <div class="form-group has-feedback" :class="pwdClassObj">
+              <div class="form-group form-group-lg has-feedback" :class="pwdClassObj">
                 <input class="form-control" :placeholder="$t('ui.repwd')" v-model="repwd" type="password">
                 <span v-if="repwd && pwdValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                 <span v-if="repwd && !pwdValidated" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
               </div>
-              <div v-show="mailSended" class="form-group has-feedback" :class="{ 'has-error': isError }">
+              <div v-show="mailSended" class="form-group form-group-lg has-feedback" :class="{ 'has-error': isError }">
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon3">{{ $t('ui.verify_code') }}</span>
                   <input type="text" class="form-control" v-model="verifyCode">

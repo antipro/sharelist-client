@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="login-wrapper">
     <nav class="navbar navbar-default">
       <p class="navbar-brand" style="float:right;">
-        <select v-model="$root.locale" class="form-control" style="width: auto; float: left;">
+        <select v-model="$root.locale" class="form-control input-lg" style="width: auto; float: left;">
           <option value='en'>English</option>
           <option value='zh-CN'>简体中文</option>
         </select>
-        <button v-if="$root.runtime !== 'browser'" type="button" class="btn btn-default" @click="$root.exit">
+        <button v-if="$root.runtime !== 'browser'" type="button" class="btn btn-lg btn-default" @click="$root.exit">
           <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
         </button>
       </p>
@@ -20,10 +20,10 @@
           </div>
           <div class="panel-body">
             <form role="form"  @keyup.enter="login">
-              <div class="form-group">
+              <div class="form-group form-group-lg">
                 <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="email" autofocus>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-lg">
                 <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password" value="">
               </div>
               <div class="btn-group btn-group-justified" role="group" aria-label="...">
@@ -41,6 +41,7 @@
 </template>
 
 <style scoped>
+.login-wrapper { height: 100%; }
 .navbar { background: transparent; border: none; }
 div.row { margin-top: 100px; }
 div#app { margin-left: 0; }

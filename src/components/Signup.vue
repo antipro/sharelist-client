@@ -1,19 +1,21 @@
 <template>
-  <div>
-    <nav class="navbar navbar-default">
-      <p class="navbar-brand btn-group" role="group" style="float:right;">
-        <select v-model="$root.locale" class="form-control input-lg" style="width: auto; float: left;">
-          <option value='en'>English</option>
-          <option value='zh-CN'>简体中文</option>
-        </select>
-        <router-link class="btn btn-lg btn-default" :to="{ name: 'login' }" replace>
-          <span class="glyphicon glyphicon-log-in"></span> {{ $t('ui.login') }}
-        </router-link>
-        <button v-if="$root.runtime !== 'browser'" type="button" class="btn btn-lg btn-default" @click="$root.exit">
-          <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
-        </button>
-      </p>
-    </nav>
+  <div  class="signup-wrapper">
+    <div class="row">
+      <nav class="navbar navbar-default">
+        <p class="navbar-brand btn-group" role="group" style="float:right;">
+          <select v-model="$root.locale" class="form-control input-lg" style="width: auto; float: left;">
+            <option value='en'>English</option>
+            <option value='zh-CN'>简体中文</option>
+          </select>
+          <router-link class="btn btn-lg btn-default" :to="{ name: 'login' }" replace>
+            <span class="glyphicon glyphicon-log-in"></span> {{ $t('ui.login') }}
+          </router-link>
+          <button v-if="$root.runtime !== 'browser'" type="button" class="btn btn-lg btn-default" @click="$root.exit">
+            <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
+          </button>
+        </p>
+      </nav>
+    </div>
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
         <div class="login-panel panel panel-default">
@@ -53,11 +55,13 @@
         </div>
       </div><!-- /.col-->
     </div><!-- /.row -->
+    <div class="row"></div>
   </div>
 </template>
-<style scoped>
-.navbar { background: transparent; border: none; }
-div.row { margin-top: 100px; }
+<style>
+.signup-wrapper { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+.signup-wrapper div.row { flex-grow: 1; }
+.signup-wrapper .navbar { background: transparent; border: none; }
 </style>
 
 <script>

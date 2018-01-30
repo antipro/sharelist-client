@@ -18,11 +18,13 @@ export default {
       'time_for_notification': 'Time For Notification',
       'email': 'Email Address',
       'username': 'User Name',
+      'oldpwd': 'Original Password',
       'pwd': 'Password',
       'repwd': 'Confirm Password',
       'project_name': 'Project Name',
       'about': 'About',
       'preference': 'Preference',
+      'resetpwd': 'Reset Password',
       'new_user': '<New User>',
       'project': 'Project',
       'confirm': 'Confirm',
@@ -65,7 +67,9 @@ export default {
       'project_unshared': '{0} unshares project with you',
       'project_updated_by_other': 'Project updated by {0}',
       'project_removed_by_other': 'Project removed by {0}',
-      'verifycode_guide': 'We have sent a message with a verification code to your mailbox. please open the mailbox and copy the received verification code here.'
+      'verifycode_guide': 'We have sent a message with a verification code to your mailbox. please open the mailbox and copy the received verification code here.',
+      'pwd_error': 'Password is not right.',
+      'pwd_reseted': 'Password has been reseted.'
     }
   },
   'zh-CN': {
@@ -87,11 +91,13 @@ export default {
       'time_for_notification': '提醒时间',
       'email': '电子邮件地址',
       'username': '用户名',
+      'oldpwd': '原密码',
       'pwd': '密码',
       'repwd': '确认密码',
       'project_name': '项目名称',
       'project': '项目',
       'preference': '偏好设置',
+      'resetpwd': '重置密码',
       'about': '关于',
       'new_user': '<新用户>',
       'confirm': '确定',
@@ -134,7 +140,9 @@ export default {
       'project_unshared': '{0} 取消了和您的分享',
       'project_updated_by_other': '项目被 {0} 更新了',
       'project_removed_by_other': '{0} 移除了项目',
-      'verifycode_guide': '我们已经向您的邮箱发送了一封带有验证码的邮件，请打开邮箱并将接收到的验证码复制到此处。'
+      'verifycode_guide': '我们已经向您的邮箱发送了一封带有验证码的邮件，请打开邮箱并将接收到的验证码复制到此处。',
+      'pwd_error': '密码不正确。',
+      'pwd_reseted': '密码已被重置。'
     }
   }
 }

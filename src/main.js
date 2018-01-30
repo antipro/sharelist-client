@@ -147,6 +147,9 @@ new Vue({
     updatePreference (preference) {
       this.$socket.emit('updatepreference', preference)
     },
+    resetPwd (oldpwd, pwd) {
+      this.$socket.emit('resetpwd', oldpwd, pwd)
+    },
     showMessage (title, content) {
       switch (this.runtime) {
         case 'browser':

@@ -44,6 +44,9 @@
               </span>
             </div>
           </div>
+          <div class="form-group">
+            <router-link class="btn btn-default btn-lg" :to="{ name: 'resetpwd' }"><span class="glyphicon glyphicon-lock"></span> 重置密码</router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -62,13 +65,13 @@
     </div>
   </div>
 </template>
-<style scoped>
+<style>
 .preference { position: relative; height: 100%; width: 100%; }
 @media screen and (min-width: 800px) {
   .preference { margin-left: 250px; width: calc(100% - 250px); }
 }
-.form-group { padding-left: 20px; }
-span.chkbox { -webkit-text-stroke: 2px white; color: #51c4f1; }
+.preference .form-group { padding-left: 20px; }
+.preference span.chkbox { -webkit-text-stroke: 2px white; color: #51c4f1; }
 </style>
 
 <script>

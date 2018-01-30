@@ -23,7 +23,7 @@
           <div class="panel-body">
             <form role="form"  @keyup.enter="login">
               <div class="form-group form-group-lg">
-                <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="email" autofocus>
+                <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="email" autofocus autocomplete="on">
               </div>
               <div class="form-group form-group-lg">
                 <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password" value="">
@@ -33,7 +33,7 @@
               </div>
               <div class="btn-group btn-group-justified" role="group" aria-label="...">
                 <div class="btn-group" role="group">
-                  <button type="button" @click="login" class="btn btn-lg btn-primary">{{ $t('ui.login') }}</button>
+                  <button type="button" @click="login" class="btn btn-lg btn-primary" :disabled="isInProgress">{{ $t('ui.login') }}</button>
                 </div>
                 <router-link role="button" class="btn btn-lg btn-default" :to="{ name: 'signup' }">{{ $t('ui.signup') }}</router-link>
               </div>

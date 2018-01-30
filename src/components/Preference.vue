@@ -45,7 +45,7 @@
             </div>
           </div>
           <div class="form-group">
-            <router-link class="btn btn-default btn-lg" :to="{ name: 'resetpwd' }"><span class="glyphicon glyphicon-lock"></span> 重置密码</router-link>
+            <router-link class="btn btn-default btn-lg" :to="{ name: 'resetpwd' }"><span class="glyphicon glyphicon-lock"></span> {{ $t('ui.resetpwd') }}</router-link>
           </div>
         </div>
       </div>

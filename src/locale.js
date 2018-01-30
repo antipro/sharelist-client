@@ -74,7 +74,7 @@ export default {
   },
   'zh-CN': {
     ui: {
-      'app_name': '共享清单',
+      'app_name': '分享清单',
       'group_by_project': '按项目分组',
       'group_by_date': '按日期分组',
       'signup': '注册',

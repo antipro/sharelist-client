@@ -138,6 +138,9 @@ export default function ($vue, store) {
     alert($vue.$t('message.pwd_reseted'))
     $vue.logout()
   })
+  socket.on('relogin', () => {
+    $vue.logout()
+  })
   socket.on('task notified', task => {
     $vue.showNotification(task)
   })

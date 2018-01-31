@@ -2,7 +2,7 @@
   <div class="list-group">
     <template v-if="projects.length === 0">
       <div class="list-group-item list-group-item-info">
-        <h3>载入中...</h3>
+        <h3>{{ $t('ui.loading') }}</h3>
         <div class="progress">
           <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
         </div>

@@ -38,7 +38,8 @@ export default {
       'ungrouped': 'Ungrouped',
       'candidate': 'Candidate',
       'recording': 'Recording...',
-      'speech_recognition': 'Speech Recognition'
+      'speech_recognition': 'Speech Recognition',
+      'loading': 'Loading...'
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
@@ -114,7 +115,8 @@ export default {
       'ungrouped': '未分组',
       'candidate': '候选',
       'recording': '正在录音...',
-      'speech_recognition': '语音识别'
+      'speech_recognition': '语音识别',
+      'loading': '载入中...'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',

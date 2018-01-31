@@ -289,6 +289,13 @@ new Vue({
       this.updatePreference({
         locale: val
       })
+      if (this.runtime === 'electron') {
+        const ipc = eval('require(\'electron\')').ipcRenderer
+        ipc.on('locale-reply', function (event) {
+          console.log('locale saved.')
+        })
+        ipc.send('locale-message', val)
+      }
     },
     timezone (val) {
       if (this.token === '') {

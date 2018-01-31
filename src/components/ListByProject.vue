@@ -1,7 +1,15 @@
 <template>
   <div class="list-group">
-    <template v-for="project in projects">
-      <div class="list-group-item list-group-item-info bg-danger" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
+    <template v-if="projects.length === 0">
+      <div class="list-group-item list-group-item-info">
+        <h3>载入中...</h3>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
+        </div>
+      </div>
+    </template>
+    <template v-else v-for="project in projects">
+      <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
         @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
         <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }} {{ project.uid !== $root.uid ? '(' + project.uname + ')' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">

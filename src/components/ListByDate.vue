@@ -1,6 +1,14 @@
 <template>
   <div class="list-group">
-    <template v-for="date in dates">
+    <template v-if="dates.length === 0">
+      <div class="list-group-item list-group-item-info">
+        <h3>载入中...</h3>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
+        </div>
+      </div>
+    </template>
+    <template v-else v-for="date in dates">
       <div class="list-group-item list-group-item-info" v-bind:key="date.notify_date" v-bind:data-name="date.notify_date" v-bind:data-date="date.notify_date"
         @click="activeDate(date, $event)">
         <span v-show="activeNotifyDate === date.notify_date" class="glyphicon glyphicon-ok-circle"></span> 

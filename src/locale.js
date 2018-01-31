@@ -73,7 +73,8 @@ export default {
       'verifycode_guide': 'We have sent a message with a verification code to your mailbox. please open the mailbox and copy the received verification code here.',
       'pwd_error': 'Password is not right.',
       'pwd_reseted': 'Password has been reseted.',
-      'find_ok': 'Password has been reseted'
+      'find_ok': 'Password has been reseted',
+      'error_code_or_timeout': 'Verify Code is wrong or expired.'
     }
   },
   'zh-CN': {
@@ -150,7 +151,8 @@ export default {
       'verifycode_guide': '我们已经向您的邮箱发送了一封带有验证码的邮件，请打开邮箱并将接收到的验证码复制到此处。',
       'pwd_error': '密码不正确。',
       'pwd_reseted': '密码已被重新设置。',
-      'find_ok': '密码已经被重新设置'
+      'find_ok': '密码已经被重新设置',
+      'error_code_or_timeout': '验证码错误或已失效。'
     }
   }
 }

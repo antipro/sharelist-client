@@ -53,6 +53,13 @@ export default {
       repwd: ''
     }
   },
+  beforeRouteEnter (to, from, next) {
+    if (from.path === '/') {
+      next('/')
+    } else {
+      next()
+    }
+  },
   components: {
     Navibar
   },

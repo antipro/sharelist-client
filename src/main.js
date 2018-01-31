@@ -75,6 +75,7 @@ new Vue({
     this.$i18n.locale = this.locale
   },
   mounted () {
+    document.title = this.$t('ui.app_name')
     var userAgent = navigator.userAgent.toLowerCase()
     if (userAgent.indexOf('electron/') > -1) {
       this.runtime = 'electron'

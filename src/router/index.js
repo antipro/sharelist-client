@@ -11,6 +11,7 @@ import Preference from '@/components/Preference'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import ResetPwd from '@/components/ResetPwd'
+import FindPwd from '@/components/FindPwd'
 import About from '@/components/About'
 
 Vue.use(Router)
@@ -62,6 +63,11 @@ export default new Router({
       name: 'resetpwd',
       path: '/resetpwd',
       component: ResetPwd
+    },
+    {
+      name: 'findpwd',
+      path: '/findpwd',
+      component: FindPwd
     },
     {
       name: 'about',

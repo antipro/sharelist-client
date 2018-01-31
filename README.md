@@ -35,8 +35,8 @@ create ./config/server.js, like below:
 ``` javascript
 'use strict'
 module.exports = {
-  dev: '"IP:PORT"',
-  prod: '"IP:PORT"'
+  dev: '"HTTPADDRESS:PORT"',
+  prod: '"HTTPADDRESS:PORT"'
 }
 ```
 

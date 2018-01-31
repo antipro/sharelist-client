@@ -20,11 +20,16 @@
               <div v-show="isInProgress" class="progress">
                 <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
               </div>
-              <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                <div class="btn-group" role="group">
-                  <button type="button" @click="login" class="btn btn-lg btn-primary" :disabled="isInProgress"><span class="glyphicon glyphicon-log-in"></span> {{ $t('ui.login') }}</button>
+              <div class="form-group">
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                  <div class="btn-group" role="group">
+                    <button type="button" @click="login" class="btn btn-lg btn-primary" :disabled="isInProgress"><span class="glyphicon glyphicon-log-in"></span> {{ $t('ui.login') }}</button>
+                  </div>
+                  <router-link role="button" class="btn btn-lg btn-default" :to="{ name: 'signup' }"><span class="glyphicon glyphicon-plus"></span> {{ $t('ui.signup') }}</router-link>
                 </div>
-                <router-link role="button" class="btn btn-lg btn-default" :to="{ name: 'signup' }"><span class="glyphicon glyphicon-plus"></span> {{ $t('ui.signup') }}</router-link>
+              </div>
+              <div class="form-group">
+                <router-link :to="{ name: 'findpwd' }">{{ $t('ui.findpwd') }}</router-link>
               </div>
             </form>
           </div>

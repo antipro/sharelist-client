@@ -1,5 +1,5 @@
 <template>
-  <div  class="signup-wrapper">
+  <div  class="findpwd-wrapper">
     <div class="row">
     </div>
     <div class="row">
@@ -11,9 +11,6 @@
                 <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="text">
                 <span v-if="email && emailValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                 <span v-if="email && !emailValidated" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-              </div>
-              <div class="form-group form-group-lg">
-                <input class="form-control" :placeholder="$t('ui.username')" v-model="username" type="text">
               </div>
               <div class="form-group form-group-lg">
                 <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password">
@@ -35,28 +32,29 @@
                 <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
               </div>
               <button v-show="!mailSended" type="button" @click="next" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.next') }}</button>
-              <button v-show="mailSended" type="button" @click="signup" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.signup') }}</button>
+              <button v-show="mailSended" type="button" @click="findpwd" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.resetpwd') }}</button>
               <router-link class="btn btn-lg btn-default btn-block" :to="{ name: 'login' }">{{ $t('ui.return_to_login') }}</router-link>
             </form>
           </div>
         </div>
       </div><!-- /.col-->
-    </div><!-- /.row -->
-    <div class="row"></div>
+    </div>
+    <div class="row">
+    </div>
   </div>
 </template>
+
 <style>
-.signup-wrapper { height: 100%; display: flex; flex-direction: column; justify-content: center; }
-.signup-wrapper div.row { flex-grow: 1; }
+.findpwd-wrapper { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+.findpwd-wrapper div.row { flex-grow: 1; }
 </style>
 
 <script>
 export default {
-  name: 'signup',
+  name: 'findpwd',
   data () {
     return {
       email: '',
-      username: '',
       pwd: '',
       repwd: '',
       mailSended: false,
@@ -64,6 +62,13 @@ export default {
       uuid: '',
       isError: false,
       isInProgress: false
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    if (from.path === '/') {
+      next('/')
+    } else {
+      next()
     }
   },
   methods: {
@@ -83,7 +88,7 @@ export default {
           alert(this.$t(res.msg))
           return Promise.reject(this.$t(res.msg))
         }
-        if (res.data === true) {
+        if (res.data === false) {
           alert(this.$t(res.msg))
           return Promise.reject(this.$t(res.msg))
         }
@@ -110,21 +115,18 @@ export default {
         console.log(error)
       })
     },
-    signup () {
+    findpwd () {
       if (this.verifyCode === '') {
         this.isError = true
         return
       }
-      let timezone = new Date().getTimezoneOffset() / -60
       this.isInProgress = true
-      this.$axios.get('/signup', {
+      this.$axios.get('/findpwd', {
         params: {
           email: this.email,
-          username: this.username,
           pwd: this.pwd,
           verifycode: this.verifyCode,
-          uuid: this.uuid,
-          timezone
+          uuid: this.uuid
         }
       }).then((response) => {
         this.isInProgress = false
@@ -133,11 +135,7 @@ export default {
           alert(this.$t(res.msg))
           return
         }
-        alert(this.$t('message.signup_ok'))
-        this.$root.email = res.data.email
-        this.$root.uid = res.data.uid
-        this.$root.uname = res.data.uname
-        this.$root.token = res.data.token
+        alert(this.$t('message.find_ok'))
         this.$router.replace('/')
       }).catch((error) => {
         this.isInProgress = false

@@ -20,6 +20,8 @@ div#app .btn { border-radius: 0; }
 div#app .input-group-addon { border-radius: 0; }
 div#app .list-group-item { border-radius: 0; }
 div#app .list-group-item a { border-radius: 0; }
+div#app .navbar { font-size: 16px; -webkit-app-region: drag; height: 50px; margin-bottom: 0px; 
+  background-color: #337ab7; width: 100%; border-width: 0px; border-radius: 0; }
 </style>
 
 <script>

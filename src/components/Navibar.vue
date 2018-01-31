@@ -29,7 +29,7 @@
             <button type="button" class="list-group-item" @click="$root.logout">
               <span class="glyphicon glyphicon-log-out"></span> {{ $t('ui.logout') }}
             </button>
-            <button v-if="$root.runtime !== 'browser'" type="button" class="list-group-item" @click="$root.exit">
+            <button v-if="$root.runtime === 'cordova'" type="button" class="list-group-item" @click="$root.exit">
               <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
             </button>
           </div>
@@ -45,8 +45,6 @@
 </template>
 
 <style scoped>
-.navbar { font-size: 16px; -webkit-app-region: drag; height: 50px; margin-bottom: 0px; 
-  background-color: #337ab7; width: 100%; border-width: 0px; border-radius: 0; }
 .navbar .navbar-header::after { clear: none; }
 .navbar .navbar-brand { -webkit-app-region: no-drag; color: #FFF; }
 .navbar .navbar-text { float: left; color: #FFF; font-weight: 800;  }

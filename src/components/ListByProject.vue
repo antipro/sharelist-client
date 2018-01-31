@@ -3,7 +3,7 @@
     <template v-for="project in projects">
       <div class="list-group-item list-group-item-info bg-danger" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
         @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
-        <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }}{{ project.uid !== $root.uid ? '（' + project.uname + '）' : '' }}
+        <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }} {{ project.uid !== $root.uid ? '(' + project.uname + ')' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">

@@ -1,20 +1,6 @@
 <template>
   <div  class="signup-wrapper">
     <div class="row">
-      <nav class="navbar navbar-default">
-        <p class="navbar-brand btn-group" role="group" style="float:right;">
-          <select v-model="$root.locale" class="form-control input-lg" style="width: auto; float: left;">
-            <option value='en'>English</option>
-            <option value='zh-CN'>简体中文</option>
-          </select>
-          <router-link class="btn btn-lg btn-default" :to="{ name: 'login' }" replace>
-            <span class="glyphicon glyphicon-log-in"></span> {{ $t('ui.login') }}
-          </router-link>
-          <button v-if="$root.runtime !== 'browser'" type="button" class="btn btn-lg btn-default" @click="$root.exit">
-            <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
-          </button>
-        </p>
-      </nav>
     </div>
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
@@ -50,6 +36,7 @@
               </div>
               <button v-show="!mailSended" type="button" @click="next" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.next') }}</button>
               <button v-show="mailSended" type="button" @click="signup" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.signup') }}</button>
+              <router-link class="btn btn-lg btn-default btn-block" :to="{ name: 'login' }">{{ $t('ui.return_to_login') }}</router-link>
             </form>
           </div>
         </div>

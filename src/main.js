@@ -244,6 +244,9 @@ new Vue({
       this.uname = ''
       this.email = ''
       this.uid = ''
+      this.local = ''
+      this.timezone = ''
+      this.$i18n.locale = navigator.language
       this.$store.commit('clear')
       sessionStorage.clear()
       this.$router.replace('/login')

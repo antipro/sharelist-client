@@ -35,7 +35,7 @@
 @media screen and (min-width: 800px) {
   .resetpwd-wrapper { margin-left: 250px; width: calc(100% - 250px); }
 }
-.resetpwd-wrapper .form-group { padding-left: 20px; }
+.resetpwd-wrapper .form-group { padding-left: 15px; }
 </style>
 
 

@@ -8,12 +8,14 @@
     <div class="container-fluid" style="margin-top: 20px;">
       <div class="row">
         <div class="col-md-6">
-          <div v-if="$root.runtime === 'electron'" class="checkbox">
-            <label class="input-lg" @click="toggle">
-              <span v-if="starup_hidden===true" class="chkbox glyphicon glyphicon-check" ></span>
-              <span v-if="starup_hidden===false" class="chkbox glyphicon glyphicon-unchecked"></span>
-              {{ $t('ui.hidden_on_startup') }}
-            </label>
+          <div v-if="$root.runtime === 'electron'" class="form-group">
+            <div class="checkbox">
+              <label class="input-lg" @click="toggle" style="padding-left: 0px;">
+                <span v-if="starup_hidden===true" class="chkbox glyphicon glyphicon-check" ></span>
+                <span v-if="starup_hidden===false" class="chkbox glyphicon glyphicon-unchecked"></span>
+                {{ $t('ui.hidden_on_startup') }}
+              </label>
+            </div>
           </div>
           <div class="form-group">
             <label for="notify_time">{{ $t('ui.default_time_for_notification') }}</label>
@@ -70,7 +72,7 @@
 @media screen and (min-width: 800px) {
   .preference { margin-left: 250px; width: calc(100% - 250px); }
 }
-.preference .form-group { padding-left: 20px; }
+.preference .form-group { padding-left: 15px; }
 .preference span.chkbox { -webkit-text-stroke: 2px white; color: #51c4f1; }
 </style>
 

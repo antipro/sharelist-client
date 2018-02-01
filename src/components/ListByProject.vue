@@ -25,14 +25,14 @@
             </button>
           </div>
         </div>
-        <div v-if="$root.runtime==='cordova' && project.uid===$root.uid && project.editable==='Y'" class="drawer-right btn-group">
+        <div v-if="$root.runtime==='cordova'" class="drawer-right btn-group">
           <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">
             <span class="glyphicon glyphicon-arrow-up" ></span>
           </button>
-          <button type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
+          <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="editProject(project, $event)">
             <span class="glyphicon glyphicon-pencil"></span>
           </button>
-          <button type="button" class="btn btn-default" @click.stop="removeProject(project, $event)">
+          <button v-if="project.uid===$root.uid && project.editable==='Y'" type="button" class="btn btn-default" @click.stop="removeProject(project, $event)">
             <span class="glyphicon glyphicon-trash"></span>
           </button>
         </div>

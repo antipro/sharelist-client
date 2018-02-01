@@ -38,7 +38,7 @@ export default {
       'ungrouped': 'Ungrouped',
       'candidate': 'Candidate',
       'recording': 'Recording...',
-      'speech_recognition': 'Speech Recognition',
+      'speech_recognition': 'Speech Recognition(English)',
       'loading': 'Loading...'
     },
     message: {
@@ -55,7 +55,10 @@ export default {
       'common_tip_01': 'Enter content to create task',
       'common_tip_02': 'Enter @content to create project',
       'common_tip_03': 'Enter ~content to search tasks',
-      'cordova_tip_01': 'Long press on list to toggle menu',
+      'common_tip_04': 'Item with green bg-color is project',
+      'common_tip_05': 'Item without bg-color is task',
+      'common_tip_06': 'Only your own project can be edited',
+      'cordova_tip_01': 'Long press on item to toggle menu',
       'mail_failure': 'Mail Failed, Please checkout whether this email address works fine.',
       'signup_ok': 'Sign Up Success.',
       'verify_email': 'The Verification Code you received is {code}, Please Do not Tell anybody else.',
@@ -116,7 +119,7 @@ export default {
       'ungrouped': '未分组',
       'candidate': '候选',
       'recording': '正在录音...',
-      'speech_recognition': '语音识别',
+      'speech_recognition': '语音识别（普通话）',
       'loading': '载入中...'
     },
     message: {
@@ -133,7 +136,10 @@ export default {
       'common_tip_01': '输入内容以创建任务',
       'common_tip_02': '输入\'@\'开头的内容以创建项目',
       'common_tip_03': '输入\'～\'开头的内容以搜索任务',
-      'cordova_tip_01': '长按列表调出菜单',
+      'common_tip_04': '带绿色背景的列表项是项目',
+      'common_tip_05': '不带背景的列表项是任务',
+      'common_tip_06': '只能编辑你自己的项目',
+      'cordova_tip_01': '长按列表项调出菜单',
       'mail_failure': '邮件发送失败，请检查电子邮件是否工作正常。',
       'signup_ok': '注册成功。',
       'verify_email': '您收到的验证码是 {code}， 请不要告诉其他人。',

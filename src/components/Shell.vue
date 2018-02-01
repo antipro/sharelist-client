@@ -163,6 +163,9 @@ export default {
       yield this.$t('message.common_tip_01')
       yield this.$t('message.common_tip_02')
       yield this.$t('message.common_tip_03')
+      yield this.$t('message.common_tip_04')
+      yield this.$t('message.common_tip_05')
+      yield this.$t('message.common_tip_06')
       if (this.$root.runtime === 'cordova') {
         yield this.$t('message.cordova_tip_01')
       }

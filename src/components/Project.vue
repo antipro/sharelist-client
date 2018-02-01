@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <input type="text" v-model="pname" class="form-control" :placeholder="$t('ui.project_name')">
+            <input type="text" v-model="pname" class="form-control input-lg" :placeholder="$t('ui.project_name')">
           </div>
           <div class="form-group">
             <div class="list-group">
@@ -23,7 +23,7 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="input-group">
+            <div class="input-group input-group-lg">
               <input type="email" class="form-control" :placeholder="$t('ui.email')" v-model="email" @keyup.stop.enter="addShare">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="button" @click="addShare">
@@ -42,7 +42,7 @@
 @media screen and (min-width: 800px) {
   .project { margin-left: 250px; width: calc(100% - 250px); }
 }
-div.list-group-item { box-shadow: 3px 3px #F4F4F4 }
+div.list-group-item { box-shadow: 3px 3px #F4F4F4; font-size: 18px; }
 .alert-info { margin-bottom: 1px; }
 </style>
 

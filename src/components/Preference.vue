@@ -72,7 +72,6 @@
 @media screen and (min-width: 800px) {
   .preference { margin-left: 250px; width: calc(100% - 250px); }
 }
-.preference .form-group { padding-left: 15px; }
 .preference span.chkbox { -webkit-text-stroke: 2px white; color: #51c4f1; }
 </style>
 

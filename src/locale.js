@@ -39,7 +39,8 @@ export default {
       'candidate': 'Candidate',
       'recording': 'Recording...',
       'speech_recognition': 'Speech Recognition(English)',
-      'loading': 'Loading...'
+      'loading': 'Loading...',
+      'left': 'left'
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
@@ -120,7 +121,8 @@ export default {
       'candidate': '候选',
       'recording': '正在录音...',
       'speech_recognition': '语音识别（普通话）',
-      'loading': '载入中...'
+      'loading': '载入中...',
+      'left': '剩余'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',

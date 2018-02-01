@@ -10,7 +10,8 @@
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
-            <textarea rows="15" maxlength="255" class="form-control input-lg" id="task_content" v-model="content" ></textarea>
+            <textarea rows="12" maxlength="500" class="form-control input-lg" id="task_content" v-model="content" ></textarea>
+            <p class="help-block">{{ 500 - content.length + ' ' + $t('ui.left')  }}</p>
           </div>
         </div>
       </div>

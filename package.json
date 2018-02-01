@@ -3,7 +3,7 @@
   "displayName": "Sharelist",
   "version": "1.0.3",
   "revision": "4",
-  "description": "A todo list application with share function accross email address.",
+  "description": "A todo list application with sharing mechanism via email.",
   "author": {
     "name": "antipro",
     "email": "antipro@163.com"

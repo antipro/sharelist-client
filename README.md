@@ -1,6 +1,6 @@
 # Sharelist
 
-> A todo list application with share function accross email address.
+> A todo list application with sharing mechanism via email.
 
 ## Features
 

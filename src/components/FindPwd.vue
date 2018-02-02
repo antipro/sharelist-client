@@ -12,22 +12,22 @@
           <div class="panel-body">
             <form role="form">
               <div class="form-group form-group-lg has-feedback" :class="emailClassObj">
-                <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="text">
+                <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="text" maxlength="50">
                 <span v-if="email && emailValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                 <span v-if="email && !emailValidated" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
               </div>
               <div class="form-group form-group-lg">
-                <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password">
+                <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password" maxlength="20">
               </div>
               <div class="form-group form-group-lg has-feedback" :class="pwdClassObj">
-                <input class="form-control" :placeholder="$t('ui.repwd')" v-model="repwd" type="password">
+                <input class="form-control" :placeholder="$t('ui.repwd')" v-model="repwd" type="password" maxlength="20">
                 <span v-if="repwd && pwdValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                 <span v-if="repwd && !pwdValidated" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
               </div>
               <div v-show="mailSended" class="form-group form-group-lg has-feedback" :class="{ 'has-error': isError }">
                 <div class="input-group">
                   <span class="input-group-addon" id="basic-addon3">{{ $t('ui.verify_code') }}</span>
-                  <input type="text" class="form-control" v-model="verifyCode">
+                  <input type="text" class="form-control" v-model="verifyCode" maxlength="20">
                   <span v-show="isError" class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
                 </div>
                 <p class="help-block">{{ $t('message.verifycode_guide') }}</p>

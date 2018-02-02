@@ -141,9 +141,13 @@ export default {
       $('.drawer-right').removeClass('drawer-right-on')
     },
     addTask () {
+      let content = this.content
+      if (content.length > 500) {
+        content = content.substr(0, 500)
+      }
       this.$root.addTask({
         pid: 0,
-        content: this.content,
+        content,
         notify_date: this.activeNotifyDate
       })
     },

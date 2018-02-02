@@ -11,15 +11,15 @@
         <div class="col-md-6">
           <form role="form" @keyup.enter="resetpwd">
             <div class="form-group form-group-lg has-feedback" :class="{ 'has-error': oldpwdIsEmpty }">
-              <input class="form-control" :placeholder="$t('ui.oldpwd')" v-model="oldpwd" type="password">
+              <input class="form-control" :placeholder="$t('ui.oldpwd')" v-model="oldpwd" type="password" maxlength="20">
               <span v-if="oldpwdIsEmpty" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="form-group form-group-lg has-feedback" :class="{ 'has-error': pwdIsEmpty }">
-              <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password">
+              <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password" maxlength="20">
               <span v-if="pwdIsEmpty" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
             </div>
             <div class="form-group form-group-lg has-feedback" :class="pwdClassObj">
-              <input class="form-control" :placeholder="$t('ui.repwd')" v-model="repwd" type="password">
+              <input class="form-control" :placeholder="$t('ui.repwd')" v-model="repwd" type="password" maxlength="20">
               <span v-if="repwd && pwdValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
               <span v-if="repwd && !pwdValidated" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
             </div>

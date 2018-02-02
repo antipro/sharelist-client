@@ -121,6 +121,9 @@ export default {
         if (content === '') {
           this.content = ''
         } else {
+          if (content.length > 20) {
+            content = content.substr(0, 20)
+          }
           this.$root.addProject(content)
         }
       } else {

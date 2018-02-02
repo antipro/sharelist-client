@@ -12,10 +12,10 @@
           <div class="panel-body">
             <form role="form"  @keyup.enter="login">
               <div class="form-group form-group-lg">
-                <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="email" autofocus autocomplete="on">
+                <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="email" autofocus autocomplete="on" maxlength="50">
               </div>
               <div class="form-group form-group-lg">
-                <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password" value="">
+                <input class="form-control" :placeholder="$t('ui.pwd')" v-model="pwd" type="password" maxlength="20">
               </div>
               <div v-show="isInProgress" class="progress">
                 <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>

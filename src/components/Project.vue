@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <input type="text" v-model="pname" class="form-control input-lg" :placeholder="$t('ui.project_name')">
+            <input type="text" v-model="pname" class="form-control input-lg" :placeholder="$t('ui.project_name')" maxlength="20">
           </div>
           <div class="form-group">
             <div class="list-group">
@@ -24,7 +24,7 @@
           </div>
           <div class="form-group">
             <div class="input-group input-group-lg">
-              <input type="email" class="form-control" :placeholder="$t('ui.email')" v-model="email" @keyup.stop.enter="addShare">
+              <input type="email" class="form-control" :placeholder="$t('ui.email')" v-model="email" @keyup.stop.enter="addShare"  maxlength="50">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="button" @click="addShare">
                   <span class="glyphicon glyphicon-plus"></span>

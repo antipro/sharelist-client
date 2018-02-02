@@ -40,7 +40,7 @@
               </div>
               <button v-show="!mailSended" type="button" @click="next" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.next') }}</button>
               <button v-show="mailSended" type="button" @click="signup" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.signup') }}</button>
-              <router-link class="btn btn-lg btn-default btn-block" :to="{ name: 'login' }">{{ $t('ui.return_to_login') }}</router-link>
+              <button type="button" class="btn btn-lg btn-default btn-block" @click="back">{{ $t('ui.return_to_login') }}</button>
             </form>
           </div>
         </div>
@@ -70,7 +70,16 @@ export default {
       isInProgress: false
     }
   },
+  created () {
+    if (this.$root.token !== '') {
+      this.$router.replace('/')
+    }
+    this.$root.locale = navigator.language
+  },
   methods: {
+    back () {
+      this.$router.go(-1)
+    },
     next () {
       if (!this.emailValidated || !this.pwd || !this.pwdValidated) {
         return

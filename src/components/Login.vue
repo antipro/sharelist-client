@@ -60,6 +60,7 @@ export default {
     if (this.$root.token !== '') {
       this.$router.replace('/')
     }
+    this.$root.locale = navigator.language
   },
   methods: {
     login (e) {

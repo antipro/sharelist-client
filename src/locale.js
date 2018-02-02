@@ -78,7 +78,9 @@ export default {
       'pwd_error': 'Password is not right.',
       'pwd_reseted': 'Password has been reseted.',
       'find_ok': 'Password has been reseted',
-      'error_code_or_timeout': 'Verify Code is wrong or expired.'
+      'error_code_or_timeout': 'Verify Code is wrong or expired.',
+      'saving': 'Saving...',
+      'saved': 'Saved'
     }
   },
   'zh-CN': {
@@ -160,7 +162,9 @@ export default {
       'pwd_error': '密码不正确。',
       'pwd_reseted': '密码已被重新设置。',
       'find_ok': '密码已经被重新设置',
-      'error_code_or_timeout': '验证码错误或已失效。'
+      'error_code_or_timeout': '验证码错误或已失效。',
+      'saving': '正在保存...',
+      'saved': '已保存'
     }
   }
 }

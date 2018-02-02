@@ -98,8 +98,8 @@ new Vue({
     })
   },
   methods: {
-    refresh (fn) {
-      this.$socket.emit('refresh', fn)
+    refresh (callback) {
+      this.$socket.emit('refresh', callback)
     },
     addProject (name) {
       this.$socket.emit('addproject', {
@@ -136,14 +136,8 @@ new Vue({
         shares
       })
     },
-    updateTask (id, pid, content, notifyDate, notifyTime) {
-      this.$socket.emit('updatetask', {
-        id,
-        pid,
-        content,
-        notify_date: notifyDate,
-        notify_time: notifyTime
-      })
+    updateTask (updatedTask, callback) {
+      this.$socket.emit('updatetask', updatedTask, callback)
     },
     updatePreference (preference) {
       this.$socket.emit('updatepreference', preference)

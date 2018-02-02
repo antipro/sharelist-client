@@ -11,7 +11,10 @@
         <div class="col-md-12">
           <div class="form-group">
             <textarea rows="12" maxlength="500" class="form-control input-lg" id="task_content" v-model="content" ></textarea>
-            <p class="help-block">{{ 500 - content.length + ' ' + $t('ui.left')  }}</p>
+            <p class="help-block">
+              <span class="label label-default">{{ 500 - content.length + ' ' + $t('ui.left')  }}</span>
+              <span class="label label-info">{{ saveStatus }}</span>
+            </p>
           </div>
         </div>
       </div>
@@ -105,7 +108,9 @@ export default {
       notify_date: '',
       notify_time: '',
       mediaRecorder: null,
-      isInProgress: false
+      isInProgress: false,
+      timeoutPtr: null,
+      saveStatus: ''
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -149,7 +154,7 @@ export default {
         $('#task_date').datepicker('setDate', this.notify_date)
       }
       let defaultTime = new Date()
-      if (this.notify_time !== '') {
+      if (this.notify_date !== '' && this.notify_time !== '') {
         defaultTime = this.notify_date + ' ' + this.notify_time
       }
       $('#task_time').datetimepicker({
@@ -165,6 +170,30 @@ export default {
       })
     })
   },
+  mounted () {
+    let autoSave = () => {
+      if (this.content !== '') {
+        this.saveStatus = this.$t('message.saving')
+        this.$root.updateTask({
+          id: this.id,
+          pid: this.pid,
+          content: this.content,
+          notify_date: this.notify_date,
+          notify_time: this.notify_time
+        }, () => {
+          this.saveStatus = this.$t('message.saved')
+          setTimeout(() => {
+            this.saveStatus = ''
+          }, 5000)
+        })
+      }
+      this.timeoutPtr = setTimeout(autoSave, 60000)
+    }
+    this.timeoutPtr = setTimeout(autoSave, 60000)
+  },
+  beforeDestroy () {
+    clearInterval(this.timeoutPtr)
+  },
   methods: {
     back () {
       this.$router.go(-1)
@@ -174,7 +203,13 @@ export default {
         alert('Content is required.')
         return
       }
-      this.$root.updateTask(this.id, this.pid, this.content, this.notify_date, this.notify_time)
+      this.$root.updateTask({
+        id: this.id,
+        pid: this.pid,
+        content: this.content,
+        notify_date: this.notify_date,
+        notify_time: this.notify_time
+      })
       this.$router.go(-1)
     },
     saveTime () {

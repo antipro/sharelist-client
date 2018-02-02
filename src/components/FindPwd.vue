@@ -10,7 +10,7 @@
             <span>{{ $t('ui.resetpwd') }}</span>
           </div>
           <div class="panel-body">
-            <form role="form">
+            <div>
               <div class="form-group form-group-lg has-feedback" :class="emailClassObj">
                 <input class="form-control" :placeholder="$t('ui.email')" v-model="email" type="text" maxlength="50">
                 <span v-if="email && emailValidated" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
@@ -38,7 +38,7 @@
               <button v-show="!mailSended" type="button" @click="next" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.next') }}</button>
               <button v-show="mailSended" type="button" @click="findpwd" v-bind:disabled="isInProgress" class="btn btn-lg btn-primary btn-block">{{ $t('ui.resetpwd') }}</button>
               <router-link class="btn btn-lg btn-default btn-block" :to="{ name: 'login' }">{{ $t('ui.return_to_login') }}</router-link>
-            </form>
+            </div>
           </div>
         </div>
       </div><!-- /.col-->

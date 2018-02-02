@@ -22,13 +22,6 @@
           <dl>
             <dt>Software License</dt>
             <dd>These programs use Apache License(Ver.2).</dd>
-            <dt>Security Problem</dt>
-            <dd>I have no domain and certificate, These programs use http for data communication, so do not use it for important information.</dd>
-            <dt>Why is there no iOS version?</dt>
-            <dd>Theoretically cordova can be compiled and deployed in iOS platform, but I have no Mac computer and iOS development environment. 
-              Maybe someone can help me to do this.</dd>
-            <dt>Why is there no windows and osx version?</dt>
-            <dd>Same above.</dd>
           </dl>
         </div>
       </div>

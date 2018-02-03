@@ -83,7 +83,7 @@ div.drawer-right .btn { flex-grow: 1; }
 div.drawer-right span.glyphicon-pencil { color: #7ed321; }
 div.drawer-right span.glyphicon-trash { color: red; }
 
-pre.lead { white-space: pre-wrap; margin-bottom: 0px; overflow: hidden; font-weight: 400; background-color: transparent; border: none; padding: 0; font-family: inherit; }
+pre.lead { white-space: pre-wrap; margin-bottom: 0px; overflow: hidden; font-weight: 400; background-color: transparent; border: none; padding: 0; font-family: inherit; user-select: text; }
 pre.wrap { white-space: nowrap; text-overflow: ellipsis; }
 
 .slide-fade-enter-active {

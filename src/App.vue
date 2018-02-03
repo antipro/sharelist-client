@@ -1,16 +1,11 @@
 <template>
-  <div id="app" style="background: #ffffff url('static/background.jpg')">
+  <div id="app" class="app" style="background: #ffffff url('static/background.jpg')">
     <router-view style="-webkit-app-region: no-drag;" />
   </div>
 </template>
 
 <style>
 * {
-  -webkit-touch-callout:none;
-  -webkit-user-select:none;
-  -khtml-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
   user-select:none;
 }
 /* global style */

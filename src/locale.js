@@ -85,7 +85,8 @@ export default {
       'saved': 'Saved',
       'warning_for_delete_account': 'Warning!!! This operation will delete your account and data, the data will be sent to your mailbox before deleted, do you want to continue?',
       'warning_again_for_delete_account': 'Warning again!!! This operation will delete your account and data, the data will be sent to your mailbox before deleted, do you want to continue still?',
-      'goodbye': 'Your account has been deleted, Thank you for use，goodbye.'
+      'goodbye': 'Your account has been deleted, Thank you for use，goodbye.',
+      'this_email_is_already_existed': 'This email is already existed'
     }
   },
   'zh-CN': {
@@ -174,7 +175,8 @@ export default {
       'saved': '已保存',
       'warning_for_delete_account': '警告！！！这项操作会删除你的账号和全部数据，数据会在删除前被发送到您的邮箱，要继续吗？',
       'warning_again_for_delete_account': '再次警告！！！这项操作会删除你的账号和全部数据，数据会在删除前被发送到您的邮箱, 仍然要继续吗？',
-      'goodbye': '您的账号已被删除，感谢您的使用，再见。'
+      'goodbye': '您的账号已被删除，感谢您的使用，再见。',
+      'this_email_is_already_existed': '这个电子邮件已经存在'
     }
   }
 }

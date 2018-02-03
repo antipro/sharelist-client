@@ -74,14 +74,13 @@
     </div>
   </div>
 </template>
-<style scoped>
+<style>
 .task { position: relative; height: 100%; width: 100%; overflow-y: auto; }
 @media screen and (min-width: 800px) {
   .task { margin-left: 250px; width: calc(100% - 250px); }
 }
-textarea { resize: none; }
-</style>
-<style>
+.task .container-fluid { position: absolute; top: 50px; bottom: 0; left: 0px; width: 100%; margin: 0px; padding-top: 10px; overflow-y: auto; }
+.task textarea { resize: none; }
 #date_modal .datepicker-inline { margin: 0 auto; font-size: 18px; }
 </style>
 

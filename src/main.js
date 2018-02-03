@@ -145,6 +145,13 @@ new Vue({
     resetPwd (oldpwd, pwd) {
       this.$socket.emit('resetpwd', oldpwd, pwd)
     },
+    deleteAccount () {
+      this.$socket.emit('deleteaccount', {
+        mailsender: this.$t('ui.app_name'),
+        ungrouped: this.$t('ui.ungrouped'),
+        subject: this.$t('message.goodbye')
+      })
+    },
     showMessage (title, content) {
       switch (this.runtime) {
         case 'browser':

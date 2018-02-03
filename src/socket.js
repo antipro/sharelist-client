@@ -138,6 +138,10 @@ export default function ($vue, store) {
     alert($vue.$t('message.pwd_reseted'))
     $vue.logout()
   })
+  socket.on('account deleted', () => {
+    alert($vue.$t('message.goodbye'))
+    $vue.logout()
+  })
   socket.on('relogin', () => {
     $vue.logout()
   })

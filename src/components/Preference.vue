@@ -49,6 +49,9 @@
           <div class="form-group">
             <router-link class="btn btn-default btn-lg" :to="{ name: 'resetpwd' }"><span class="glyphicon glyphicon-lock"></span> {{ $t('ui.resetpwd') }}</router-link>
           </div>
+          <div class="form-group">
+            <button class="btn btn-danger btn-lg" @click="deleteAccount"><span class="glyphicon glyphicon-warning-sign"></span> {{ $t('ui.delete_account_data') }}</button>
+          </div>
         </div>
       </div>
     </div>
@@ -148,6 +151,17 @@ export default {
       this.$root.updatePreference({
         name: this.uname
       })
+    },
+    deleteAccount () {
+      let bool = confirm(this.$t('message.warning_for_delete_account'))
+      if (!bool) {
+        return
+      }
+      bool = confirm(this.$t('message.warning_again_for_delete_account'))
+      if (!bool) {
+        return
+      }
+      this.$root.deleteAccount()
     }
   },
   components: {

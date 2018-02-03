@@ -40,7 +40,8 @@ export default {
       'recording': 'Recording...',
       'speech_recognition': 'Speech Recognition(English)',
       'loading': 'Loading...',
-      'left': 'left'
+      'left': 'left',
+      'delete_account_data': 'Delete Account'
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
@@ -80,7 +81,10 @@ export default {
       'find_ok': 'Password has been reseted',
       'error_code_or_timeout': 'Verify Code is wrong or expired.',
       'saving': 'Saving...',
-      'saved': 'Saved'
+      'saved': 'Saved',
+      'warning_for_delete_account': 'Warning!!! This operation will delete your account and data, the data will be sent to your mailbox before deleted, do you want to continue?',
+      'warning_again_for_delete_account': 'Warning again!!! This operation will delete your account and data, the data will be sent to your mailbox before deleted, do you want to continue still?',
+      'goodbye': 'Your account has been deleted, Thank you for use，goodbye.'
     }
   },
   'zh-CN': {
@@ -124,7 +128,8 @@ export default {
       'recording': '正在录音...',
       'speech_recognition': '语音识别（普通话）',
       'loading': '载入中...',
-      'left': '剩余'
+      'left': '剩余',
+      'delete_account_data': '删除账号'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',
@@ -164,7 +169,10 @@ export default {
       'find_ok': '密码已经被重新设置',
       'error_code_or_timeout': '验证码错误或已失效。',
       'saving': '正在保存...',
-      'saved': '已保存'
+      'saved': '已保存',
+      'warning_for_delete_account': '警告！！！这项操作会删除你的账号和全部数据，数据会在删除前被发送到您的邮箱，要继续吗？',
+      'warning_again_for_delete_account': '再次警告！！！这项操作会删除你的账号和全部数据，数据会在删除前被发送到您的邮箱, 仍然要继续吗？',
+      'goodbye': '您的账号已被删除，感谢您的使用，再见。'
     }
   }
 }

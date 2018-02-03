@@ -195,6 +195,12 @@ export default {
         })
         date.tasks.push(taskProxy)
       })
+      if (dates.length === 0) {
+        dates.push({
+          notify_date: null,
+          tasks: []
+        })
+      }
       dates.forEach(date => {
         date.tasks.sort((a, b) => {
           if (a.state < b.state) {

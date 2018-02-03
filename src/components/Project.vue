@@ -13,14 +13,26 @@
             <input type="text" v-model="pname" class="form-control input-lg" :placeholder="$t('ui.project_name')" maxlength="20">
           </div>
           <div class="form-group">
-            <div class="list-group">
-              <div class="list-group-item list-group-item-success" v-for="(share, index) of shares" :key="share.uid">
-                <button type="button" class="close" aria-label="Close" @click="removeShare(index)">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <span>{{ share.email }} <small>{{ share.uname }}</small></span>
+            <template v-if="isInProgress">
+              <div class="list-group">
+                <div class="list-group-item list-group-item-default">
+                  {{ $t('ui.loading') }}
+                </div>
               </div>
-            </div>
+            </template>
+            <template v-else>
+              <div v-if="shares.length > 0" class="list-group">
+                <div class="list-group-item list-group-item-success" v-for="(share, index) of shares" :key="share.uid">
+                  <button type="button" class="close" aria-label="Close" @click="removeShare(index)">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <span>{{ share.email }} <small>{{ share.uname }}</small></span>
+                </div>
+              </div>
+              <div v-else class="list-group">
+                <div class="list-group-item list-group-item-info">{{ $t('ui.not_shared') }}</div>
+              </div>
+            </template>
           </div>
           <div class="form-group">
             <div class="input-group input-group-lg">
@@ -56,7 +68,8 @@ export default {
       pid: null,
       pname: null,
       shares: [],
-      email: ''
+      email: '',
+      isInProgress: false
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -73,17 +86,22 @@ export default {
     }
     this.pid = this.$route.params.id
     this.pname = this.$route.params.name
+    this.isInProgress = true
     this.$axios.get('/shares/' + this.pid, {
       headers: {
         TOKEN: this.$root.token
       }
     }).then((response) => {
+      this.isInProgress = false
       let res = response.data
       if (res.state === '001') {
         alert(this.$t(res.msg))
         return
       }
       this.shares = res.data
+    }).catch(err => {
+      this.isInProgress = false
+      console.log(err)
     })
   },
   methods: {

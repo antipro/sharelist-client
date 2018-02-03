@@ -41,7 +41,8 @@ export default {
       'speech_recognition': 'Speech Recognition(English)',
       'loading': 'Loading...',
       'left': 'left',
-      'delete_account_data': 'Delete Account'
+      'delete_account_data': 'Delete Account',
+      'not_shared': 'Not shared'
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
@@ -129,7 +130,8 @@ export default {
       'speech_recognition': '语音识别（普通话）',
       'loading': '载入中...',
       'left': '剩余',
-      'delete_account_data': '删除账号'
+      'delete_account_data': '删除账号',
+      'not_shared': '未共享'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',

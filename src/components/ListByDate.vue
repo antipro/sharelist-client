@@ -89,9 +89,7 @@ export default {
     }
   },
   created () {
-    if (sessionStorage['activeNotifyDate']) {
-      this.activeNotifyDate = sessionStorage['activeNotifyDate']
-    }
+    this.activeNotifyDate = this.$root.activeNotifyDate
   },
   updated () {
     this.initDom()
@@ -236,7 +234,7 @@ export default {
   },
   watch: {
     activeNotifyDate (val) {
-      sessionStorage.setItem('activeNotifyDate', val)
+      this.$root.activeNotifyDate = val
     }
   }
 }

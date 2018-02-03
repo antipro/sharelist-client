@@ -22,7 +22,9 @@ Vue.prototype.$axios = axios.create({
 })
 
 Vue.use(VueI18n)
-Vue.use(VuePersist)
+Vue.use(VuePersist, {
+  name: 'persist:sharelist'
+})
 Vue.config.productionTip = false
 fundebug.apikey = '7cdad64bb66764b020b49afe0887c080f6307ba789cd9911ffb1926ba5751b4a'
 function formatComponentName (vm) {
@@ -64,9 +66,12 @@ new Vue({
     token: '',
     runtime: 'browser',
     locale: '',
-    timezone: ''
+    timezone: '',
+    activePid: 0,
+    topPid: 0,
+    activeNotifyDate: null
   },
-  persist: ['uid', 'email', 'uname', 'token', 'locale', 'timezone'],
+  persist: ['uid', 'email', 'uname', 'token', 'locale', 'timezone', 'activePid', 'topPid', 'activeNotifyDate'],
   components: { App },
   created () {
     if (this.locale === '') {
@@ -248,9 +253,11 @@ new Vue({
       this.uid = ''
       this.local = ''
       this.timezone = ''
+      this.activePid = 0
+      this.topPid = 0
+      this.activeNotifyDate = null
       this.$i18n.locale = navigator.language
       this.$store.commit('clear')
-      sessionStorage.clear()
       this.$router.replace('/login')
     },
     exit () {

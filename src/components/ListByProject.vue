@@ -115,9 +115,8 @@ export default {
     }
   },
   created () {
-    if (sessionStorage['activePid']) {
-      this.activePid = sessionStorage['activePid']
-    }
+    this.activePid = this.$root.activePid
+    this.topPid = this.$root.topPid
   },
   updated () {
     this.initDom()
@@ -281,7 +280,10 @@ export default {
   },
   watch: {
     activePid (val) {
-      sessionStorage.setItem('activePid', val)
+      this.$root.activePid = val
+    },
+    topPid (val) {
+      this.$root.topPid = val
     }
   }
 }

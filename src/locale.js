@@ -57,12 +57,15 @@ export default {
       'update_error': 'Update Error.',
       'remove_error': 'Remove Error.',
       'common_tip_01': 'Enter content to create task',
-      'common_tip_02': 'Enter @content to create project',
+      'common_tip_02': 'Enter @content to locate or create project',
       'common_tip_03': 'Enter ~content to search tasks',
       'common_tip_04': 'Item with green bg-color is project',
       'common_tip_05': 'Item without bg-color is task',
       'common_tip_06': 'Only your own project can be edited',
+      'common_tip_07': 'Enter #<date> to locate dates',
       'cordova_tip_01': 'Long press on item to toggle menu',
+      '_cordova_tip_01': 'Ctrl+Shift+P locate input box',
+      '_cordova_tip_02': 'Ctrl+S save project or task',
       'mail_failure': 'Mail Failed, Please checkout whether this email address works fine.',
       'signup_ok': 'Sign Up Success.',
       'verify_email': 'The Verification Code you received is {code}, Please Do not Tell anybody else.',
@@ -87,7 +90,8 @@ export default {
       'warning_for_delete_account': 'Warning!!! This operation will delete your account and data, the data will be sent to your mailbox before deleted, do you want to continue?',
       'warning_again_for_delete_account': 'Warning again!!! This operation will delete your account and data, the data will be sent to your mailbox before deleted, do you want to continue still?',
       'goodbye': 'Your account has been deleted, Thank you for use，goodbye.',
-      'this_email_is_already_existed': 'This email is already existed'
+      'this_email_is_already_existed': 'This email is already existed',
+      'wait_for_loading_shared_users': 'Please wait for loading shared users'
     }
   },
   'zh-CN': {
@@ -147,13 +151,16 @@ export default {
       'add_error': '添加出错。',
       'update_error': '更新出错。',
       'remove_error': '删除出错。',
-      'common_tip_01': '输入内容以创建任务',
-      'common_tip_02': '输入\'@\'开头的内容以创建项目',
-      'common_tip_03': '输入\'～\'开头的内容以搜索任务',
+      'common_tip_01': '输入内容来创建任务',
+      'common_tip_02': '输入\'@<内容>\'来定位或创建项目',
+      'common_tip_03': '输入\'～<内容>\'来搜索任务',
       'common_tip_04': '带绿色背景的列表项是项目',
       'common_tip_05': '不带背景的列表项是任务',
       'common_tip_06': '只能编辑你自己的项目',
+      'common_tip_07': '输入\'#<日期>\'来定位具体日期',
       'cordova_tip_01': '长按列表项调出菜单',
+      '_cordova_tip_01': 'Ctrl+Shift+P 定位到输入框',
+      '_cordova_tip_02': 'Ctrl+S 保存项目或任务',
       'mail_failure': '邮件发送失败，请检查电子邮件是否工作正常。',
       'signup_ok': '注册成功。',
       'verify_email': '您收到的验证码是 {code}， 请不要告诉其他人。',
@@ -178,7 +185,8 @@ export default {
       'warning_for_delete_account': '警告！！！这项操作会删除你的账号和全部数据，数据会在删除前被发送到您的邮箱，要继续吗？',
       'warning_again_for_delete_account': '再次警告！！！这项操作会删除你的账号和全部数据，数据会在删除前被发送到您的邮箱, 仍然要继续吗？',
       'goodbye': '您的账号已被删除，感谢您的使用，再见。',
-      'this_email_is_already_existed': '这个电子邮件已经存在'
+      'this_email_is_already_existed': '这个电子邮件已经存在',
+      'wait_for_loading_shared_users': '请等待共享用户加载完毕。'
     }
   }
 }

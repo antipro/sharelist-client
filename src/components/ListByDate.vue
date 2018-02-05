@@ -1,5 +1,5 @@
 <template>
-  <div class="list-group">
+  <div class="list-group listbydate">
     <template v-if="dates.length === 0">
       <div class="list-group-item list-group-item-info">
         <h3>{{ $t('ui.loading') }}</h3>
@@ -241,6 +241,23 @@ export default {
   watch: {
     activeNotifyDate (val) {
       this.$root.activeNotifyDate = val
+    },
+    content (val) {
+      if (val.startsWith('#') && val.length > 1) {
+        let notifyDate = val.substr(1, val.length)
+        let date = this.dates.find(date => {
+          return date.notify_date.indexOf(notifyDate) > -1
+        })
+        if (date === undefined) {
+          return
+        }
+        let $selectedDate = $('.list-group-item-info[data-name="' + date.notify_date + '"]')
+        if ($selectedDate.length === 0) {
+          return
+        }
+        this.activeDate(date)
+        $('.main').scrollTop($selectedDate.position().top - $('.list-group-item-info:first').position().top)
+      }
     }
   }
 }

@@ -16,7 +16,7 @@
     </div>
     <div class="footer">
       <div class="input-group">
-        <input type="text" class="form-control input-lg" :placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
+        <input id="command" type="text" class="form-control input-lg" :placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
         <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
           <span class="glyphicon glyphicon-edit" @click="add"></span>
         </span>
@@ -95,8 +95,16 @@ export default {
       this.placeholder = next.value
     }, 5000)
   },
+  mounted () {
+    if (this.$root.runtime !== 'cordova') {
+      document.addEventListener('keydown', this.shortCut, false)
+    }
+  },
   beforeDestroy () {
     clearInterval(this.interval_ptr)
+    if (this.$root.runtime !== 'cordova') {
+      document.removeEventListener('keydown', this.shortCut, false)
+    }
   },
   beforeRouteUpdate (to, from, next) {
     if (['projectlist', 'datelist'].indexOf(to.name) > -1) {
@@ -108,6 +116,12 @@ export default {
     Navibar
   },
   methods: {
+    shortCut (evt) {
+      if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 80) {
+        $('#command').focus()
+        evt.preventDefault()
+      }
+    },
     groupchanged (gname) {
       this.active_gname = gname === '' || gname === null ? this.$t('ui.ungrouped') : gname
     },
@@ -169,8 +183,14 @@ export default {
       yield this.$t('message.common_tip_04')
       yield this.$t('message.common_tip_05')
       yield this.$t('message.common_tip_06')
+      if ($(this.$refs.tasklist.$el).hasClass('listbydate')) {
+        yield this.$t('message.common_tip_07')
+      }
       if (this.$root.runtime === 'cordova') {
         yield this.$t('message.cordova_tip_01')
+      } else {
+        yield this.$t('message._cordova_tip_01')
+        yield this.$t('message._cordova_tip_02')
       }
     },
     detect (evt) {

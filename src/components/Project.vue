@@ -107,7 +107,23 @@ export default {
       console.log(err)
     })
   },
+  mounted () {
+    if (this.$root.runtime !== 'cordova') {
+      document.addEventListener('keydown', this.shortCut, false)
+    }
+  },
+  beforeDestroy () {
+    if (this.$root.runtime !== 'cordova') {
+      document.removeEventListener('keydown', this.shortCut, false)
+    }
+  },
   methods: {
+    shortCut (evt) {
+      if (evt.ctrlKey && evt.keyCode === 83) {
+        this.updateProject()
+        evt.preventDefault()
+      }
+    },
     back () {
       this.$router.go(-1)
     },
@@ -137,6 +153,10 @@ export default {
       this.email = ''
     },
     updateProject () {
+      if (this.isInProgress) {
+        alert(this.$t('message.wait_for_loading_shared_users'))
+        return
+      }
       this.$root.updateProject(this.pid, this.pname, this.shares)
       this.$router.go(-1)
     }

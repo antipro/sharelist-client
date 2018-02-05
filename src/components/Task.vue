@@ -189,11 +189,23 @@ export default {
       this.timeoutPtr = setTimeout(autoSave, 60000)
     }
     this.timeoutPtr = setTimeout(autoSave, 60000)
+    if (this.$root.runtime !== 'cordova') {
+      document.addEventListener('keydown', this.shortCut, false)
+    }
   },
   beforeDestroy () {
     clearInterval(this.timeoutPtr)
+    if (this.$root.runtime !== 'cordova') {
+      document.removeEventListener('keydown', this.shortCut, false)
+    }
   },
   methods: {
+    shortCut (evt) {
+      if (evt.ctrlKey && evt.keyCode === 83) {
+        this.updateTask()
+        evt.preventDefault()
+      }
+    },
     back () {
       this.$router.go(-1)
     },

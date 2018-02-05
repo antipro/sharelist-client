@@ -1,5 +1,5 @@
 <template>
-  <div class="list-group">
+  <div class="list-group listbyproject">
     <template v-if="projects.length === 0">
       <div class="list-group-item list-group-item-info">
         <h3>{{ $t('ui.loading') }}</h3>
@@ -284,6 +284,23 @@ export default {
     },
     topPid (val) {
       this.$root.topPid = val
+    },
+    content (val) {
+      if (val.startsWith('@') && val.length > 1) {
+        let projectName = val.substr(1, val.length)
+        let project = this.projects.find(project => {
+          return project.name.indexOf(projectName) > -1
+        })
+        if (project === undefined) {
+          return
+        }
+        let $selectedProject = $('.list-group-item-info[data-name="' + project.name + '"]')
+        if ($selectedProject.length === 0) {
+          return
+        }
+        this.activeProject(project)
+        $('.main').scrollTop($selectedProject.position().top - $('.list-group-item-info:first').position().top)
+      }
     }
   }
 }

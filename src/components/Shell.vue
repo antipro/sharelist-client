@@ -99,11 +99,17 @@ export default {
     if (this.$root.runtime !== 'cordova') {
       document.addEventListener('keydown', this.shortCut, false)
     }
+    if (this.$root.runtime === 'electron') {
+      document.querySelector('#command').addEventListener('contextmenu', this.$root.rightMenu, false)
+    }
   },
   beforeDestroy () {
     clearInterval(this.interval_ptr)
     if (this.$root.runtime !== 'cordova') {
       document.removeEventListener('keydown', this.shortCut, false)
+    }
+    if (this.$root.runtime === 'electron') {
+      document.querySelector('#command').removeEventListener('contextmenu', this.$root.rightMenu, false)
     }
   },
   beforeRouteUpdate (to, from, next) {

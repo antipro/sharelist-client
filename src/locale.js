@@ -42,7 +42,10 @@ export default {
       'loading': 'Loading...',
       'left': 'left',
       'delete_account_data': 'Delete Account',
-      'not_shared': 'Not shared'
+      'not_shared': 'Not shared',
+      'cut': 'Cut',
+      'copy': 'Copy',
+      'paste': 'Paste'
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
@@ -142,7 +145,10 @@ export default {
       'loading': '载入中...',
       'left': '剩余',
       'delete_account_data': '删除账号',
-      'not_shared': '未共享'
+      'not_shared': '未共享',
+      'cut': '剪切',
+      'copy': '复制',
+      'paste': '粘贴'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',

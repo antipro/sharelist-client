@@ -111,10 +111,16 @@ export default {
     if (this.$root.runtime !== 'cordova') {
       document.addEventListener('keydown', this.shortCut, false)
     }
+    if (this.$root.runtime === 'electron') {
+      document.querySelector('input').addEventListener('contextmenu', this.$root.rightMenu, false)
+    }
   },
   beforeDestroy () {
     if (this.$root.runtime !== 'cordova') {
       document.removeEventListener('keydown', this.shortCut, false)
+    }
+    if (this.$root.runtime === 'electron') {
+      document.querySelector('input').removeEventListener('contextmenu', this.$root.rightMenu, false)
     }
   },
   methods: {

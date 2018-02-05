@@ -78,9 +78,6 @@ new Vue({
       this.locale = navigator.language
     }
     this.$i18n.locale = this.locale
-  },
-  mounted () {
-    document.title = this.$t('ui.app_name')
     var userAgent = navigator.userAgent.toLowerCase()
     if (userAgent.indexOf('electron/') > -1) {
       this.runtime = 'electron'
@@ -102,7 +99,20 @@ new Vue({
       }, false)
     })
   },
+  mounted () {
+    document.title = this.$t('ui.app_name')
+  },
   methods: {
+    rightMenu (evt) {
+      const { remote } = eval('require(\'electron\')')
+      const { Menu, MenuItem } = remote
+      const menu = new Menu()
+      menu.append(new MenuItem({ label: this.$t('ui.cut'), click () { document.execCommand('Cut') } }))
+      menu.append(new MenuItem({ label: this.$t('ui.copy'), click () { document.execCommand('Copy') } }))
+      menu.append(new MenuItem({ label: this.$t('ui.paste'), click () { document.execCommand('Paste') } }))
+      evt.preventDefault()
+      menu.popup(remote.getCurrentWindow())
+    },
     refresh (callback) {
       this.$socket.emit('refresh', callback)
     },

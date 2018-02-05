@@ -45,7 +45,8 @@ export default {
       'not_shared': 'Not shared',
       'cut': 'Cut',
       'copy': 'Copy',
-      'paste': 'Paste'
+      'paste': 'Paste',
+      'global_shortcut': 'Global Shortcut'
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
@@ -148,7 +149,8 @@ export default {
       'not_shared': '未共享',
       'cut': '剪切',
       'copy': '复制',
-      'paste': '粘贴'
+      'paste': '粘贴',
+      'global_shortcut': '全局快捷键'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',

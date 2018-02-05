@@ -17,6 +17,16 @@
               </label>
             </div>
           </div>
+          <div v-if="$root.runtime === 'electron'" class="form-group">
+            <label for="shortcut">{{ $t('ui.global_shortcut') }}</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-addon">CmdOrCtrl+Alt+Shift</span>
+              <input type="text" class="form-control" v-model="shortcut">
+              <span class="input-group-addon" style="padding: 6px 18px;">
+                <span class="glyphicon glyphicon-floppy-save" @click="saveKey"></span>
+              </span>
+            </div>
+          </div>
           <div class="form-group">
             <label for="notify_time">{{ $t('ui.default_time_for_notification') }}</label>
             <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg">
@@ -94,6 +104,7 @@ export default {
   data () {
     return {
       starup_hidden: false,
+      shortcut: 'S',
       uname: this.$root.uname
     }
   },
@@ -102,6 +113,7 @@ export default {
       const ipc = eval('require(\'electron\')').ipcRenderer
       ipc.on('preference-get-reply', (event, ref) => {
         this.starup_hidden = ref.starup_hidden
+        this.shortcut = ref.shortcut || 'S'
       })
       ipc.send('preference-get-message')
     }
@@ -126,10 +138,17 @@ export default {
     toggle () {
       this.starup_hidden = !this.starup_hidden
       const ipc = eval('require(\'electron\')').ipcRenderer
-      ipc.on('preference-reply', function (event) {
-        console.log('electron preference saved.')
+      ipc.send('preference-message', {
+        starup_hidden: this.starup_hidden,
+        shortcut: this.shortcut
       })
-      ipc.send('preference-message', { starup_hidden: this.starup_hidden })
+    },
+    saveKey () {
+      const ipc = eval('require(\'electron\')').ipcRenderer
+      ipc.send('preference-message', {
+        starup_hidden: this.starup_hidden,
+        shortcut: this.shortcut
+      })
     },
     saveTime () {
       this.$root.updatePreference({

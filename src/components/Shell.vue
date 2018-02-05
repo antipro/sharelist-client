@@ -121,11 +121,11 @@ export default {
         $('#command').focus()
         evt.preventDefault()
       }
-      if (!evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 40) {
-        $('.main')[0].scrollBy(0, 30)
+      if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 40) {
+        document.querySelector('.main').scrollTop += 30
       }
-      if (!evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 38) {
-        $('.main')[0].scrollBy(0, -30)
+      if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 38) {
+        document.querySelector('.main').scrollTop -= 30
       }
     },
     groupchanged (gname) {
@@ -197,6 +197,7 @@ export default {
       } else {
         yield this.$t('message._cordova_tip_01')
         yield this.$t('message._cordova_tip_02')
+        yield this.$t('message._cordova_tip_03')
       }
     },
     detect (evt) {

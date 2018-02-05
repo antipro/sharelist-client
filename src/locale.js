@@ -92,7 +92,11 @@ export default {
       'warning_again_for_delete_account': 'Warning again!!! This operation will delete your account and data, the data will be sent to your mailbox before deleted, do you want to continue still?',
       'goodbye': 'Your account has been deleted, Thank you for use，goodbye.',
       'this_email_is_already_existed': 'This email is already existed',
-      'wait_for_loading_shared_users': 'Please wait for loading shared users'
+      'wait_for_loading_shared_users': 'Please wait for loading shared users',
+      'author': 'Author',
+      'description': 'Description',
+      'software_license': 'Software License',
+      'shortcut': 'Shortcut'
     }
   },
   'zh-CN': {
@@ -188,7 +192,11 @@ export default {
       'warning_again_for_delete_account': '再次警告！！！这项操作会删除你的账号和全部数据，数据会在删除前被发送到您的邮箱, 仍然要继续吗？',
       'goodbye': '您的账号已被删除，感谢您的使用，再见。',
       'this_email_is_already_existed': '这个电子邮件已经存在',
-      'wait_for_loading_shared_users': '请等待共享用户加载完毕。'
+      'wait_for_loading_shared_users': '请等待共享用户加载完毕。',
+      'author': '作者',
+      'description': '描述',
+      'software_license': '软件许可证',
+      'shortcut': '快捷键'
     }
   }
 }

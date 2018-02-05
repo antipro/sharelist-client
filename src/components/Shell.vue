@@ -121,6 +121,12 @@ export default {
         $('#command').focus()
         evt.preventDefault()
       }
+      if (!evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 40) {
+        $('.main')[0].scrollBy(0, 30)
+      }
+      if (!evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 38) {
+        $('.main')[0].scrollBy(0, -30)
+      }
     },
     groupchanged (gname) {
       this.active_gname = gname === '' || gname === null ? this.$t('ui.ungrouped') : gname

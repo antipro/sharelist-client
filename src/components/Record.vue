@@ -119,29 +119,32 @@ export default {
           lan = 'en'
         }
         this.$emit('recognizing')
-        axios({
-          method: 'post',
-          url: 'http://vop.baidu.com/server_api?lan=' + lan + '&cuid=' + cuid + '&token=24.7fd075ee583a8021ebe4930893b59b03.2592000.1518941300.282335-10716330',
-          headers: {
-            'Content-Type': 'audio/amr; rate=8000'
-          },
-          data: reader.result
-        }).then(response => {
-          this.$emit('recognized')
-          if (response.status !== 200) {
-            console.error('Network Fault', response.status, response.statusText)
-            alert(response.statusText)
-            return
-          }
-          let res = response.data
-          if (res.err_no === 0) {
-            this.processResult(res.result)
-          } else {
-            alert(res.err_msg)
-          }
-        }).catch((error) => {
-          this.$emit('recognized')
-          console.log(error)
+        this.$root.fetchToken((accessToken) => {
+          console.log(accessToken)
+          axios({
+            method: 'post',
+            url: 'http://vop.baidu.com/server_api?lan=' + lan + '&cuid=' + cuid + '&token=' + accessToken,
+            headers: {
+              'Content-Type': 'audio/amr; rate=8000'
+            },
+            data: reader.result
+          }).then(response => {
+            this.$emit('recognized')
+            if (response.status !== 200) {
+              console.error('Network Fault', response.status, response.statusText)
+              alert(response.statusText)
+              return
+            }
+            let res = response.data
+            if (res.err_no === 0) {
+              this.processResult(res.result)
+            } else {
+              alert(res.err_msg)
+            }
+          }).catch((error) => {
+            this.$emit('recognized')
+            console.log(error)
+          })
         })
       }
       reader.readAsArrayBuffer(file)

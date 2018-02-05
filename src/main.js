@@ -167,6 +167,9 @@ new Vue({
         subject: this.$t('message.goodbye')
       })
     },
+    fetchToken (callback) {
+      this.$socket.emit('fetchtoken', callback)
+    },
     showMessage (title, content) {
       switch (this.runtime) {
         case 'browser':

@@ -201,9 +201,6 @@ export default {
     if (this.$root.runtime !== 'cordova') {
       document.removeEventListener('keydown', this.shortCut, false)
     }
-    if (this.$root.runtime === 'electron') {
-      document.querySelector('textarea').removeEventListener('contextmenu', this.$root.rightMenu, false)
-    }
   },
   methods: {
     shortCut (evt) {

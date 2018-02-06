@@ -108,9 +108,6 @@ export default {
     if (this.$root.runtime !== 'cordova') {
       document.removeEventListener('keydown', this.shortCut, false)
     }
-    if (this.$root.runtime === 'electron') {
-      document.querySelector('#command').removeEventListener('contextmenu', this.$root.rightMenu, false)
-    }
   },
   beforeRouteUpdate (to, from, next) {
     if (['projectlist', 'datelist'].indexOf(to.name) > -1) {

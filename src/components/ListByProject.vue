@@ -86,19 +86,10 @@ div.drawer-right span.glyphicon-trash { color: red; }
 pre.lead { white-space: pre-wrap; margin-bottom: 0px; overflow: hidden; font-weight: 400; background-color: transparent; border: none; padding: 0; font-family: inherit; user-select: text; }
 pre.wrap { white-space: nowrap; text-overflow: ellipsis; }
 
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to {
-  transform: translateX(10px);
-  opacity: 0;
-}
-.slide-fade-move {
-  transition: transform .5s;
-}
+.slide-fade-enter-active { transition: all .3s ease; }
+.slide-fade-leave-active { transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0); }
+.slide-fade-enter, .slide-fade-leave-to { transform: translateX(10px); opacity: 0; }
+.slide-fade-move { transition: transform .5s; }
 </style>
 
 <script>
@@ -273,7 +264,7 @@ export default {
         if (b.id === topPid) { // b should smaller/positive
           return 1
         }
-        return a.id - b.id // no top project/compare them
+        return b.id - a.id // no top project/compare them
       })
       return projects
     }
@@ -286,7 +277,7 @@ export default {
       this.$root.topPid = val
     },
     content (val) {
-      if (val.startsWith('@') && val.length > 1) {
+      if (val.startsWith('#') && val.length > 1) {
         let projectName = val.substr(1, val.length)
         let project = this.projects.find(project => {
           return project.name.indexOf(projectName) > -1

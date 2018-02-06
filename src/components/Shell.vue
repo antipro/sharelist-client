@@ -39,7 +39,7 @@
 @media screen and (min-width: 800px) {
   .shell { margin-left: 250px; width: calc(100% - 250px); }
 }
-.shell .main { position: absolute; top: 50px; bottom: 50px; left: 0px; width: 100%; margin: 0px; overflow-y: auto; }
+.shell .main { position: absolute; top: 50px; bottom: 50px; left: 0px; width: 100%; margin: 0px; overflow-y: auto; background: url('../../static/border.jpg') repeat-y }
 .shell .footer { position: absolute; bottom: 0px; left: 0px; height: 50px; width: 100%; padding: 2px 0px; }
 .shell .footer .input-group { margin: 0 5px; }
 .shell .notice { position: absolute; display: none; top: 0; margin: 0 auto; width: 250px; left: 0; right: 0; z-index: 1050; }

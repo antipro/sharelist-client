@@ -8,7 +8,7 @@
         </a>
       </slot>
       <div class="side-modal" @click="close">
-        <div class="side-action" style="text-align: left; background: #ffffff url('static/background.jpg')">
+        <div class="side-action" style="text-align: left;">
           <div style="margin-bottom: 50px; text-align: center; padding: 0 15px;">
             <img src="../assets/user.png" class="img-rounded img-responsive" style="width: 60%;margin: 0 auto;">
             <h3>{{ email }}<br><small>{{ uname }}</small></h3>
@@ -50,9 +50,10 @@
 .navbar .navbar-text { float: left; color: #FFF; font-weight: 800;  }
 .navbar .navbar-brand:hover { color: #FFF; }
 .navbar .navbar-brand:focus { color: #FFF; }
-.side-action { position: absolute; width: 250px; top: 0px; bottom: 0px; left: -250px; background-color: #f9f7f6;
+.side-action { position: absolute; width: 250px; top: 0px; bottom: 0px; left: -250px; background: #98e3ff url('../../static/navigator.jpg') no-repeat bottom center;
   display: flex; flex-direction: column; justify-content: center; }
 .side-action h3 { word-wrap: break-word; }
+.side-action .list-group * { background-color: rgba(152, 227, 255, 0.5); color: #1d465f; font-weight: bold; }
 .side-modal { -webkit-app-region: no-drag; overflow: hidden; display: none; z-index: 1050; }
 .side-modal-on { position: fixed;	right: 0px;	left: 0px; top: 0px; bottom: 0px;	display: block; background-color: rgba(52, 52, 52, 0.5); }
 @media screen and (min-width: 800px) {

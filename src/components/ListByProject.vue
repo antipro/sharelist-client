@@ -9,7 +9,7 @@
       </div>
     </template>
     <template v-else v-for="project in projects">
-      <div class="list-group-item list-group-item-info" v-bind:key="project.id" v-bind:data-name="project.name" v-bind:data-pid="project.id" 
+      <div class="list-group-item list-group-item-info" :id="'project_' + project.id" :key="project.id" :data-name="project.name" :data-pid="project.id" 
         @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
         <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }} {{ project.uid !== $root.uid ? '(' + project.uname + ')' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
@@ -37,8 +37,8 @@
           </button>
         </div>
       </div> <!-- /.list-group-item-info  -->
-      <transition-group name="slide-fade" v-bind:key="project.id + '_slide'">
-        <div class="list-group-item" v-for="task in project.tasks" v-show="search(task)" v-bind:key="task.id" @click="activeTask(task, $event)">
+      <transition-group name="slide-fade" :key="project.id + '_slide'">
+        <div class="list-group-item" v-for="task in project.tasks" v-show="search(task)" :id="'task_' + task.id" :key="task.id" @click="activeTask(task, $event)">
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
           <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
@@ -294,12 +294,9 @@ export default {
         if (project === undefined) {
           return
         }
-        let $selectedProject = $('.list-group-item-info[data-name="' + project.name + '"]')
-        if ($selectedProject.length === 0) {
-          return
-        }
         this.activeProject(project)
-        $('.main').scrollTop($selectedProject.position().top - $('.list-group-item-info:first').position().top)
+        location.hash = '#project_' + project.id
+        document.querySelector('#command').focus()
       }
     }
   }

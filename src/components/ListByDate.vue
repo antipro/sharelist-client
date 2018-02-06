@@ -9,13 +9,13 @@
       </div>
     </template>
     <template v-else v-for="date in dates">
-      <div class="list-group-item list-group-item-info" v-bind:key="date.notify_date" v-bind:data-name="date.notify_date" v-bind:data-date="date.notify_date"
+      <div class="list-group-item list-group-item-info" :id="'date_' + date.notify_date" :key="date.notify_date" :data-name="date.notify_date" :data-date="date.notify_date"
         @click="activeDate(date, $event)">
         <span v-show="activeNotifyDate === date.notify_date" class="glyphicon glyphicon-ok-circle"></span> 
         {{ date.notify_date===null?$t('ui.ungrouped'):date.notify_date }} {{ today(date.notify_date) }}
       </div>
-      <transition-group name="slide-fade" v-bind:key="date.notify_date + '_slide'">
-        <div class="list-group-item" v-for="task in date.tasks" v-show="search(task)" v-bind:key="task.id" @click="activeTask(task, $event)">
+      <transition-group name="slide-fade" :key="date.notify_date + '_slide'">
+        <div class="list-group-item" v-for="task in date.tasks" v-show="search(task)" :id="'task_' + task.id" :key="task.id" @click="activeTask(task, $event)">
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
           <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
@@ -251,12 +251,9 @@ export default {
         if (date === undefined) {
           return
         }
-        let $selectedDate = $('.list-group-item-info[data-name="' + date.notify_date + '"]')
-        if ($selectedDate.length === 0) {
-          return
-        }
         this.activeDate(date)
-        $('.main').scrollTop($selectedDate.position().top - $('.list-group-item-info:first').position().top)
+        location.hash = '#date_' + date.notify_date
+        document.querySelector('#command').focus()
       }
     }
   }

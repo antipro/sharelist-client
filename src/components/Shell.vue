@@ -16,12 +16,19 @@
     </div>
     <record ref="record" @getContent="contentGet" @recognizing="isInProgress = true" @recognized="isInProgress = false"></record>
     <div class="footer">
-      <div class="input-group">
-        <input id="command" type="text" class="form-control input-lg" :placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
-        <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
-          <span v-if="content !== ''" class="glyphicon glyphicon-edit" @click="add"></span>
-          <span v-if="content === '' && $root.runtime === 'cordova' && isInProgress === false" class="glyphicon glyphicon-record" @click="startRecord"></span>
-        </span>
+      <div class="input-group input-group-lg">
+        <input id="command" type="text" class="form-control" :placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
+        <template v-if="$root.runtime === 'cordova'">
+          <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
+            <span v-if="content !== ''" class="glyphicon glyphicon-edit" @click="add"></span>
+            <span v-if="content === ''" class="glyphicon glyphicon-record" @click="startRecord"></span>
+          </span>
+        </template>
+        <template v-else>
+          <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
+            <span class="glyphicon glyphicon-edit" @click="add"></span>
+          </span>
+        </template>
       </div><!-- /input-group -->
     </div>
   </div>
@@ -160,6 +167,9 @@ export default {
       this.content = ''
     },
     startRecord () {
+      if (this.isInProgress) {
+        return
+      }
       this.$refs.record.startRecord()
     },
     contentGet (text) {

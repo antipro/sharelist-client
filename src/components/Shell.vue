@@ -14,11 +14,13 @@
         <router-view ref="tasklist" @changegroup="groupchanged" :content="content"></router-view>
       </keep-alive>
     </div>
+    <record ref="record" @getContent="contentGet" @recognizing="isInProgress = true" @recognized="isInProgress = false"></record>
     <div class="footer">
       <div class="input-group">
         <input id="command" type="text" class="form-control input-lg" :placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
         <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
-          <span class="glyphicon glyphicon-edit" @click="add"></span>
+          <span v-if="content !== ''" class="glyphicon glyphicon-edit" @click="add"></span>
+          <span v-if="content === '' && $root.runtime === 'cordova' && isInProgress === false" class="glyphicon glyphicon-record" @click="startRecord"></span>
         </span>
       </div><!-- /input-group -->
     </div>
@@ -56,6 +58,7 @@ span.glyphicon-refresh{
 
 <script>
 import Navibar from '@/components/Navibar'
+import Record from '@/components/Record'
 import $ from 'jquery'
 
 export default {
@@ -69,7 +72,8 @@ export default {
       interval_ptr: null,
       forward: null,
       back: null,
-      defaultChild: null
+      defaultChild: null,
+      isInProgress: false
     }
   },
   persist: ['defaultChild'],
@@ -116,7 +120,7 @@ export default {
     next()
   },
   components: {
-    Navibar
+    Navibar, Record
   },
   methods: {
     shortCut (evt) {
@@ -137,6 +141,7 @@ export default {
     add () {
       let content = this.content.trim()
       if (content === '') {
+        this.startRecord()
         return
       }
       if (content.startsWith('@')) {
@@ -153,6 +158,12 @@ export default {
         this.$refs.tasklist.addTask()
       }
       this.content = ''
+    },
+    startRecord () {
+      this.$refs.record.startRecord()
+    },
+    contentGet (text) {
+      this.content = text
     },
     shownotice (forward, back) {
       if (this.timeout_ptr !== null) {

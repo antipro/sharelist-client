@@ -101,7 +101,8 @@ export default {
       'description': 'Description',
       'software_license': 'Software License',
       'shortcut': 'Shortcut',
-      'no_result': 'No Result'
+      'no_result': 'No Result',
+      'current_version': 'Current Version'
     }
   },
   'zh-CN': {
@@ -206,7 +207,8 @@ export default {
       'description': '描述',
       'software_license': '软件许可证',
       'shortcut': '快捷键',
-      'no_result': '没有结果'
+      'no_result': '没有结果',
+      'current_version': '当前版本'
     }
   }
 }

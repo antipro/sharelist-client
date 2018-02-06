@@ -5,19 +5,25 @@
 
 const path = require('path')
 try {
-  var server = require('./server.js')
+  var sharelistConfig = require('./sharelist-config.js')
 } catch (error) {
-  console.error('Please create config/server.js file')
+  console.error('Please create config/sharelist-config.js file')
   console.error('Content like this:')
   console.error(`'use strict'
   module.exports = {
-    dev: '"ip or domain of sharelist-server for development(with port)"',
-    prod: '"ip or domain of sharelist-server for production(with port)"'
+    CURRENT_VERSION: '"version-revision"'
+    SERVER_URL: {
+      dev: '"ip or domain of sharelist-server for development(with port)"',
+      prod: '"ip or domain of sharelist-server for production(with port)"'
+    }
   }`)
   throw error
 }
 
 module.exports = {
+  base: {
+    currentVersion: sharelistConfig.CURRENT_VERSION
+  },
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
@@ -36,7 +42,7 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report,
-    serverAddress: server.prod
+    serverAddress: sharelistConfig.SERVER_URL.prod
   },
   dev: {
     env: require('./dev.env'),
@@ -51,6 +57,6 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
-    serverAddress: server.dev
+    serverAddress: sharelistConfig.SERVER_URL.dev
   }
 }

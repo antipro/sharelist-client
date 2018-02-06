@@ -10,12 +10,18 @@
         <div class="col-md-12">
           <h4>{{ $t('message.description') }}</h4>
           <p class="lead">
-            A todo list application with share function accross email address.
+            A todo list application with sharing mechanism via email.
           </p>
+          <h4>{{ $t('message.current_version') }}</h4>
+          <p>{{ currentVersion }}</p>
           <h4>{{ $t('message.author') }}</h4>
           <strong>antipro</strong><br/>
           <a href="mailto:antipro@163.com">antipro@163.com</a><br/>
-          <a href="https://gitee.com/antipro" target="_blank">https://gitee.com/antipro</a>
+          <a href="https://antipro.gitee.io/sharelist/" target="_blank">https://antipro.gitee.io/sharelist/</a>
+          <h4>Android</h4>
+          <p>
+            <img src="http://qr.liantu.com/api.php?text=http://antipro.gitee.io/sharelist/releases/sharelist-release.apk" style="width: 200px; height: 200px;">
+          </p>
           <h4>{{ $t('message.software_license') }}</h4>
           <p><a href="http://www.apache.org/licenses/LICENSE-2.0.txt" target="_blank">Apache License(Ver.2)</a></p>
           <h4>{{ $t('message.shortcut') }}</h4>
@@ -50,10 +56,16 @@
 
 
 <script>
+/* global CURRENT_VERSION:true */
 import Navibar from '@/components/Navibar'
 
 export default {
   name: 'about',
+  data () {
+    return {
+      currentVersion: CURRENT_VERSION
+    }
+  },
   created () {
     if (this.$root.token === '') {
       this.$router.replace('/login')

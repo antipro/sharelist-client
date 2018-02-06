@@ -50,7 +50,7 @@
 .navbar .navbar-text { float: left; color: #FFF; font-weight: 800;  }
 .navbar .navbar-brand:hover { color: #FFF; }
 .navbar .navbar-brand:focus { color: #FFF; }
-.side-action { position: absolute; width: 250px; top: 0px; bottom: 0px; left: -250px; background: #98e3ff url('../../static/navigator.jpg') no-repeat bottom center;
+.side-action { position: absolute; width: 250px; top: 0px; bottom: 0px; left: -250px; background: #b3e4f5 url('../../static/navigator.jpg') no-repeat bottom center;
   display: flex; flex-direction: column; justify-content: center; }
 .side-action h3 { word-wrap: break-word; }
 .side-action .list-group * { background-color: rgba(152, 227, 255, 0.5); color: #1d465f; font-weight: bold; }

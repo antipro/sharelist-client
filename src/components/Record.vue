@@ -25,7 +25,7 @@
           </div>
           <div class="modal-body">
             <div class="list-group">
-              <button v-for="item in items" :key="item" type="button" class="list-group-item" @click="selectItem(item)">{{ item }}</button>
+              <button v-for="item in items" :key="item" type="button" class="list-group-item" @click="selectItem(item)">{{ formatted(item) }}</button>
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@ export default {
     processResult (result) {
       console.log(result)
       if (result.length === 0) {
-        alert('No Result')
+        alert(this.$t('message.no_result'))
       } else {
         this.showItems(result)
       }
@@ -162,8 +162,11 @@ export default {
       $('#modal-items').modal('show')
     },
     selectItem (item) {
-      this.$emit('getContent', item)
+      this.$emit('getContent', this.formatted(item))
       $('#modal-items').modal('hide')
+    },
+    formatted (item) {
+      return item.substr(0, item.length - 1)
     }
   }
 }

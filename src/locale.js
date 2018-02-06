@@ -100,7 +100,8 @@ export default {
       'author': 'Author',
       'description': 'Description',
       'software_license': 'Software License',
-      'shortcut': 'Shortcut'
+      'shortcut': 'Shortcut',
+      'no_result': 'No Result'
     }
   },
   'zh-CN': {
@@ -204,7 +205,8 @@ export default {
       'author': '作者',
       'description': '描述',
       'software_license': '软件许可证',
-      'shortcut': '快捷键'
+      'shortcut': '快捷键',
+      'no_result': '没有结果'
     }
   }
 }

@@ -132,7 +132,6 @@ export default {
   },
   mounted () {
     touch.on('.list-group', 'hold', (evt) => {
-      console.log(evt)
       if (evt.target.dataset.pid !== undefined) {
         this.drawid = 'project_' + evt.target.dataset.pid
         return

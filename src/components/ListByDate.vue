@@ -14,8 +14,8 @@
         :key="date.notify_date" 
         :data-name="date.notify_date" 
         :data-date="date.notify_date"
-        @click="activeDate(date, $event)">
-        <span v-show="activeNotifyDate === date.notify_date" class="glyphicon glyphicon-ok-circle"></span> 
+        @click="activeDate(date)">
+        <span v-show="checkActive(date)" class="glyphicon glyphicon-ok-circle"></span> 
         {{ date.notify_date===null?$t('ui.ungrouped'):date.notify_date }} {{ today(date.notify_date) }}
       </div>
       <transition-group name="slide-fade" :key="date.notify_date + '_slide'">
@@ -25,7 +25,7 @@
           :id="'task_' + task.id" 
           :key="task.id" 
           :data-tid="task.id"  
-          @click="activeTask(task, $event)">
+          @click="activeTask(task)">
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
           <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
@@ -127,6 +127,13 @@ export default {
       }
     })
   },
+  activated () {
+    for (let date of this.dates) {
+      if (this.checkActive(date)) {
+        break
+      }
+    }
+  },
   methods: {
     toggleWrap (tid) {
       if (this.expandid === 'task_' + tid) {
@@ -155,11 +162,18 @@ export default {
         $item.css({ display: 'block' })
       })
     },
-    activeDate (date, $evt) {
+    checkActive (date) {
+      let bool = this.activeNotifyDate === date.notify_date
+      if (bool) {
+        this.$emit('changegroup', date.notify_date)
+      }
+      return bool
+    },
+    activeDate (date) {
       this.$root.activeNotifyDate = date.notify_date
       this.$emit('changegroup', date.notify_date)
     },
-    activeTask (task, evt) {
+    activeTask (task) {
       this.drawpid = ''
     },
     addTask () {

@@ -14,10 +14,10 @@
         :key="project.id" 
         :data-name="project.name" 
         :data-pid="project.id" 
-        @click="activeProject(project, $event)" 
+        @click="activeProject(project)" 
         @mouseenter="mousein" 
         @mouseleave="mouseout">
-        <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }} {{ project.uid !== $root.uid ? '(' + project.uname + ')' : '' }}
+        <span v-show="checkActive(project)" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }} {{ project.uid !== $root.uid ? '(' + project.uname + ')' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">
@@ -50,7 +50,7 @@
           :id="'task_' + task.id" 
           :key="task.id" 
           :data-tid="task.id" 
-          @click="activeTask(task, $event)">
+          @click="activeTask(task)">
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
           <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
@@ -131,6 +131,7 @@ export default {
     }
   },
   mounted () {
+    console.log('mounted')
     touch.on('.list-group', 'hold', (evt) => {
       if (evt.target.dataset.pid !== undefined) {
         this.drawid = 'project_' + evt.target.dataset.pid
@@ -157,6 +158,13 @@ export default {
         this.drawid = 'task_' + taskel.dataset.tid
       }
     })
+  },
+  activated () {
+    for (let project of this.projects) {
+      if (this.checkActive(project)) {
+        break
+      }
+    }
   },
   methods: {
     toggleWrap (tid) {
@@ -202,12 +210,18 @@ export default {
         locationId = '#project_' + project.id
       })
     },
-    activeProject (project, evt) {
+    checkActive (project) {
+      let bool = this.activePid === project.id
+      if (bool) {
+        this.$emit('changegroup', project.name)
+      }
+      return bool
+    },
+    activeProject (project) {
       this.$root.activePid = project.id
-      this.$emit('changegroup', project.name)
       this.drawpid = ''
     },
-    activeTask (task, evt) {
+    activeTask (task) {
       this.drawpid = ''
     },
     addTask () {

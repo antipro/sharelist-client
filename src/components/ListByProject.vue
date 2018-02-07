@@ -150,7 +150,6 @@ export default {
       let taskel = evt.path.find((el) => {
         return el.classList.contains('list-group-item')
       })
-      console.log(taskel)
       if (taskel === undefined) {
         return
       }

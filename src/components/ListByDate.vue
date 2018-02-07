@@ -24,6 +24,7 @@
           v-locate v-show="search(task)" 
           :id="'task_' + task.id" 
           :key="task.id" 
+          :data-tid="task.id"  
           @click="activeTask(task, $event)">
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
@@ -164,10 +165,10 @@ export default {
       })
     },
     mousein (evt) {
-      evt.target.querySelector('.pull-right').style.visibility = ''
+      $('.pull-right', evt.target).css('visibility', '')
     },
     mouseout (evt) {
-      evt.target.querySelector('.pull-right').style.visibility = 'hidden'
+      $('.pull-right', evt.target).css('visibility', 'hidden')
     },
     search (task) {
       let term = this.content.toLowerCase()

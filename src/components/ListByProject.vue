@@ -149,7 +149,6 @@ export default {
   },
   methods: {
     toggleWrap (tid) {
-      console.log(tid)
       if (this.expandid === 'task_' + tid) {
         this.expandid = ''
       } else {
@@ -217,10 +216,10 @@ export default {
       this.$root.topPid = pid
     },
     mousein (evt) {
-      evt.target.querySelector('.pull-right').style.visibility = ''
+      $('.pull-right', evt.target).css('visibility', '')
     },
     mouseout (evt) {
-      evt.target.querySelector('.pull-right').style.visibility = 'hidden'
+      $('.pull-right', evt.target).css('visibility', 'hidden')
     },
     search (task) {
       let term = this.content.toLowerCase()

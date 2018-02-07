@@ -102,7 +102,9 @@ export default {
       'software_license': 'Software License',
       'shortcut': 'Shortcut',
       'no_result': 'No Result',
-      'current_version': 'Current Version'
+      'current_version': 'Current Version',
+      'share_subject': '{0} shared a project({1}) with you',
+      'share_description': 'You received this email because that {0} shared a project({1}) with you, you can get this project by use sharelist application. This software(Windows/Debian Linux/Android) can be downloaded in the link below if you have not own it.'
     }
   },
   'zh-CN': {
@@ -208,7 +210,9 @@ export default {
       'software_license': '软件许可证',
       'shortcut': '快捷键',
       'no_result': '没有结果',
-      'current_version': '当前版本'
+      'current_version': '当前版本',
+      'share_subject': '{0} 和你分享了一个项目（{1}）',
+      'share_description': '你接收到这份邮件是因为 {0} 和你分享了一个项目（{1}）, 你可以从分享清单这个应用程序来获取项目。如果你还没有这款软件(Windows/Debian Linux/Android)， 可以在下面的链接中被下载。'
     }
   }
 }

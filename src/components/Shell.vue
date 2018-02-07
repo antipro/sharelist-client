@@ -159,7 +159,7 @@ export default {
           if (content.length > 20) {
             content = content.substr(0, 20)
           }
-          this.$root.addProject(content)
+          this.$refs.tasklist.addProject(content)
         }
       } else {
         this.$refs.tasklist.addTask()

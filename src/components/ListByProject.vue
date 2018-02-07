@@ -9,8 +9,14 @@
       </div>
     </template>
     <template v-else v-for="project in projects">
-      <div class="list-group-item list-group-item-info" :id="'project_' + project.id" :key="project.id" :data-name="project.name" :data-pid="project.id" 
-        @click="activeProject(project, $event)" @mouseenter="mousein" @mouseleave="mouseout">
+      <div class="list-group-item list-group-item-info" 
+        v-locate :id="'project_' + project.id" 
+        :key="project.id" 
+        :data-name="project.name" 
+        :data-pid="project.id" 
+        @click="activeProject(project, $event)" 
+        @mouseenter="mousein" 
+        @mouseleave="mouseout">
         <span v-show="activePid === project.id" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }} {{ project.uid !== $root.uid ? '(' + project.uname + ')' : '' }}
         <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
@@ -25,7 +31,7 @@
             </button>
           </div>
         </div>
-        <div v-if="$root.runtime==='cordova'" class="drawer-right btn-group">
+        <div v-if="$root.runtime==='cordova'" class="drawer-right btn-group" :class="{'drawer-right-on': drawid === 'project_' + project.id}">
           <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">
             <span class="glyphicon glyphicon-arrow-up" ></span>
           </button>
@@ -38,11 +44,17 @@
         </div>
       </div> <!-- /.list-group-item-info  -->
       <transition-group name="slide-fade" :key="project.id + '_slide'">
-        <div class="list-group-item" v-for="task in project.tasks" v-show="search(task)" :id="'task_' + task.id" :key="task.id" @click="activeTask(task, $event)">
+        <div class="list-group-item" 
+          v-for="task in project.tasks" 
+          v-locate v-show="search(task)" 
+          :id="'task_' + task.id" 
+          :key="task.id" 
+          :data-tid="task.id" 
+          @click="activeTask(task, $event)">
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
           <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
-            <pre class="lead wrap" @click="expandContent">{{ task.content }}</pre>
+            <pre class="lead" :class="{'wrap': expandid !== 'task_' + task.id}" @click="toggleWrap(task.id)">{{ task.content }}</pre>
             <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ today(task.notify_date) }} {{ task.notify_time }}</small>
             <small v-else class="text-muted">{{ $t('ui.no_date') }}</small>
             <div v-if="$root.runtime!=='cordova'" class="pull-right" style="visibility: hidden">
@@ -56,7 +68,7 @@
               </div>
             </div>
           </div>
-          <div v-if="$root.runtime==='cordova'" class="drawer-right btn-group">
+          <div v-if="$root.runtime==='cordova'" class="drawer-right btn-group" :class="{'drawer-right-on': drawid === 'task_' + task.id}">
             <button type="button" class="btn btn-default" @click.stop="editTask(task, $event)">
               <span class="glyphicon glyphicon-pencil"></span>
             </button>
@@ -65,9 +77,9 @@
             </button>
           </div>
         </div> <!-- /.list-group-item  -->
-      </transition-group>
-    </template>
-  </div>
+      </transition-group> <!-- /task transition-group  -->
+    </template> <!-- /foreach project  -->
+  </div> <!-- /.list-group  -->
 </template>
 
 <style scoped>
@@ -96,46 +108,53 @@ pre.wrap { white-space: nowrap; text-overflow: ellipsis; }
 import $ from 'jquery'
 import touch from 'touchjs'
 
+let locationId = ''
 export default {
   name: 'projectlist',
   props: [ 'content' ],
   data () {
     return {
-      activePid: 0,
-      topPid: 0
+      drawid: '',
+      expandid: ''
     }
   },
-  created () {
-    this.activePid = this.$root.activePid
-    this.topPid = this.$root.topPid
+  directives: {
+    locate: {
+      inserted: function (el) {
+        let viewBottom = document.querySelector('.main').scrollTop + window.innerHeight - 100
+        let elBottom = el.offsetTop + el.scrollHeight
+        if (locationId === '#' + el.id && viewBottom <= elBottom) {
+          document.querySelector('.main').scrollTop += elBottom - viewBottom
+          document.querySelector('#command').focus()
+        }
+      }
+    }
   },
-  updated () {
-    this.initDom()
-  },
-  activated () {
-    this.initDom()
+  mounted () {
+    touch.on('.list-group', 'hold', (evt) => {
+      if (evt.target.dataset.pid !== undefined) {
+        this.drawid = 'project_' + evt.target.dataset.pid
+        return
+      }
+      let taskel = evt.path.find((el) => {
+        return el.classList.contains('list-group-item')
+      })
+      if (taskel === undefined) {
+        return
+      }
+      if (taskel.dataset.tid !== undefined) {
+        this.drawid = 'task_' + taskel.dataset.tid
+      }
+    })
   },
   methods: {
-    initDom () {
-      if (this.activePid !== 0 && $('.list-group-item-info[data-pid="' + this.activePid + '"]').length !== 0) {
-        $('.list-group-item-info[data-pid="' + this.activePid + '"]').click()
+    toggleWrap (tid) {
+      console.log(tid)
+      if (this.expandid === 'task_' + tid) {
+        this.expandid = ''
       } else {
-        $('.list-group-item-info:first').click()
+        this.expandid = 'task_' + tid
       }
-      touch.on('.list-group-item-info', 'hold', function (evt) {
-        let _self = $('.drawer-right', evt.currentTarget)
-        $('.drawer-right').not(_self).removeClass('drawer-right-on')
-        _self.addClass('drawer-right-on')
-      })
-      touch.on('.list-group-item:not(.list-group-item-info)', 'hold', function (evt) {
-        let _self = $('.drawer-right', evt.currentTarget)
-        $('.drawer-right').not(_self).removeClass('drawer-right-on')
-        _self.addClass('drawer-right-on')
-      })
-    },
-    expandContent (evt) {
-      $('pre.lead').not(evt.currentTarget).addClass('wrap')
-      $(evt.currentTarget).toggleClass('wrap')
     },
     editProject (project, evt) {
       if (project.uid !== this.$root.uid) {
@@ -167,13 +186,19 @@ export default {
         $item.css({ display: 'block' })
       })
     },
+    addProject (content) {
+      this.$root.addProject(content, (project) => {
+        this.$root.activePid = project.id
+        locationId = '#project_' + project.id
+      })
+    },
     activeProject (project, evt) {
-      this.activePid = project.id
+      this.$root.activePid = project.id
       this.$emit('changegroup', project.name)
-      $('.drawer-right').removeClass('drawer-right-on')
+      this.drawpid = ''
     },
     activeTask (task, evt) {
-      $('.drawer-right').removeClass('drawer-right-on')
+      this.drawpid = ''
     },
     addTask () {
       let content = this.content
@@ -184,16 +209,18 @@ export default {
         pid: this.activePid,
         content,
         notify_date: null
+      }, (task) => {
+        locationId = '#task_' + task.id
       })
     },
     setTop (pid) {
-      this.topPid = pid
+      this.$root.topPid = pid
     },
     mousein (evt) {
-      $('.pull-right', evt.target).css('visibility', '')
+      evt.target.querySelector('.pull-right').style.visibility = ''
     },
     mouseout (evt) {
-      $('.pull-right', evt.target).css('visibility', 'hidden')
+      evt.target.querySelector('.pull-right').style.visibility = 'hidden'
     },
     search (task) {
       let term = this.content.toLowerCase()
@@ -264,18 +291,18 @@ export default {
         if (b.id === topPid) { // b should smaller/positive
           return 1
         }
-        return b.id - a.id // no top project/compare them
+        return a.id - b.id // no top project/compare them
       })
       return projects
+    },
+    activePid () {
+      return this.$root.activePid
+    },
+    topPid () {
+      return this.$root.topPid
     }
   },
   watch: {
-    activePid (val) {
-      this.$root.activePid = val
-    },
-    topPid (val) {
-      this.$root.topPid = val
-    },
     content (val) {
       if (val.startsWith('#') && val.length > 1) {
         let projectName = val.substr(1, val.length)

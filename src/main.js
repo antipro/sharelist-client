@@ -116,13 +116,13 @@ new Vue({
     refresh (callback) {
       this.$socket.emit('refresh', callback)
     },
-    addProject (name) {
+    addProject (name, callback) {
       this.$socket.emit('addproject', {
         name
-      })
+      }, callback)
     },
-    addTask (task) {
-      this.$socket.emit('addtask', task)
+    addTask (task, callback) {
+      this.$socket.emit('addtask', task, callback)
     },
     toggleTask (id, state, pid) {
       this.$socket.emit('toggletask', {
@@ -148,8 +148,14 @@ new Vue({
       this.$socket.emit('updateproject', {
         pid,
         pname,
-        shares
+        shares,
+        mailsender: this.$t('ui.app_name'),
+        share_subject: this.$t('message.share_subject', [ this.uname, pname ]),
+        share_description: this.$t('message.share_description', [ this.uname, pname ])
       })
+    },
+    querySharedUsers (pid, callback) {
+      this.$socket.emit('querysharedusers', pid, callback)
     },
     updateTask (updatedTask, callback) {
       this.$socket.emit('updatetask', updatedTask, callback)

@@ -90,21 +90,9 @@ export default {
     this.pid = this.$route.params.id
     this.pname = this.$route.params.name
     this.isInProgress = true
-    this.$axios.get('/shares/' + this.pid, {
-      headers: {
-        TOKEN: this.$root.token
-      }
-    }).then((response) => {
+    this.$root.querySharedUsers(this.pid, (shares) => {
       this.isInProgress = false
-      let res = response.data
-      if (res.state === '001') {
-        alert(this.$t(res.msg))
-        return
-      }
-      this.shares = res.data
-    }).catch(err => {
-      this.isInProgress = false
-      console.log(err)
+      this.shares = shares
     })
   },
   mounted () {

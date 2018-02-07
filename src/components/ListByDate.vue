@@ -9,17 +9,26 @@
       </div>
     </template>
     <template v-else v-for="date in dates">
-      <div class="list-group-item list-group-item-info" :id="'date_' + date.notify_date" :key="date.notify_date" :data-name="date.notify_date" :data-date="date.notify_date"
+      <div class="list-group-item list-group-item-info" 
+        :id="'date_' + date.notify_date" 
+        :key="date.notify_date" 
+        :data-name="date.notify_date" 
+        :data-date="date.notify_date"
         @click="activeDate(date, $event)">
         <span v-show="activeNotifyDate === date.notify_date" class="glyphicon glyphicon-ok-circle"></span> 
         {{ date.notify_date===null?$t('ui.ungrouped'):date.notify_date }} {{ today(date.notify_date) }}
       </div>
       <transition-group name="slide-fade" :key="date.notify_date + '_slide'">
-        <div class="list-group-item" v-for="task in date.tasks" v-show="search(task)" :id="'task_' + task.id" :key="task.id" @click="activeTask(task, $event)">
+        <div class="list-group-item" 
+          v-for="task in date.tasks" 
+          v-locate v-show="search(task)" 
+          :id="'task_' + task.id" 
+          :key="task.id" 
+          @click="activeTask(task, $event)">
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
           <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
-            <pre class="lead wrap" @click="expandContent">{{ task.content }}</pre>
+            <pre class="lead" :class="{'wrap': expandid !== 'task_' + task.id}" @click="toggleWrap(task.id)">{{ task.content }}</pre>
             <small v-if="task.pname" class="text-muted">{{ task.pname }} {{ task.notify_time }}</small>
             <small v-else class="text-muted">{{ $t('ui.ungrouped') }} {{ task.notify_time }}</small>
             <div v-if="$root.runtime!=='cordova'" class="pull-right" style="visibility: hidden">
@@ -33,7 +42,7 @@
               </div>
             </div>
           </div>
-          <div v-if="$root.runtime==='cordova'" class="drawer-right btn-group">
+          <div v-if="$root.runtime==='cordova'" class="drawer-right btn-group" :class="{'drawer-right-on': drawid === 'task_' + task.id}">
             <button type="button" class="btn btn-default" @click.stop="editTask(task, $event)">
               <span class="glyphicon glyphicon-pencil"></span>
             </button>
@@ -41,10 +50,10 @@
               <span class="glyphicon glyphicon-trash"></span>
             </button>
           </div>
-        </div>
-      </transition-group>
-    </template>
-  </div>
+        </div> <!-- /.list-group-item  -->
+      </transition-group> <!-- /task transition-group  -->
+    </template> <!-- /foreach date  -->
+  </div> <!-- /.list-group  -->
 </template>
 <style scoped>
 div.list-group-item { margin: 0 5px; box-shadow: 3px 3px #F4F4F4 }
@@ -62,57 +71,60 @@ div.drawer-right span.glyphicon-trash { color: red; }
 pre.lead { white-space: pre-wrap; margin-bottom: 0px; overflow: hidden; font-weight: 400; background-color: transparent; border: none; padding: 0; font-family: inherit; }
 pre.wrap { white-space: nowrap; text-overflow: ellipsis; }
 
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to {
-  transform: translateX(10px);
-  opacity: 0;
-}
-.slide-fade-move {
-  transition: transform .5s;
-}
+.slide-fade-enter-active { transition: all .3s ease; }
+.slide-fade-leave-active { transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0); }
+.slide-fade-enter, .slide-fade-leave-to { transform: translateX(10px); opacity: 0; }
+.slide-fade-move { transition: transform .5s; }
 </style>
 <script>
 import $ from 'jquery'
 import touch from 'touchjs'
 
+let locationId = ''
 export default {
   name: 'datelist',
   props: [ 'content' ],
   data () {
     return {
-      activeNotifyDate: null
+      drawid: '',
+      expandid: ''
     }
   },
-  created () {
-    this.activeNotifyDate = this.$root.activeNotifyDate
+  directives: {
+    locate: {
+      inserted: function (el) {
+        let viewBottom = document.querySelector('.main').scrollTop + window.innerHeight - 100
+        let elBottom = el.offsetTop + el.scrollHeight
+        if (locationId === '#' + el.id && viewBottom <= elBottom) {
+          document.querySelector('.main').scrollTop += elBottom - viewBottom
+          document.querySelector('#command').focus()
+        }
+      }
+    }
   },
-  updated () {
-    this.initDom()
-  },
-  activated () {
-    this.initDom()
+  mounted () {
+    touch.on('.list-group', 'hold', (evt) => {
+      let taskel = evt.path.find((el) => {
+        return el.classList.contains('list-group-item')
+      })
+      if (taskel === undefined) {
+        return
+      }
+      if (taskel.dataset.tid !== undefined) {
+        this.drawid = 'task_' + taskel.dataset.tid
+      }
+    })
   },
   methods: {
-    initDom () {
-      if (this.activeNotifyDate !== null && $('.list-group-item-info[data-date="' + this.activeNotifyDate + '"]').length !== 0) {
-        $('.list-group-item-info[data-date="' + this.activeNotifyDate + '"]').click()
+    toggleWrap (tid) {
+      if (this.expandid === 'task_' + tid) {
+        this.expandid = ''
       } else {
-        $('.list-group-item-info:last').click()
+        this.expandid = 'task_' + tid
       }
-      touch.on('.list-group-item:not(.list-group-item-info)', 'hold', function (evt) {
-        let _self = $('.drawer-right', evt.currentTarget)
-        $('.drawer-right').not(_self).removeClass('drawer-right-on')
-        _self.addClass('drawer-right-on')
-      })
     },
-    expandContent (evt) {
-      $('pre.lead').not(evt.currentTarget).addClass('wrap')
-      $(evt.currentTarget).toggleClass('wrap')
+    addProject (content) {
+      this.$root.addProject(content)
     },
     editTask (task, evt) {
       this.$router.push({ name: 'task', params: task })
@@ -132,11 +144,11 @@ export default {
       })
     },
     activeDate (date, $evt) {
-      this.activeNotifyDate = date.notify_date
+      this.$root.activeNotifyDate = date.notify_date
       this.$emit('changegroup', date.notify_date)
     },
     activeTask (task, evt) {
-      $('.drawer-right').removeClass('drawer-right-on')
+      this.drawpid = ''
     },
     addTask () {
       let content = this.content
@@ -147,13 +159,15 @@ export default {
         pid: 0,
         content,
         notify_date: this.activeNotifyDate
+      }, (task) => {
+        locationId = '#task_' + task.id
       })
     },
     mousein (evt) {
-      $('.pull-right', evt.target).css('visibility', '')
+      evt.target.querySelector('.pull-right').style.visibility = ''
     },
     mouseout (evt) {
-      $('.pull-right', evt.target).css('visibility', 'hidden')
+      evt.target.querySelector('.pull-right').style.visibility = 'hidden'
     },
     search (task) {
       let term = this.content.toLowerCase()
@@ -236,12 +250,12 @@ export default {
         }
       })
       return dates
+    },
+    activeNotifyDate () {
+      return this.$root.activeNotifyDate
     }
   },
   watch: {
-    activeNotifyDate (val) {
-      this.$root.activeNotifyDate = val
-    },
     content (val) {
       if (val.startsWith('#') && val.length > 1) {
         let notifyDate = val.substr(1, val.length)

@@ -27,26 +27,26 @@ Vue.use(VuePersist, {
 })
 Vue.config.productionTip = false
 fundebug.apikey = '7cdad64bb66764b020b49afe0887c080f6307ba789cd9911ffb1926ba5751b4a'
-function formatComponentName (vm) {
-  if (vm.$root === vm) {
-    return 'root'
-  }
-  var name = vm._isVue ? (vm.$options && vm.$options.name) || (vm.$options && vm.$options._componentTag) : vm.name
-  return (name ? 'component <' + name + '>' : 'anonymous component') + (vm._isVue && vm.$options && vm.$options.__file ? ' at ' + (vm.$options && vm.$options.__file) : '')
-}
+// function formatComponentName (vm) {
+//   if (vm.$root === vm) {
+//     return 'root'
+//   }
+//   var name = vm._isVue ? (vm.$options && vm.$options.name) || (vm.$options && vm.$options._componentTag) : vm.name
+//   return (name ? 'component <' + name + '>' : 'anonymous component') + (vm._isVue && vm.$options && vm.$options.__file ? ' at ' + (vm.$options && vm.$options.__file) : '')
+// }
 
-Vue.config.errorHandler = function (err, vm, info) {
-  var componentName = formatComponentName(vm)
-  var propsData = vm.$options && vm.$options.propsData
-  fundebug.notifyError(err, {
-    metaData: {
-      runtime: vm.$root.runtime,
-      componentName: componentName,
-      propsData: propsData,
-      info: info
-    }
-  })
-}
+// Vue.config.errorHandler = function (err, vm, info) {
+//   var componentName = formatComponentName(vm)
+//   var propsData = vm.$options && vm.$options.propsData
+//   fundebug.notifyError(err, {
+//     metaData: {
+//       runtime: vm.$root.runtime,
+//       componentName: componentName,
+//       propsData: propsData,
+//       info: info
+//     }
+//   })
+// }
 const i18n = new VueI18n({
   locale: 'en',
   messages: translation,

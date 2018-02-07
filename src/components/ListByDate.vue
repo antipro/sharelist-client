@@ -105,6 +105,17 @@ export default {
   },
   mounted () {
     touch.on('.list-group', 'hold', (evt) => {
+      if (!evt.path) {
+        evt.path = []
+        let fun = (src, target) => {
+          evt.path.push(src)
+          if (src === target) {
+            return
+          }
+          fun(src.parentElement, target)
+        }
+        fun(evt.srcElement, evt.currentTarget)
+      }
       let taskel = evt.path.find((el) => {
         return el.classList.contains('list-group-item')
       })

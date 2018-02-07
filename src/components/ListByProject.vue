@@ -132,13 +132,26 @@ export default {
   },
   mounted () {
     touch.on('.list-group', 'hold', (evt) => {
+      console.log(evt)
       if (evt.target.dataset.pid !== undefined) {
         this.drawid = 'project_' + evt.target.dataset.pid
         return
       }
+      if (!evt.path) {
+        evt.path = []
+        let fun = (src, target) => {
+          evt.path.push(src)
+          if (src === target) {
+            return
+          }
+          fun(src.parentElement, target)
+        }
+        fun(evt.srcElement, evt.currentTarget)
+      }
       let taskel = evt.path.find((el) => {
         return el.classList.contains('list-group-item')
       })
+      console.log(taskel)
       if (taskel === undefined) {
         return
       }

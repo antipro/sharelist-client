@@ -133,7 +133,7 @@ export default {
   methods: {
     shortCut (evt) {
       if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 80) {
-        $('#command').focus()
+        document.querySelector('#command').focus()
         evt.preventDefault()
       }
       if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 40) {

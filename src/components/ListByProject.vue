@@ -124,7 +124,6 @@ export default {
         let viewTop = document.querySelector('.main').scrollTop
         let viewButtom = document.querySelector('.main').scrollTop + window.innerHeight - 100
         let elButtom = el.offsetTop + el.scrollHeight
-        console.log(viewTop, viewButtom, elButtom)
         if (locationId !== '#' + el.id) {
           return
         }
@@ -139,7 +138,6 @@ export default {
     }
   },
   mounted () {
-    console.log('mounted')
     touch.on('.list-group', 'hold', (evt) => {
       if (evt.target.dataset.pid !== undefined) {
         this.drawid = 'project_' + evt.target.dataset.pid
@@ -173,6 +171,7 @@ export default {
         break
       }
     }
+    document.querySelector('#command').focus()
   },
   methods: {
     toggleWrap (tid) {

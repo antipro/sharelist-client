@@ -113,6 +113,7 @@ export default {
     if (this.$root.runtime === 'electron') {
       document.querySelector('#command').addEventListener('contextmenu', this.$root.rightMenu, false)
     }
+    document.querySelector('#command').focus()
   },
   beforeDestroy () {
     clearInterval(this.interval_ptr)

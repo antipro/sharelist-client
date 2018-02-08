@@ -17,7 +17,18 @@
     <record ref="record" @getContent="contentGet" @recognizing="isInProgress = true" @recognized="isInProgress = false"></record>
     <div class="footer">
       <div class="input-group input-group-lg">
-        <input id="command" type="text" class="form-control" :placeholder="placeholder" maxlength="255" v-model="content" @keyup.enter="add">
+        <input 
+          id="command" 
+          type="text" 
+          class="form-control" 
+          :placeholder="placeholder" 
+          maxlength="500" 
+          v-model="content" 
+          @keydown.enter="add"
+          @keydown.stop.40="$refs.tasklist.next()" 
+          @keydown.stop.38="$refs.tasklist.prev()"
+          @keydown.prevent.stop.ctrl.68="$refs.tasklist.removeItem()"  
+          @keydown.prevent.stop.ctrl.69="$refs.tasklist.editItem()">
         <template v-if="$root.runtime === 'cordova'">
           <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
             <span v-if="content !== ''" class="glyphicon glyphicon-edit" @click="add"></span>
@@ -137,10 +148,10 @@ export default {
         evt.preventDefault()
       }
       if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 40) {
-        document.querySelector('.main').scrollTop += 30
+        document.querySelector('.main').scrollTop += 60
       }
       if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 38) {
-        document.querySelector('.main').scrollTop -= 30
+        document.querySelector('.main').scrollTop -= 60
       }
     },
     groupchanged (gname) {

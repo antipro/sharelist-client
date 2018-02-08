@@ -15,10 +15,11 @@
         :data-name="project.name" 
         :data-pid="project.id" 
         @click="activeProject(project)" 
-        @mouseenter="mousein" 
-        @mouseleave="mouseout">
+        @mouseenter="mousein('project_' + project.id)" 
+        @mouseleave="mouseout('project_' + project.id)"
+        :class="{'activestyle': activeid === 'project_' + project.id}">
         <span v-show="checkActive(project)" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }} {{ project.uid !== $root.uid ? '(' + project.uname + ')' : '' }}
-        <div v-if="$root.runtime !== 'cordova'" class="pull-right" style="visibility: hidden">
+        <div v-if="$root.runtime !== 'cordova'" class="pull-right" :class="{'pull-right-on': activeid === 'project_' + project.id}">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">
               <span class="glyphicon glyphicon-arrow-up" ></span>
@@ -50,14 +51,15 @@
           :id="'task_' + task.id" 
           :key="task.id" 
           :data-tid="task.id" 
-          @click="activeTask(task)">
+          @click="activeTask(task)"
+          :class="{'activestyle': activeid === 'task_' + task.id}">
           <span v-if="task.state===0" class="chkbox glyphicon glyphicon-unchecked" @click.stop="toggleTask(task, 1, $event)"></span>
           <span v-if="task.state===1" class="chkbox glyphicon glyphicon-check" @click.stop="toggleTask(task, 0, $event)"></span>
-          <div class="content" @mouseenter="mousein" @mouseleave="mouseout">
+          <div class="content" @mouseenter="mousein('task_' + task.id)" @mouseleave="mouseout('task_' + task.id)">
             <pre class="lead" :class="{'wrap': expandid !== 'task_' + task.id}" @click="toggleWrap(task.id)">{{ task.content }}</pre>
             <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ today(task.notify_date) }} {{ task.notify_time }}</small>
             <small v-else class="text-muted">{{ $t('ui.no_date') }}</small>
-            <div v-if="$root.runtime!=='cordova'" class="pull-right" style="visibility: hidden">
+            <div v-if="$root.runtime!=='cordova'" class="pull-right" :class="{'pull-right-on': activeid === 'task_' + task.id}">
               <div class="btn-group btn-group-xs" role="group" aria-label="...">
                 <button type="button" class="btn btn-default" @click="editTask(task, $event)">
                   <span class="glyphicon glyphicon-pencil"></span>
@@ -83,10 +85,13 @@
 </template>
 
 <style scoped>
-div.list-group-item { margin: 0 5px; box-shadow: 3px 3px #F4F4F4 }
+div.list-group-item { margin: 0 5px; box-shadow: 3px 3px #F4F4F4; }
+div.activestyle { border-color: #3d3c3c; box-shadow: 3px 3px #3d3c3c; }
 div.list-group-item-info { background-color: #beffb2; font-weight: 600; font-size: 16px; margin-top: 10px; }
 span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; color: #51c4f1; }
 div.content { margin-left: 35px; position: relative; }
+div.pull-right { visibility: hidden; }
+div.pull-right-on { visibility: visible; }
 div.pull-right span.glyphicon { margin: 0 5px; }
 div.drawer-right { position: absolute; top: 0; right: 0; bottom: 0; background-color: #F4F4F4; 
   display: none; }
@@ -95,7 +100,7 @@ div.drawer-right .btn { flex-grow: 1; }
 div.drawer-right span.glyphicon-pencil { color: #7ed321; }
 div.drawer-right span.glyphicon-trash { color: red; }
 
-pre.lead { white-space: pre-wrap; margin-bottom: 0px; overflow: hidden; font-weight: 400; background-color: transparent; border: none; padding: 0; font-family: inherit; user-select: text; }
+pre.lead { white-space: pre-wrap; margin-bottom: 0px; overflow: hidden; font-weight: 400; background-color: transparent; border: none; padding: 0; font-family: inherit; }
 pre.wrap { white-space: nowrap; text-overflow: ellipsis; }
 
 .slide-fade-enter-active { transition: all .3s ease; }
@@ -109,30 +114,34 @@ import $ from 'jquery'
 import touch from 'touchjs'
 
 let locationId = ''
+function locateElement (el) {
+  let viewTop = document.querySelector('.main').scrollTop
+  let viewButtom = document.querySelector('.main').scrollTop + window.innerHeight - 100
+  let elButtom = el.offsetTop + el.scrollHeight
+  if (locationId !== '#' + el.id) {
+    return
+  }
+  if (elButtom >= viewButtom) {
+    document.querySelector('.main').scrollTop += elButtom - viewButtom
+  }
+  if (el.offsetTop <= viewTop) {
+    document.querySelector('.main').scrollTop -= viewTop - elButtom + el.scrollHeight
+  }
+}
 export default {
   name: 'projectlist',
   props: [ 'content' ],
   data () {
     return {
       drawid: '',
-      expandid: ''
+      expandid: '',
+      activeid: ''
     }
   },
   directives: {
     locate: {
       inserted: function (el) {
-        let viewTop = document.querySelector('.main').scrollTop
-        let viewButtom = document.querySelector('.main').scrollTop + window.innerHeight - 100
-        let elButtom = el.offsetTop + el.scrollHeight
-        if (locationId !== '#' + el.id) {
-          return
-        }
-        if (elButtom >= viewButtom) {
-          document.querySelector('.main').scrollTop += elButtom - viewButtom
-        }
-        if (elButtom <= viewTop) {
-          document.querySelector('.main').scrollTop -= viewTop - elButtom + el.scrollHeight
-        }
+        locateElement(el)
       }
     }
   },
@@ -171,6 +180,9 @@ export default {
         break
       }
     }
+    // document.querySelector('#command').focus()
+  },
+  updated () {
     document.querySelector('#command').focus()
   },
   methods: {
@@ -214,7 +226,8 @@ export default {
     addProject (content) {
       this.$root.addProject(content, (project) => {
         this.$root.activePid = project.id
-        locationId = '#project_' + project.id
+        this.activeid = 'project_' + project.id
+        locationId = '#' + this.activeid
       })
     },
     checkActive (project) {
@@ -225,10 +238,16 @@ export default {
       return bool
     },
     activeProject (project) {
+      if (project === undefined) {
+        return
+      }
       this.$root.activePid = project.id
       this.drawpid = ''
     },
     activeTask (task) {
+      if (task === undefined) {
+        return
+      }
       this.drawpid = ''
     },
     addTask () {
@@ -241,17 +260,19 @@ export default {
         content,
         notify_date: null
       }, (task) => {
-        locationId = '#task_' + task.id
+        this.activeid = 'task_' + task.id
+        locationId = '#' + this.activeid
       })
     },
     setTop (pid) {
       this.$root.topPid = pid
     },
-    mousein (evt) {
-      $('.pull-right', evt.target).css('visibility', '')
+    mousein (id) {
+      this.activeid = id
+      this.locateItem()
     },
-    mouseout (evt) {
-      $('.pull-right', evt.target).css('visibility', 'hidden')
+    mouseout (id) {
+      this.activeid = ''
     },
     search (task) {
       let term = this.content.toLowerCase()
@@ -271,6 +292,64 @@ export default {
       if (notifyDate.getFullYear() === today.getFullYear() && notifyDate.getMonth() === today.getMonth() && notifyDate.getDate() === today.getDate()) {
         return this.$t('ui.today')
       }
+    },
+    next () {
+      if (this.activeid === '') {
+        this.activeid = $('.listbyproject .list-group-item:first').attr('id')
+      } else {
+        let els = $('.listbyproject .list-group-item').get()
+        let idx = els.findIndex(el => {
+          return this.activeid === el.id
+        })
+        idx += 1
+        if (els[idx]) {
+          this.activeid = els[idx].id
+        } else {
+          console.log('archive to buttom')
+        }
+      }
+      this.locateItem()
+    },
+    prev () {
+      if (this.activeid === '') {
+        this.activeid = $('.listbyproject .list-group-item:first').attr('id')
+      } else {
+        let els = $('.listbyproject .list-group-item').get()
+        let idx = els.findIndex(el => {
+          return this.activeid === el.id
+        })
+        idx -= 1
+        if (els[idx]) {
+          this.activeid = els[idx].id
+        } else {
+          console.log('archive to top')
+        }
+      }
+      this.locateItem()
+    },
+    locateItem () {
+      locationId = '#' + this.activeid
+      locateElement(document.querySelector(locationId))
+      if (this.activeid.startsWith('project')) {
+        let pid = parseInt(this.activeid.split('_')[1])
+        this.activeProject(this.projects.find(project => project.id === pid))
+      }
+      if (this.activeid.startsWith('task')) {
+        let tid = parseInt(this.activeid.split('_')[1])
+        this.activeTask(this.$store.state.tasks.find(task => task.id === tid))
+      }
+    },
+    removeItem () {
+      if (this.activeid === '') {
+        return
+      }
+      $('#' + this.activeid).find('.glyphicon-trash').click()
+    },
+    editItem () {
+      if (this.activeid === '') {
+        return
+      }
+      $('#' + this.activeid).find('.glyphicon-pencil').click()
     }
   },
   computed: {
@@ -343,9 +422,8 @@ export default {
         if (project === undefined) {
           return
         }
-        this.activeProject(project)
-        location.hash = '#project_' + project.id
-        document.querySelector('#command').focus()
+        this.activeid = 'project_' + project.id
+        this.locateItem()
       }
     }
   }

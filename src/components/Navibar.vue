@@ -15,22 +15,22 @@
           </div>
           <div class="list-group">
             <router-link class="list-group-item" :to="{ name: 'projectlist' }" replace>
-              <span class="glyphicon glyphicon-menu-hamburger"></span> {{ $t('ui.group_by_project') }}
+              <span class="glyphicon glyphicon-menu-hamburger"></span> {{ $t('ui.group_by_project') }} (<ins>P</ins>)
             </router-link>
             <router-link class="list-group-item" :to="{ name: 'datelist' }" replace>
-              <span class="glyphicon glyphicon-calendar"></span> {{ $t('ui.group_by_date') }}
+              <span class="glyphicon glyphicon-calendar"></span> {{ $t('ui.group_by_date') }} (<ins>D</ins>)
             </router-link>
             <router-link class="list-group-item" :to="{ name: 'preference' }">
-              <span class="glyphicon glyphicon-cog"></span> {{ $t('ui.preference') }}
+              <span class="glyphicon glyphicon-cog"></span> {{ $t('ui.preference') }} (<ins>R</ins>)
             </router-link>
             <router-link class="list-group-item" :to="{ name: 'about' }">
-              <span class="glyphicon glyphicon-info-sign"></span> {{ $t('ui.about') }}
+              <span class="glyphicon glyphicon-info-sign"></span> {{ $t('ui.about') }} (<ins>A</ins>)
             </router-link>
             <button type="button" class="list-group-item" @click="$root.logout">
-              <span class="glyphicon glyphicon-log-out"></span> {{ $t('ui.logout') }}
+              <span class="glyphicon glyphicon-log-out"></span> {{ $t('ui.logout') }} (<ins>Q</ins>)
             </button>
             <button v-if="$root.runtime === 'cordova'" type="button" class="list-group-item" @click="$root.exit">
-              <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }}
+              <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }} (<ins>F4</ins>)
             </button>
           </div>
         </div>
@@ -92,8 +92,39 @@ export default {
         $('body').css('padding-left', '')
       }
     })
+    if (this.$root.runtime !== 'cordova') {
+      document.addEventListener('keydown', this.shortCut, false)
+    }
+  },
+  beforeDestroy () {
+    if (this.$root.runtime !== 'cordova') {
+      document.removeEventListener('keydown', this.shortCut, false)
+    }
   },
   methods: {
+    shortCut (evt) {
+      if (!evt.ctrlKey && evt.altKey) {
+        switch (evt.keyCode) {
+          case 65: // A->About
+            this.$router.push({ name: 'about' })
+            break
+          case 68: // D->DateList
+            this.$router.replace({ name: 'datelist' })
+            break
+          case 80: // P->ProjectList
+            this.$router.replace({ name: 'projectlist' })
+            break
+          case 81: // Q->logout
+            this.$root.logout()
+            break
+          case 82: // R->Preference
+            this.$router.push({ name: 'preference' })
+            break
+        }
+        evt.preventDefault()
+        evt.stopPropagation()
+      }
+    },
     open () {
       var modal = $('.side-modal')
       modal.addClass('side-modal-on')

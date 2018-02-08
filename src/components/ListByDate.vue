@@ -134,6 +134,7 @@ export default {
     })
   },
   activated () {
+    this.$emit('changegroup', '')
     for (let date of this.dates) {
       if (this.checkActive(date)) {
         break

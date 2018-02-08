@@ -165,6 +165,7 @@ export default {
     })
   },
   activated () {
+    this.$emit('changegroup', '')
     for (let project of this.projects) {
       if (this.checkActive(project)) {
         break

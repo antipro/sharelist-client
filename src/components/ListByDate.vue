@@ -106,7 +106,6 @@ export default {
         if (elButtom <= viewTop) {
           document.querySelector('.main').scrollTop -= viewTop - elButtom + el.scrollHeight
         }
-        document.querySelector('#command').focus()
       }
     }
   },

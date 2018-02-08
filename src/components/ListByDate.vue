@@ -94,12 +94,20 @@ export default {
   directives: {
     locate: {
       inserted: function (el) {
-        let viewBottom = document.querySelector('.main').scrollTop + window.innerHeight - 100
-        let elBottom = el.offsetTop + el.scrollHeight
-        if (locationId === '#' + el.id && viewBottom <= elBottom) {
-          document.querySelector('.main').scrollTop += elBottom - viewBottom
-          document.querySelector('#command').focus()
+        let viewTop = document.querySelector('.main').scrollTop
+        let viewButtom = document.querySelector('.main').scrollTop + window.innerHeight - 100
+        let elButtom = el.offsetTop + el.scrollHeight
+        console.log(viewTop, viewButtom, elButtom)
+        if (locationId !== '#' + el.id) {
+          return
         }
+        if (elButtom >= viewButtom) {
+          document.querySelector('.main').scrollTop += elButtom - viewButtom
+        }
+        if (elButtom <= viewTop) {
+          document.querySelector('.main').scrollTop -= viewTop - elButtom + el.scrollHeight
+        }
+        document.querySelector('#command').focus()
       }
     }
   },

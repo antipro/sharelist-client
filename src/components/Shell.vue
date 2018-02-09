@@ -27,8 +27,8 @@
           @keydown.enter="add"
           @keydown.40="next" 
           @keydown.38="prev"
-          @keydown.prevent.stop.ctrl.68="$refs.tasklist.removeItem()"  
-          @keydown.prevent.stop.ctrl.69="$refs.tasklist.editItem()">
+          @keydown.prevent.stop.ctrl.68="$refs.tasklist.removeItem"  
+          @keydown.prevent.stop.ctrl.69="$refs.tasklist.editItem">
         <template v-if="$root.runtime === 'cordova'">
           <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
             <span v-if="content !== ''" class="glyphicon glyphicon-edit" @click="add"></span>
@@ -148,11 +148,9 @@ export default {
         evt.preventDefault()
       }
       if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 40) {
-        console.log('document 40')
         document.querySelector('.main').scrollTop += 60
       }
       if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 38) {
-        console.log('document 38')
         document.querySelector('.main').scrollTop -= 60
       }
     },

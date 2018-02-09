@@ -294,7 +294,6 @@ export default {
       }
     },
     next () {
-      console.log('list 40')
       if (this.activeid === '') {
         this.activeid = $('.listbyproject .list-group-item:first').attr('id')
       } else {
@@ -312,7 +311,6 @@ export default {
       this.locateItem()
     },
     prev () {
-      console.log('list 38')
       if (this.activeid === '') {
         this.activeid = $('.listbyproject .list-group-item:first').attr('id')
       } else {

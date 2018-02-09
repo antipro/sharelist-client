@@ -25,8 +25,8 @@
           maxlength="500" 
           v-model="content" 
           @keydown.enter="add"
-          @keydown.stop.40="$refs.tasklist.next()" 
-          @keydown.stop.38="$refs.tasklist.prev()"
+          @keydown.40="next" 
+          @keydown.38="prev"
           @keydown.prevent.stop.ctrl.68="$refs.tasklist.removeItem()"  
           @keydown.prevent.stop.ctrl.69="$refs.tasklist.editItem()">
         <template v-if="$root.runtime === 'cordova'">
@@ -148,9 +148,11 @@ export default {
         evt.preventDefault()
       }
       if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 40) {
+        console.log('document 40')
         document.querySelector('.main').scrollTop += 60
       }
       if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 38) {
+        console.log('document 38')
         document.querySelector('.main').scrollTop -= 60
       }
     },
@@ -246,6 +248,18 @@ export default {
           $(element).click()
           break
         }
+      }
+    },
+    next (evt) {
+      if (!evt.ctrlKey && !evt.altKey && !evt.shiftKey) {
+        this.$refs.tasklist.next()
+        evt.stopPropagation()
+      }
+    },
+    prev (evt) {
+      if (!evt.ctrlKey && !evt.altKey && !evt.shiftKey) {
+        this.$refs.tasklist.prev()
+        evt.stopPropagation()
       }
     }
   }

@@ -160,7 +160,9 @@ export default {
     add () {
       let content = this.content.trim()
       if (content === '') {
-        this.startRecord()
+        if (this.$root.runtime === 'cordova') {
+          this.startRecord()
+        }
         return
       }
       if (content.startsWith('@')) {

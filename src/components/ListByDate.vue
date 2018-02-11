@@ -33,7 +33,9 @@
             <pre class="lead" :class="{'wrap': expandid !== 'task_' + task.id}" @click="toggleWrap(task.id)">{{ task.content }}</pre>
             <small v-if="task.pname" class="text-muted">{{ task.pname }} {{ task.notify_time }}</small>
             <small v-else class="text-muted">{{ $t('ui.ungrouped') }} {{ task.notify_time }}</small>
-            <div v-if="$root.runtime!=='cordova'" class="pull-right" :class="{'pull-right-on': activeid === 'task_' + task.id}">
+            <div v-if="$root.runtime!=='cordova'" 
+              class="pull-right" 
+              :class="{'pull-right-on': activeid === 'task_' + task.id || mouseid === 'task_' + task.id}">
               <div class="btn-group btn-group-xs" role="group" aria-label="...">
                 <button type="button" class="btn btn-default" @click="editTask(task, $event)">
                   <span class="glyphicon glyphicon-pencil"></span>
@@ -107,7 +109,8 @@ export default {
     return {
       drawid: '',
       expandid: '',
-      activeid: ''
+      activeid: '',
+      mouseid: ''
     }
   },
   directives: {
@@ -215,11 +218,10 @@ export default {
       })
     },
     mousein (id) {
-      this.activeid = id
-      this.locateItem()
+      this.mouseid = id
     },
     mouseout (id) {
-      this.activeid = ''
+      this.mouseid = ''
     },
     search (task) {
       let term = this.content.toLowerCase()

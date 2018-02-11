@@ -25,8 +25,6 @@
           maxlength="500" 
           v-model="content" 
           @keydown.enter="add"
-          @keydown.40="next" 
-          @keydown.38="prev"
           @keydown.prevent.stop.ctrl.68="$refs.tasklist.removeItem"  
           @keydown.prevent.stop.ctrl.69="$refs.tasklist.editItem">
         <template v-if="$root.runtime === 'cordova'">
@@ -152,6 +150,12 @@ export default {
       }
       if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 38) {
         document.querySelector('.main').scrollTop -= 60
+      }
+      if (!evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 40) {
+        this.$refs.tasklist.next()
+      }
+      if (!evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 38) {
+        this.$refs.tasklist.prev()
       }
     },
     groupchanged (gname) {

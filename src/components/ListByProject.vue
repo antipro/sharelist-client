@@ -19,7 +19,10 @@
         @mouseleave="mouseout('project_' + project.id)"
         :class="{'activestyle': activeid === 'project_' + project.id}">
         <span v-show="checkActive(project)" class="glyphicon glyphicon-ok-circle"></span> {{ project.name===''?$t('ui.ungrouped'):project.name }} {{ project.uid !== $root.uid ? '(' + project.uname + ')' : '' }}
-        <div v-if="$root.runtime !== 'cordova'" class="pull-right" :class="{'pull-right-on': activeid === 'project_' + project.id}">
+        <div 
+          v-if="$root.runtime !== 'cordova'" 
+          class="pull-right" 
+          :class="{'pull-right-on': activeid === 'project_' + project.id || mouseid === 'project_' + project.id}">
           <div class="btn-group btn-group-xs" role="group" aria-label="...">
             <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">
               <span class="glyphicon glyphicon-arrow-up" ></span>
@@ -32,7 +35,9 @@
             </button>
           </div>
         </div>
-        <div v-if="$root.runtime==='cordova'" class="drawer-right btn-group" :class="{'drawer-right-on': drawid === 'project_' + project.id}">
+        <div v-if="$root.runtime==='cordova'" 
+          class="drawer-right btn-group" 
+          :class="{'drawer-right-on': drawid === 'project_' + project.id}">
           <button type="button" class="btn btn-default" @click.stop="setTop(project.id, $event)">
             <span class="glyphicon glyphicon-arrow-up" ></span>
           </button>
@@ -59,7 +64,9 @@
             <pre class="lead" :class="{'wrap': expandid !== 'task_' + task.id}" @click="toggleWrap(task.id)">{{ task.content }}</pre>
             <small v-if="task.notify_date" class="text-muted">{{ task.notify_date }} {{ today(task.notify_date) }} {{ task.notify_time }}</small>
             <small v-else class="text-muted">{{ $t('ui.no_date') }}</small>
-            <div v-if="$root.runtime!=='cordova'" class="pull-right" :class="{'pull-right-on': activeid === 'task_' + task.id}">
+            <div v-if="$root.runtime!=='cordova'" 
+              class="pull-right" 
+              :class="{'pull-right-on': activeid === 'task_' + task.id || mouseid === 'task_' + task.id}">
               <div class="btn-group btn-group-xs" role="group" aria-label="...">
                 <button type="button" class="btn btn-default" @click="editTask(task, $event)">
                   <span class="glyphicon glyphicon-pencil"></span>
@@ -135,7 +142,8 @@ export default {
     return {
       drawid: '',
       expandid: '',
-      activeid: ''
+      activeid: '',
+      mouseid: ''
     }
   },
   directives: {
@@ -268,11 +276,10 @@ export default {
       this.$root.topPid = pid
     },
     mousein (id) {
-      this.activeid = id
-      this.locateItem()
+      this.mouseid = id
     },
     mouseout (id) {
-      this.activeid = ''
+      this.mouseid = ''
     },
     search (task) {
       let term = this.content.toLowerCase()

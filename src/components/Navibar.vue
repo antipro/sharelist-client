@@ -59,7 +59,7 @@
 .side-action { position: absolute; width: 250px; top: 0px; bottom: 0px; left: -250px; background: #b3e4f5 url('../../static/navigator.jpg') no-repeat bottom center;
   display: flex; flex-direction: column; justify-content: center; }
 .side-action h3 { word-wrap: break-word; }
-.side-action .list-group * { background-color: rgba(152, 227, 255, 0.5); color: #1d465f; font-weight: bold; }
+.side-action .list-group * { background-color: rgba(152, 227, 255, 0.5); color: #352727; font-weight: bold; }
 .side-modal { -webkit-app-region: no-drag; overflow: hidden; display: none; z-index: 1050; }
 .side-modal-on { position: fixed;	right: 0px;	left: 0px; top: 0px; bottom: 0px;	display: block; background-color: rgba(52, 52, 52, 0.5); }
 @media screen and (min-width: 800px) {

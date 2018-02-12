@@ -50,7 +50,7 @@ export default {
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
-      'require_email_and_pwd': 'Please input your email and password.',
+      'require_email_and_pwd': 'Please input your Email and password.',
       'not_logged_in': 'Not logged in.',
       'user_not_existed': 'User Not Existed.',
       'user_already_existed': 'User Already Existed.',
@@ -74,7 +74,7 @@ export default {
       '_cordova_tip_04': 'Arrow Up/Down select item in list',
       '_cordova_tip_05': 'Ctrl+D delete actived item',
       '_cordova_tip_06': 'Ctrl+E edit actived item',
-      'mail_failure': 'Mail Failed, Please checkout whether this email address works fine.',
+      'mail_failure': 'Mail Failed, Please checkout whether this Email address works fine.',
       'signup_ok': 'Sign Up Success.',
       'verify_email': 'The Verification Code you received is {code}, Please Do not Tell anybody else.',
       'confirm_to_remove': 'Remove?',
@@ -98,16 +98,17 @@ export default {
       'warning_for_delete_account': 'Warning!!! This operation will delete your account and data, the data will be sent to your mailbox before deleted, do you want to continue?',
       'warning_again_for_delete_account': 'Warning again!!! This operation will delete your account and data, the data will be sent to your mailbox before deleted, do you want to continue still?',
       'goodbye': 'Your account has been deleted, Thank you for use，goodbye.',
-      'this_email_is_already_existed': 'This email is already existed',
+      'this_email_is_already_existed': 'This Email is already existed',
       'wait_for_loading_shared_users': 'Please wait for loading shared users',
       'author': 'Author',
       'description': 'Description',
+      'description2': 'A TODO liked application with sharing mechanism via Email.',
       'software_license': 'Software License',
       'shortcut': 'Shortcut',
       'no_result': 'No Result',
       'current_version': 'Current Version',
       'share_subject': '{0} shared a project({1}) with you',
-      'share_description': 'You received this email because that {0} shared a project({1}) with you, you can get this project by use sharelist application. This software(Windows/Debian Linux/Android) can be downloaded in the link below if you have not own it.'
+      'share_description': 'You received this Email because that {0} shared a project({1}) with you, you can get this project by use sharelist application. This software(Windows/Debian Linux/Android) can be downloaded in the link below if you have not own it.'
     }
   },
   'zh-CN': {
@@ -213,6 +214,7 @@ export default {
       'wait_for_loading_shared_users': '请等待共享用户加载完毕。',
       'author': '作者',
       'description': '描述',
+      'description2': '一个通过Email共享内容的TODO类应用。',
       'software_license': '软件许可证',
       'shortcut': '快捷键',
       'no_result': '没有结果',

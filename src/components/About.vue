@@ -10,7 +10,7 @@
         <div class="col-md-12">
           <h4>{{ $t('message.description') }}</h4>
           <p class="lead">
-            A todo list application with sharing mechanism via email.
+            {{ $t('message.description2') }}
           </p>
           <h4>{{ $t('message.current_version') }}</h4>
           <p>{{ currentVersion }}</p>

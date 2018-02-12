@@ -195,13 +195,13 @@ export default {
         return
       }
       this.$root.activeNotifyDate = date.notify_date
-      this.drawpid = ''
+      this.drawid = ''
     },
     activeTask (task) {
       if (task === undefined) {
         return
       }
-      this.drawpid = ''
+      this.drawid = ''
     },
     addTask () {
       let content = this.content

@@ -250,13 +250,13 @@ export default {
         return
       }
       this.$root.activePid = project.id
-      this.drawpid = ''
+      this.drawid = ''
     },
     activeTask (task) {
       if (task === undefined) {
         return
       }
-      this.drawpid = ''
+      this.drawid = ''
     },
     addTask () {
       let content = this.content

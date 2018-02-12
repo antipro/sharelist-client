@@ -21,7 +21,7 @@
       <transition-group name="slide-fade" :key="date.notify_date + '_slide'">
         <div class="list-group-item" 
           v-for="task in date.tasks" 
-          v-locate v-show="search(task)" 
+          v-locate v-if="search(task)" 
           :id="'task_' + task.id" 
           :key="task.id" 
           :data-tid="task.id"  
@@ -225,7 +225,7 @@ export default {
     },
     search (task) {
       let term = this.content.toLowerCase()
-      if (term === '' || !term.startsWith('~')) {
+      if (term === '' || !term.startsWith('?')) {
         return true
       }
       term = term.substr(1)

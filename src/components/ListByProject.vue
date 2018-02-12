@@ -52,7 +52,7 @@
       <transition-group name="slide-fade" :key="project.id + '_slide'">
         <div class="list-group-item" 
           v-for="task in project.tasks" 
-          v-locate v-show="search(task)" 
+          v-locate v-if="search(task)" 
           :id="'task_' + task.id" 
           :key="task.id" 
           :data-tid="task.id" 
@@ -283,7 +283,7 @@ export default {
     },
     search (task) {
       let term = this.content.toLowerCase()
-      if (term === '' || !term.startsWith('~')) {
+      if (term === '' || !term.startsWith('?')) {
         return true
       }
       term = term.substr(1)
@@ -422,9 +422,9 @@ export default {
   watch: {
     content (val) {
       if (val.startsWith('#') && val.length > 1) {
-        let projectName = val.substr(1, val.length)
+        let projectName = val.substr(1, val.length).toLowerCase()
         let project = this.projects.find(project => {
-          return project.name.indexOf(projectName) > -1
+          return project.name.toLowerCase().indexOf(projectName) > -1
         })
         if (project === undefined) {
           return

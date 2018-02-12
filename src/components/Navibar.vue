@@ -15,22 +15,28 @@
           </div>
           <div class="list-group">
             <router-link class="list-group-item" :to="{ name: 'projectlist' }" replace>
-              <span class="glyphicon glyphicon-menu-hamburger"></span> {{ $t('ui.group_by_project') }} (<ins>P</ins>)
+              <span class="glyphicon glyphicon-menu-hamburger"></span> {{ $t('ui.group_by_project') }} 
+              <template v-if="$root.runtime !== 'cordova'">(<ins>P</ins>)</template>
             </router-link>
             <router-link class="list-group-item" :to="{ name: 'datelist' }" replace>
-              <span class="glyphicon glyphicon-calendar"></span> {{ $t('ui.group_by_date') }} (<ins>D</ins>)
+              <span class="glyphicon glyphicon-calendar"></span> {{ $t('ui.group_by_date') }} 
+              <template v-if="$root.runtime !== 'cordova'">(<ins>D</ins>)</template>
             </router-link>
             <router-link class="list-group-item" :to="{ name: 'preference' }">
-              <span class="glyphicon glyphicon-cog"></span> {{ $t('ui.preference') }} (<ins>R</ins>)
+              <span class="glyphicon glyphicon-cog"></span> {{ $t('ui.preference') }} 
+              <template v-if="$root.runtime !== 'cordova'">(<ins>R</ins>)</template>
             </router-link>
             <router-link class="list-group-item" :to="{ name: 'about' }">
-              <span class="glyphicon glyphicon-info-sign"></span> {{ $t('ui.about') }} (<ins>A</ins>)
+              <span class="glyphicon glyphicon-info-sign"></span> {{ $t('ui.about') }} 
+              <template v-if="$root.runtime !== 'cordova'">(<ins>A</ins>)</template>
             </router-link>
             <button type="button" class="list-group-item" @click="$root.logout">
-              <span class="glyphicon glyphicon-log-out"></span> {{ $t('ui.logout') }} (<ins>Q</ins>)
+              <span class="glyphicon glyphicon-log-out"></span> {{ $t('ui.logout') }} 
+              <template v-if="$root.runtime !== 'cordova'">(<ins>Q</ins>)</template>
             </button>
             <button v-if="$root.runtime === 'cordova'" type="button" class="list-group-item" @click="$root.exit">
-              <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }} (<ins>F4</ins>)
+              <span class="glyphicon glyphicon-off"></span> {{ $t('ui.exit') }} 
+              <template v-if="$root.runtime !== 'cordova'">(<ins>F4</ins>)</template>
             </button>
           </div>
         </div>

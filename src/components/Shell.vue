@@ -240,6 +240,9 @@ export default {
         yield this.$t('message._cordova_tip_01')
         yield this.$t('message._cordova_tip_02')
         yield this.$t('message._cordova_tip_03')
+        yield this.$t('message._cordova_tip_04')
+        yield this.$t('message._cordova_tip_05')
+        yield this.$t('message._cordova_tip_06')
       }
     },
     detect (evt) {

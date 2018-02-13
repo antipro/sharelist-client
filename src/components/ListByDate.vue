@@ -174,6 +174,9 @@ export default {
       this.$root.toggleTask(task.id, state, task.pid)
     },
     removeTask (task, evt) {
+      if (this.activeid === 'task_' + task.id) {
+        this.activeid = ''
+      }
       let $item = $(evt.target).parents('.list-group-item')
       $item.fadeOut('normal', () => {
         $item.css({ display: 'none' })

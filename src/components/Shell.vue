@@ -11,34 +11,47 @@
     </navibar>
     <div class="main">
       <keep-alive>
-        <router-view ref="tasklist" @changegroup="groupchanged" :content="content"></router-view>
+        <router-view ref="tasklist" @changegroup="groupchanged" @searchgroup="groupsearched" :content="content"></router-view>
       </keep-alive>
     </div>
     <record ref="record" @getContent="contentGet" @recognizing="isInProgress = true" @recognized="isInProgress = false"></record>
     <div class="footer">
-      <div class="input-group input-group-lg">
-        <input 
-          id="command" 
-          type="text" 
-          class="form-control" 
-          :placeholder="placeholder" 
-          maxlength="500" 
-          v-model="content" 
-          @keydown.enter="add"
-          @keydown.prevent.stop.ctrl.68="$refs.tasklist.removeItem"  
-          @keydown.prevent.stop.ctrl.69="$refs.tasklist.editItem">
-        <template v-if="$root.runtime === 'cordova'">
-          <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
-            <span v-if="content !== ''" class="glyphicon glyphicon-edit" @click="add"></span>
-            <span v-if="content === ''" class="glyphicon glyphicon-record" @click="startRecord"></span>
-          </span>
-        </template>
-        <template v-else>
-          <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
-            <span class="glyphicon glyphicon-edit" @click="add"></span>
-          </span>
-        </template>
-      </div><!-- /input-group -->
+      <div style="position: absolute; bottom: 0;">
+        <div class="list-group search-group">
+          <div v-for="(searchedgroup, idx) in searchedgroups"
+              :key="searchedgroup.id" 
+              class="list-group-item" 
+              :class="{'active': selected_gidx === idx}" 
+              @click="selectGroup(searchedgroup.id)">
+              {{ searchedgroup.name?searchedgroup.name:$t('ui.ungrouped') }}
+          </div>
+        </div>
+        <div class="input-group input-group-lg">
+          <input 
+            id="command" 
+            type="text" 
+            class="form-control" 
+            :placeholder="placeholder" 
+            maxlength="500" 
+            v-model="content" 
+            @keydown.enter="add"
+            @keydown.40="nextGroup"
+            @keydown.38="prevGroup"
+            @keydown.ctrl.68.stop.prevent="$refs.tasklist.removeItem"  
+            @keydown.ctrl.69.stop.prevent="$refs.tasklist.editItem">
+          <template v-if="$root.runtime === 'cordova'">
+            <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
+              <span v-if="content !== ''" class="glyphicon glyphicon-edit" @click="add"></span>
+              <span v-if="content === ''" class="glyphicon glyphicon-record" @click="startRecord"></span>
+            </span>
+          </template>
+          <template v-else>
+            <span class="input-group-addon" style="padding: 6px 18px; font-size: 18px;">
+              <span class="glyphicon glyphicon-edit" @click="add"></span>
+            </span>
+          </template>
+        </div><!-- /input-group -->
+      </div>
     </div>
   </div>
 </template>
@@ -51,6 +64,7 @@
 .shell .main { position: absolute; top: 50px; bottom: 50px; left: 0px; width: 100%; margin: 0px; overflow-y: auto; background: url('../../static/border.jpg') repeat-y }
 .shell .footer { position: absolute; bottom: 0px; left: 0px; height: 50px; width: 100%; padding: 2px 0px; }
 .shell .footer .input-group { margin: 0 5px; }
+.shell .footer .search-group { position: absolute; bottom: 50px; left: 0; width: 100%; margin-bottom: 0; max-height: 200px; overflow-y: auto; }
 .shell .notice { position: absolute; display: none; top: 0; margin: 0 auto; width: 250px; left: 0; right: 0; z-index: 1050; }
 @keyframes rotate {
   0%   { transform: rotate(0deg); }
@@ -81,7 +95,7 @@ export default {
   data () {
     return {
       active_gname: '',
-      active_gid: null,
+      selected_gidx: 0,
       content: '',
       placeholder: '',
       timeout_ptr: null,
@@ -89,7 +103,8 @@ export default {
       forward: null,
       back: null,
       defaultChild: null,
-      isInProgress: false
+      isInProgress: false,
+      searchedgroups: []
     }
   },
   persist: ['defaultChild'],
@@ -169,6 +184,14 @@ export default {
         }
         return
       }
+      this.content = ''
+      if (content.startsWith('#')) {
+        let searchedGroup = this.searchedgroups.find((group, idx) => {
+          return this.selected_gidx === idx
+        })
+        this.selectGroup(searchedGroup.id)
+        return
+      }
       if (content.startsWith('@')) {
         content = content.substr(1)
         if (content === '') {
@@ -179,10 +202,9 @@ export default {
           }
           this.$refs.tasklist.addProject(content)
         }
-      } else {
-        this.$refs.tasklist.addTask()
+        return
       }
-      this.content = ''
+      this.$refs.tasklist.addTask()
     },
     startRecord () {
       if (this.isInProgress) {
@@ -266,6 +288,39 @@ export default {
         this.$refs.tasklist.prev()
         evt.stopPropagation()
       }
+    },
+    groupsearched (results) {
+      this.searchedgroups = results
+      this.selected_gidx = 0
+      console.log(results)
+    },
+    nextGroup (evt) {
+      if (this.searchedgroups.length === 0) {
+        return
+      }
+      evt.stopPropagation()
+      if (this.selected_gidx === this.searchedgroups.length - 1) {
+        console.log('archive to bottom')
+        return
+      }
+      this.selected_gidx++
+      document.querySelector('.search-group').scrollTop += 42
+    },
+    prevGroup (evt) {
+      if (this.searchedgroups.length === 0) {
+        return
+      }
+      evt.stopPropagation()
+      if (this.selected_gidx === 0) {
+        console.log('archive to top')
+        return
+      }
+      this.selected_gidx--
+      document.querySelector('.search-group').scrollTop -= 42
+    },
+    selectGroup (gid) {
+      this.$refs.tasklist.selectGroup(gid)
+      this.content = ''
     }
   }
 }

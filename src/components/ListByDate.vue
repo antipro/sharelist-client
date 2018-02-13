@@ -14,7 +14,8 @@
         :key="date.notify_date" 
         :data-name="date.notify_date" 
         :data-date="date.notify_date"
-        @click="activeDate(date)">
+        @click="activeDate(date)" 
+        :class="{'activestyle': activeid === 'date_' + date.notify_date}">
         <span v-show="checkActive(date)" class="glyphicon glyphicon-ok-circle"></span> 
         {{ date.notify_date===null?$t('ui.ungrouped'):date.notify_date }} {{ today(date.notify_date) }}
       </div>
@@ -244,9 +245,9 @@ export default {
     },
     next () {
       if (this.activeid === '') {
-        this.activeid = $('.listbydate .list-group-item:not(.list-group-item-info):first').attr('id')
+        this.activeid = $('.listbydate .list-group-item:first').attr('id')
       } else {
-        let els = $('.listbydate .list-group-item:not(.list-group-item-info)').get()
+        let els = $('.listbydate .list-group-item').get()
         let idx = els.findIndex(el => {
           return this.activeid === el.id
         })
@@ -261,9 +262,9 @@ export default {
     },
     prev () {
       if (this.activeid === '') {
-        this.activeid = $('.listbydate .list-group-item:not(.list-group-item-info):first').attr('id')
+        this.activeid = $('.listbydate .list-group-item:first').attr('id')
       } else {
-        let els = $('.listbydate .list-group-item:not(.list-group-item-info)').get()
+        let els = $('.listbydate .list-group-item').get()
         let idx = els.findIndex(el => {
           return this.activeid === el.id
         })
@@ -279,8 +280,14 @@ export default {
     locateItem () {
       locationId = '#' + this.activeid
       locateElement(document.querySelector(locationId))
-      let tid = parseInt(this.activeid.split('_')[1])
-      this.activeTask(this.$store.state.tasks.find(task => task.id === tid))
+      if (this.activeid.startsWith('date')) {
+        let did = parseInt(this.activeid.split('_')[1])
+        this.activeDate(this.dates.find(date => date.notify_date === did))
+      }
+      if (this.activeid.startsWith('task')) {
+        let tid = parseInt(this.activeid.split('_')[1])
+        this.activeTask(this.$store.state.tasks.find(task => task.id === tid))
+      }
     },
     removeItem () {
       if (this.activeid === '') {
@@ -293,6 +300,10 @@ export default {
         return
       }
       $('#' + this.activeid).find('.glyphicon-pencil').click()
+    },
+    selectGroup (gid) {
+      this.activeid = 'date_' + gid
+      this.locateItem()
     }
   },
   computed: {
@@ -363,17 +374,31 @@ export default {
   },
   watch: {
     content (val) {
-      if (val.startsWith('#') && val.length > 1) {
+      if (val.startsWith('#')) {
         let notifyDate = val.substr(1, val.length)
-        let date = this.dates.find(date => {
+        let results = this.dates.filter(date => {
+          if (date.notify_date === null) {
+            return false
+          }
           return date.notify_date.indexOf(notifyDate) > -1
+        }).map(date => {
+          return {
+            id: date.notify_date,
+            name: date.notify_date
+          }
         })
-        if (date === undefined) {
-          return
+        if (results.length > 0) {
+          this.$emit('searchgroup', results)
+        } else {
+          this.$emit('searchgroup', this.dates.map(date => {
+            return {
+              id: date.notify_date,
+              name: date.notify_date
+            }
+          }))
         }
-        this.activeDate(date)
-        location.hash = '#date_' + date.notify_date
-        document.querySelector('#command').focus()
+      } else {
+        this.$emit('searchgroup', [])
       }
     }
   }

@@ -357,6 +357,10 @@ export default {
         return
       }
       $('#' + this.activeid).find('.glyphicon-pencil').click()
+    },
+    selectGroup (gid) {
+      this.activeid = 'project_' + gid
+      this.locateItem()
     }
   },
   computed: {
@@ -421,16 +425,28 @@ export default {
   },
   watch: {
     content (val) {
-      if (val.startsWith('#') && val.length > 1) {
+      if (val.startsWith('#')) {
         let projectName = val.substr(1, val.length).toLowerCase()
-        let project = this.projects.find(project => {
+        let results = this.projects.filter(project => {
           return project.name.toLowerCase().indexOf(projectName) > -1
+        }).map(project => {
+          return {
+            id: project.id,
+            name: project.name
+          }
         })
-        if (project === undefined) {
-          return
+        if (results.length > 0) {
+          this.$emit('searchgroup', results)
+        } else {
+          this.$emit('searchgroup', this.projects.map(project => {
+            return {
+              id: project.id,
+              name: project.name
+            }
+          }))
         }
-        this.activeid = 'project_' + project.id
-        this.locateItem()
+      } else {
+        this.$emit('searchgroup', [])
       }
     }
   }

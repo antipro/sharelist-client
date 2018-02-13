@@ -56,11 +56,19 @@
               </span>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
           <div class="form-group">
-            <router-link class="btn btn-default btn-lg" :to="{ name: 'resetpwd' }"><span class="glyphicon glyphicon-lock"></span> {{ $t('ui.resetpwd') }}</router-link>
+            <router-link class="btn btn-default btn-lg btn-block" :to="{ name: 'resetpwd' }"><span class="glyphicon glyphicon-lock"></span> {{ $t('ui.resetpwd') }}</router-link>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
           <div class="form-group">
-            <button class="btn btn-danger btn-lg" @click="deleteAccount"><span class="glyphicon glyphicon-warning-sign"></span> {{ $t('ui.delete_account_data') }}</button>
+            <button class="btn btn-danger btn-lg btn-block" @click="deleteAccount"><span class="glyphicon glyphicon-warning-sign"></span> {{ $t('ui.delete_account_data') }}</button>
           </div>
         </div>
       </div>

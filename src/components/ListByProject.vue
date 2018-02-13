@@ -312,7 +312,7 @@ export default {
         if (els[idx]) {
           this.activeid = els[idx].id
         } else {
-          console.log('archive to buttom')
+          console.log('archive to bottom')
         }
       }
       this.locateItem()

@@ -255,7 +255,7 @@ export default {
         if (els[idx]) {
           this.activeid = els[idx].id
         } else {
-          console.log('archive to buttom')
+          console.log('archive to bottom')
         }
       }
       this.locateItem()
@@ -281,7 +281,7 @@ export default {
       locationId = '#' + this.activeid
       locateElement(document.querySelector(locationId))
       if (this.activeid.startsWith('date')) {
-        let did = parseInt(this.activeid.split('_')[1])
+        let did = this.activeid.split('_')[1]
         this.activeDate(this.dates.find(date => date.notify_date === did))
       }
       if (this.activeid.startsWith('task')) {

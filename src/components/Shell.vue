@@ -292,7 +292,6 @@ export default {
     groupsearched (results) {
       this.searchedgroups = results
       this.selected_gidx = 0
-      console.log(results)
     },
     nextGroup (evt) {
       if (this.searchedgroups.length === 0) {

@@ -40,6 +40,9 @@
               <li>{{ $t('message._cordova_tip_01') }}</li>
               <li>{{ $t('message._cordova_tip_02') }}</li>
               <li>{{ $t('message._cordova_tip_03') }}</li>
+              <li>{{ $t('message._cordova_tip_04') }}</li>
+              <li>{{ $t('message._cordova_tip_05') }}</li>
+              <li>{{ $t('message._cordova_tip_06') }}</li>
             </template>
           </ul>
         </div>

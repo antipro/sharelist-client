@@ -5,7 +5,7 @@
         <span class="glyphicon glyphicon-arrow-left"></span>
       </a>
     </navibar>
-    <div class="container-fluid" style="margin-top: 20px; overflow-y:auto;">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
           <h4>{{ $t('message.description') }}</h4>
@@ -55,6 +55,7 @@
 @media screen and (min-width: 800px) {
   .about { margin-left: 250px; width: calc(100% - 250px); }
 }
+.about .container-fluid { position: absolute; top: 50px; bottom: 0; left: 0px; width: 100%; margin-top: 20px; overflow-y: auto; }
 </style>
 
 

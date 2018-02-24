@@ -29,7 +29,12 @@
           </div>
           <div class="form-group">
             <label for="notify_time">{{ $t('ui.default_time_for_notification') }}</label>
-            <input type="text" v-model="notify_time" class="form-control input-lg" readonly @focus="showTimeDlg">
+            <div class="input-group input-group-lg">
+              <input type="time" id="notify_time" v-model="notify_time" pattern="[0-9]{2}:[0-9]{2}" class="form-control">
+              <span class="input-group-addon" style="padding: 6px 18px;">
+                <span class="glyphicon glyphicon-floppy-save" @click="saveTime"></span>
+              </span>
+            </div>
           </div>
           <div class="form-group">
             <label for="locale">{{ $t('ui.default_locale') }}</label>
@@ -74,18 +79,6 @@
       </div>
     </div>
 
-    <div class="modal fade" id="time_modal" @click="hideTimeDlg">
-      <div class="modal-dialog" @click.stop>
-        <div class="modal-content">
-          <div class="modal-body">
-            <div id="task_time"></div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="saveTime">{{ $t('ui.confirm') }}</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <style>
@@ -100,19 +93,13 @@
 <script>
 /* eslint-disable no-eval */
 import Navibar from '@/components/Navibar'
-import jQuery from 'jquery'
-import 'bootstrap/dist/js/bootstrap'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
-import 'eonasdan-bootstrap-datetimepicker'
-
-const $ = jQuery
 
 export default {
   name: 'preference',
   data () {
     return {
       starup_hidden: false,
+      notify_time: this.$store.state.preference.notify_time,
       shortcut: 'S',
       uname: this.$root.uname
     }
@@ -126,19 +113,6 @@ export default {
       })
       ipc.send('preference-get-message')
     }
-    $(() => {
-      $('#time_modal').modal({
-        backdrop: false,
-        show: false
-      })
-      $('#task_time').datetimepicker({
-        defaultDate: new Date(),
-        format: 'HH:mm',
-        stepping: 5,
-        inline: true,
-        sideBySide: true
-      })
-    })
   },
   methods: {
     back () {
@@ -160,16 +134,10 @@ export default {
       })
     },
     saveTime () {
+      alert(this.notify_time)
       this.$root.updatePreference({
-        notify_time: $('#task_time').data('DateTimePicker').date().format('HH:mm')
+        notify_time: this.notify_time
       })
-      this.hideTimeDlg()
-    },
-    showTimeDlg () {
-      $('#time_modal').modal('show')
-    },
-    hideTimeDlg () {
-      $('#time_modal').modal('hide')
     },
     saveName () {
       if (this.uname === '') {
@@ -194,11 +162,6 @@ export default {
   },
   components: {
     Navibar
-  },
-  computed: {
-    notify_time () {
-      return this.$store.state.preference.notify_time
-    }
   }
 }
 </script>

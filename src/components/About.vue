@@ -17,13 +17,17 @@
           <h4>{{ $t('message.author') }}</h4>
           <strong>antipro</strong><br/>
           <a href="mailto:antipro@163.com">antipro@163.com</a><br/>
-          <a href="https://antipro.gitee.io/sharelist/" target="_blank">https://antipro.gitee.io/sharelist/</a>
+          <a v-if="$root.runtime==='electron'" href="javascript:void(0)" @click="openExternal('https://antipro.gitee.io/sharelist/')">https://antipro.gitee.io/sharelist/</a>
+          <a v-else href="https://antipro.gitee.io/sharelist/" target="_blank">https://antipro.gitee.io/sharelist/</a>
           <h4>Android</h4>
           <p>
             <img src="http://qr.liantu.com/api.php?text=http://antipro.gitee.io/sharelist/releases/sharelist-release.apk" style="width: 200px; height: 200px;">
           </p>
           <h4>{{ $t('message.software_license') }}</h4>
-          <p><a href="http://www.apache.org/licenses/LICENSE-2.0.txt" target="_blank">Apache License(Ver.2)</a></p>
+          <p>
+            <a v-if="$root.runtime==='electron'" href="javascript:void(0)" @click="openExternal('http://www.apache.org/licenses/LICENSE-2.0.txt')">Apache License(Ver.2)</a>
+            <a v-else href="http://www.apache.org/licenses/LICENSE-2.0.txt" target="_blank">Apache License(Ver.2)</a>
+          </p>
           <h4>{{ $t('message.shortcut') }}</h4>
           <ul>
             <li>{{ $t('message.common_tip_01') }}</li>
@@ -61,6 +65,7 @@
 
 <script>
 /* global CURRENT_VERSION:true */
+/* eslint-disable no-eval */
 import Navibar from '@/components/Navibar'
 
 export default {
@@ -78,6 +83,10 @@ export default {
   methods: {
     back () {
       this.$router.go(-1)
+    },
+    openExternal (url) {
+      const shell = eval('require(\'electron\')').shell
+      shell.openExternal(url)
     }
   },
   components: {

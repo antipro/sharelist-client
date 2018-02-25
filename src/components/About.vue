@@ -55,7 +55,7 @@
 @media screen and (min-width: 800px) {
   .about { margin-left: 250px; width: calc(100% - 250px); }
 }
-.about .container-fluid { position: absolute; top: 50px; bottom: 0; left: 0px; width: 100%; margin-top: 20px; overflow-y: auto; }
+.about .container-fluid { position: absolute; top: 50px; bottom: 0; left: 0px; width: 100%; padding-top: 20px; overflow-y: auto; }
 </style>
 
 

@@ -151,7 +151,7 @@ export default {
     },
     updateTask () {
       if (this.content == null || this.content === '') {
-        alert('Content is required.')
+        alert(this.$t('message.content_required'))
         return
       }
       this.$root.updateTask({

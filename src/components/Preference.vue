@@ -134,7 +134,6 @@ export default {
       })
     },
     saveTime () {
-      alert(this.notify_time)
       this.$root.updatePreference({
         notify_time: this.notify_time
       })

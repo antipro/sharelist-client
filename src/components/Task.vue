@@ -145,6 +145,9 @@ export default {
         this.updateTask()
         evt.preventDefault()
       }
+      if (evt.ctrlKey && evt.keyCode === 66) {
+        this.$router.go(-1)
+      }
     },
     back () {
       this.$router.go(-1)

@@ -37,6 +37,7 @@
             @keydown.enter="add"
             @keydown.40="nextGroup"
             @keydown.38="prevGroup"
+            @keydown.ctrl.79.stop.prevent="$refs.tasklist.toggleItem"  
             @keydown.ctrl.68.stop.prevent="$refs.tasklist.removeItem"  
             @keydown.ctrl.69.stop.prevent="$refs.tasklist.editItem">
           <template v-if="$root.runtime === 'cordova'">
@@ -265,6 +266,8 @@ export default {
         yield this.$t('message._cordova_tip_04')
         yield this.$t('message._cordova_tip_05')
         yield this.$t('message._cordova_tip_06')
+        yield this.$t('message._cordova_tip_07')
+        yield this.$t('message._cordova_tip_08')
       }
     },
     detect (evt) {

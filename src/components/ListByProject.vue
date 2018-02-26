@@ -366,6 +366,12 @@ export default {
       }
       $('#' + this.activeid).find('.glyphicon-pencil').click()
     },
+    toggleItem () {
+      if (this.activeid === '') {
+        return
+      }
+      $('#' + this.activeid).find('.chkbox').click()
+    },
     selectGroup (gid) {
       this.activeid = 'project_' + gid
       this.locateItem()

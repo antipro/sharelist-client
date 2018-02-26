@@ -93,7 +93,7 @@
 
 <style scoped>
 div.list-group-item { margin: 0 5px; box-shadow: 3px 3px #F4F4F4; }
-div.activestyle { border-color: #3d3c3c; box-shadow: 3px 3px #3d3c3c; }
+div.activestyle { border-color: #3e506b; box-shadow: 3px 3px #ddd; }
 div.list-group-item-info { background-color: #beffb2; font-weight: 600; font-size: 16px; margin-top: 10px; }
 span.chkbox { font-size: 32px; vertical-align: middle; float: left; -webkit-text-stroke: 2px white; color: #51c4f1; }
 div.content { margin-left: 35px; position: relative; }
@@ -105,7 +105,7 @@ div.drawer-right { position: absolute; top: 0; right: 0; bottom: 0; background-c
 div.drawer-right-on { display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: flex-end; }
 div.drawer-right .btn { flex-grow: 1; }
 div.drawer-right span.glyphicon-pencil { color: #7ed321; }
-div.drawer-right span.glyphicon-trash { color: red; }
+div.drawer-right span.glyphicon-trash { color: #ff0000; }
 
 pre.lead { white-space: pre-wrap; margin-bottom: 0px; overflow: hidden; font-weight: 400; background-color: transparent; border: none; padding: 0; font-family: inherit; }
 pre.wrap { white-space: nowrap; text-overflow: ellipsis; }
@@ -255,6 +255,7 @@ export default {
       if (project === undefined) {
         return
       }
+      this.activeid = 'project_' + project.id
       this.$root.activePid = project.id
       this.drawid = ''
     },
@@ -262,6 +263,7 @@ export default {
       if (task === undefined) {
         return
       }
+      this.activeid = 'task_' + task.id
       this.drawid = ''
     },
     addTask () {

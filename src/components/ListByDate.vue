@@ -154,7 +154,7 @@ export default {
     }
   },
   updated () {
-    document.querySelector('#command').focus()
+    this.$parent.focus()
   },
   methods: {
     toggleWrap (tid) {

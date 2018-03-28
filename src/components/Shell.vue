@@ -138,7 +138,7 @@ export default {
     if (this.$root.runtime === 'electron') {
       document.querySelector('#command').addEventListener('contextmenu', this.$root.rightMenu, false)
     }
-    document.querySelector('#command').focus()
+    this.focus()
   },
   beforeDestroy () {
     clearInterval(this.interval_ptr)
@@ -158,7 +158,7 @@ export default {
   methods: {
     shortCut (evt) {
       if (evt.ctrlKey && evt.shiftKey && evt.keyCode === 80) {
-        document.querySelector('#command').focus()
+        this.focus()
         evt.preventDefault()
       }
       if (evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 40) {
@@ -172,6 +172,11 @@ export default {
       }
       if (!evt.ctrlKey && !evt.shiftKey && !evt.altKey && evt.keyCode === 38) {
         this.$refs.tasklist.prev()
+      }
+    },
+    focus () {
+      if (this.$root.runtime !== 'cordova') {
+        document.querySelector('#command').focus()
       }
     },
     groupchanged (gname) {

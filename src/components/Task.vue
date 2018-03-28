@@ -106,7 +106,9 @@ export default {
     }
   },
   mounted () {
-    document.querySelector('#task_content').focus()
+    if (this.$root.runtime !== 'cordova') {
+      document.querySelector('#task_content').focus()
+    }
     let autoSave = () => {
       if (this.content !== '') {
         this.saveStatus = this.$t('message.saving')

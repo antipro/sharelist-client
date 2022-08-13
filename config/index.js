@@ -11,7 +11,7 @@ try {
   console.error('Content like this:')
   console.error(`'use strict'
   module.exports = {
-    CURRENT_VERSION: '"version-revision"'
+    CURRENT_VERSION: '"version-revision"',
     SERVER_URL: {
       dev: '"ip or domain of sharelist-server for development(with port)"',
       prod: '"ip or domain of sharelist-server for production(with port)"'

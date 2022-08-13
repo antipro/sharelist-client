@@ -31,12 +31,15 @@
 
 start server according to guide of [sharelist-server](https://gitee.com/antipro/sharelist-server)
 
-create ./config/server.js, like below:
+create config/sharelist-config.js, like below:
 ``` javascript
 'use strict'
 module.exports = {
-  dev: '"HTTPADDRESS:PORT"',
-  prod: '"HTTPADDRESS:PORT"'
+  CURRENT_VERSION: '"version-revision"',
+  SERVER_URL: {
+    dev: '"ip or domain of sharelist-server for development(with port)"',
+    prod: '"ip or domain of sharelist-server for production(with port)"'
+  }
 }
 ```
 

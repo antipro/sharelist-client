@@ -17,3 +17,4 @@ selenium-debug.log
 *.sln
 config/sharelist-config.js
 config/server.js
+/pnpm-lock.yaml

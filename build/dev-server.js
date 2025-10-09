@@ -68,6 +68,45 @@ app.use(devMiddleware)
 const staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
+// catch-all route to serve in-memory index.html from webpack-dev-middleware
+app.get('*', (req, res) => {
+  const fs = devMiddleware.fileSystem;
+  // List all files in memory for debugging
+  try {
+    const files = fs.readdirSync('.');
+    console.log('Files in devMiddleware memory:', files);
+  } catch (e) {
+    console.log('Could not list files in devMiddleware memory:', e);
+  }
+  // Try both index.html and /index.html
+  fs.readFile('index.html', (err, result) => {
+    if (!err) {
+      res.set('content-type', 'text/html');
+      res.send(result);
+      res.end();
+      return;
+    }
+    fs.readFile('/index.html', (err2, result2) => {
+      if (!err2) {
+        res.set('content-type', 'text/html');
+        res.send(result2);
+        res.end();
+        return;
+      }
+      // Try dist/index.html as a fallback for debugging
+      fs.readFile('dist/index.html', (err3, result3) => {
+        if (!err3) {
+          res.set('content-type', 'text/html');
+          res.send(result3);
+          res.end();
+          return;
+        }
+        res.status(404).send('Not Found');
+      });
+    });
+  });
+});
+
 const uri = 'http://localhost:' + port
 
 var _resolve

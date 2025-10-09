@@ -35,12 +35,14 @@ const webpackConfig = merge(baseWebpackConfig, {
       'CURRENT_VERSION': config.base.currentVersion
     }),
     // UglifyJs do not support ES6+, you can also use babel-minify for better treeshaking: https://github.com/babel/minify
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      sourceMap: true
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false
+    //   },
+    //   sourceMap: true
+    // }),
+    // Use babel-minify-webpack-plugin instead of UglifyJs
+    new (require('babel-minify-webpack-plugin'))(),
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css')

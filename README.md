@@ -20,16 +20,16 @@
 
 ## Related Project
 
-* [sharelist-server](https://gitee.com/antipro/sharelist-server)
+* [sharelist-server](https://github.com/antipro/sharelist-server)
   > server-side program
-* [sharelist-electron](https://gitee.com/antipro/sharelist-electron)
+* [sharelist-electron](https://github.com/antipro/sharelist-electron)
   > desktop wrapper
-* [sharelist-cordova](https://gitee.com/antipro/sharelist-cordova)
+* [sharelist-cordova](https://github.com/antipro/sharelist-cordova)
   > mobile wrapper
 
 ## Preparation
 
-start server according to guide of [sharelist-server](https://gitee.com/antipro/sharelist-server)
+start server according to guide of [sharelist-server](https://github.com/antipro/sharelist-server)
 
 create config/sharelist-config.js, like below:
 ``` javascript

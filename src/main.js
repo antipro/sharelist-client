@@ -82,22 +82,24 @@ new Vue({
     if (userAgent.indexOf('electron/') > -1) {
       this.runtime = 'electron'
     }
-    $.getScript('cordova.js').done(() => {
-      this.runtime = 'cordova'
-      document.addEventListener('deviceready', () => {
-        document.addEventListener('backbutton', evt => {
-          if (location.href.indexOf('list') > -1) {
-            navigator.Backbutton.goHome(function () {
-              console.log('go home success')
-            }, function () {
-              console.log('go home fail')
-            })
-          } else {
-            history.back()
-          }
+    if (process.env.NODE_ENV !== 'development') {
+      $.getScript('cordova.js').done(() => {
+        this.runtime = 'cordova'
+        document.addEventListener('deviceready', () => {
+          document.addEventListener('backbutton', evt => {
+            if (location.href.indexOf('list') > -1) {
+              navigator.Backbutton.goHome(function () {
+                console.log('go home success')
+              }, function () {
+                console.log('go home fail')
+              })
+            } else {
+              history.back()
+            }
+          }, false)
         }, false)
-      }, false)
-    })
+      })
+    }
   },
   mounted () {
     document.title = this.$t('ui.app_name')

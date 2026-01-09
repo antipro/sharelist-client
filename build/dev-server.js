@@ -73,13 +73,13 @@ app.get('*', (req, res) => {
   const fs = devMiddleware.fileSystem;
   // List all files in memory for debugging
   try {
-    const files = fs.readdirSync('.');
+    const files = devMiddleware.fileSystem.readdirSync(webpackConfig.output.path);
     console.log('Files in devMiddleware memory:', files);
   } catch (e) {
     console.log('Could not list files in devMiddleware memory:', e);
   }
-  // Try both index.html and /index.html
-  fs.readFile('index.html', (err, result) => {
+  // Try getting index.html from output path
+  fs.readFile(path.join(webpackConfig.output.path, 'index.html'), (err, result) => {
     if (!err) {
       res.set('content-type', 'text/html');
       res.send(result);

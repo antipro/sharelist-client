@@ -36,17 +36,16 @@
 
 <script>
 import $ from 'jquery'
-import axios from 'axios'
 
 export default {
   name: 'record',
   data () {
     return {
-      mediaRecorder: null,
+      recognition: null,
       counter: 10,
       interPtr: 0,
       items: [],
-      confirmed: false
+      finalTranscript: ''
     }
   },
   mounted () {
@@ -54,8 +53,8 @@ export default {
       backdrop: false,
       show: false
     })
-    $('#modal-record').on('show.bs.modal', (e) => {
-      this.confirmed = false
+    $('#modal-record').on('show.bs.modal', () => {
+      this.finalTranscript = ''
       this.counter = 10
       this.interPtr = setInterval(() => {
         if (this.counter <= 0) {
@@ -64,94 +63,71 @@ export default {
         this.counter--
       }, 1000)
     })
-    $('#modal-record').on('hide.bs.modal', (e) => {
+    $('#modal-record').on('hide.bs.modal', () => {
       clearInterval(this.interPtr)
-      if (this.mediaRecorder) {
-        this.mediaRecorder.stopRecord()
-        this.mediaRecorder.release()
+      if (this.recognition) {
+        this.recognition.stop()
+        this.recognition = null
       }
     })
   },
   beforeDestroy () {
     clearInterval(this.interPtr)
-    if (this.mediaRecorder) {
-      this.mediaRecorder.stopRecord()
-      this.mediaRecorder.release()
+    if (this.recognition) {
+      this.recognition.stop()
+      this.recognition = null
     }
   },
   methods: {
     startRecord () {
-      let errorHandler = (error) => {
-        console.log('Record Error', error)
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+      if (!SpeechRecognition) {
+        alert(this.$t('message.no_result'))
+        return
       }
-      this.mediaRecorder = new window.Media('cdvfile://localhost/temporary/speech.amr', () => {
-        console.log('Record Success')
-        if (!this.confirmed) { // Stop parsing if not confirmed by user
-          return
+      let lan = this.$root.locale === 'en' ? 'en-US' : 'zh-CN'
+      this.recognition = new SpeechRecognition()
+      this.recognition.lang = lan
+      this.recognition.continuous = false
+      this.recognition.interimResults = true
+      this.recognition.maxAlternatives = 5
+
+      this.recognition.onresult = (event) => {
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const result = event.results[i]
+          if (result.isFinal) {
+            this.finalTranscript = result[0].transcript
+          }
         }
-        window.resolveLocalFileSystemURL('cdvfile://localhost/temporary/speech.amr', (fileEntry) => {
-          console.log(fileEntry)
-          fileEntry.file(this.processFile, errorHandler)
-        }, errorHandler)
-        // window.resolveLocalFileSystemURL(window.cordova.file.externalRootDirectory, (dirEntry) => {
-        //   dirEntry.getFile('8k-122.amr', {}, fileEntry => {
-        //     console.log('fileEntry', fileEntry)
-        //     fileEntry.file(this.processFile, errorHandler)
-        //   }, errorHandler)
-        // }, errorHandler)
-      }, errorHandler)
-      this.mediaRecorder.startRecord()
+      }
+
+      this.recognition.onerror = (event) => {
+        console.log('Speech recognition error', event.error)
+        $('#modal-record').modal('hide')
+        if (event.error !== 'no-speech' && event.error !== 'aborted') {
+          alert('Speech recognition error: ' + event.error)
+        }
+      }
+
+      this.recognition.onend = () => {
+        $('#modal-record').modal('hide')
+        if (this.finalTranscript) {
+          this.processResult([this.finalTranscript])
+        }
+      }
+
+      this.recognition.start()
       $('#modal-record').modal('show')
     },
     stopRecord () {
-      this.confirmed = true
+      if (this.recognition) {
+        this.recognition.stop()
+        this.recognition = null
+      }
       $('#modal-record').modal('hide')
     },
-    processFile (file) {
-      var reader = new FileReader()
-      reader.onerror = () => {
-        console.log('Can not read file', reader.error)
-      }
-      reader.onloadend = () => {
-        let cuid = this.$root.uid
-        let lan = 'zh'
-        if (this.$root.locale === 'en') {
-          lan = 'en'
-        }
-        this.$emit('recognizing')
-        this.$root.fetchToken((accessToken) => {
-          console.log(accessToken)
-          axios({
-            method: 'post',
-            url: 'http://vop.baidu.com/server_api?lan=' + lan + '&cuid=' + cuid + '&token=' + accessToken,
-            headers: {
-              'Content-Type': 'audio/amr; rate=8000'
-            },
-            data: reader.result
-          }).then(response => {
-            this.$emit('recognized')
-            if (response.status !== 200) {
-              console.error('Network Fault', response.status, response.statusText)
-              alert(response.statusText)
-              return
-            }
-            let res = response.data
-            if (res.err_no === 0) {
-              this.processResult(res.result)
-            } else {
-              alert(res.err_msg)
-            }
-          }).catch((error) => {
-            this.$emit('recognized')
-            console.log(error)
-          })
-        })
-      }
-      reader.readAsArrayBuffer(file)
-    },
     processResult (result) {
-      console.log(result)
-      if (result.length === 0) {
+      if (result.length === 0 || !result[0]) {
         alert(this.$t('message.no_result'))
       } else {
         this.showItems(result)
@@ -166,7 +142,7 @@ export default {
       $('#modal-items').modal('hide')
     },
     formatted (item) {
-      return item.substr(0, item.length - 1)
+      return item
     }
   }
 }

@@ -62,13 +62,7 @@ export default {
     }
     this.$root.locale = navigator.language
   },
-  mounted () {
-    if (process.env.NODE_ENV === 'development') {
-      this.email = 'test@test.com'
-      this.pwd = 'test'
-      this.login()
-    }
-  },
+
   methods: {
     login (e) {
       if (this.email === '' || this.pwd === '') {

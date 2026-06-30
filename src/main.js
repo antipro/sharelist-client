@@ -82,8 +82,14 @@ new Vue({
     if (userAgent.indexOf('electron/') > -1) {
       this.runtime = 'electron'
     }
-    if (process.env.NODE_ENV !== 'development') {
+    if (window.__TAURI__) {
+      this.runtime = 'electron'
+    }
+    if (process.env.NODE_ENV !== 'development' && !window.__TAURI__) {
       $.getScript('cordova.js').done(() => {
+        if (typeof window.cordova === 'undefined') {
+          return
+        }
         this.runtime = 'cordova'
         document.addEventListener('deviceready', () => {
           document.addEventListener('backbutton', evt => {
@@ -103,6 +109,14 @@ new Vue({
   },
   mounted () {
     document.title = this.$t('ui.app_name')
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'F12') {
+        e.preventDefault()
+        try {
+          window.__TAURI__.core.invoke('open_devtools')
+        } catch (_) {}
+      }
+    })
   },
   methods: {
     rightMenu (evt) {

@@ -8,7 +8,16 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
-          <div v-if="$root.runtime === 'electron'" class="form-group">
+          <div v-if="$root.runtime === 'tauri'" class="form-group">
+            <div class="checkbox">
+              <label class="input-lg" @click="toggleCloseToTray" style="padding-left: 0px;">
+                <span v-if="close_to_tray===true" class="chkbox glyphicon glyphicon-check" ></span>
+                <span v-if="close_to_tray===false" class="chkbox glyphicon glyphicon-unchecked"></span>
+                {{ $t('ui.close_to_tray') }}
+              </label>
+            </div>
+          </div>
+          <div v-if="$root.runtime !== 'browser'" class="form-group">
             <div class="checkbox">
               <label class="input-lg" @click="toggle" style="padding-left: 0px;">
                 <span v-if="starup_hidden===true" class="chkbox glyphicon glyphicon-check" ></span>
@@ -17,7 +26,7 @@
               </label>
             </div>
           </div>
-          <div v-if="$root.runtime === 'electron'" class="form-group">
+          <div v-if="$root.runtime !== 'browser'" class="form-group">
             <label for="shortcut">{{ $t('ui.global_shortcut') }}</label>
             <div class="input-group input-group-lg">
               <span class="input-group-addon">CmdOrCtrl+Alt+Shift</span>
@@ -101,7 +110,8 @@ export default {
       starup_hidden: false,
       notify_time: this.$store.state.preference.notify_time,
       shortcut: 'S',
-      uname: this.$root.uname
+      uname: this.$root.uname,
+      close_to_tray: false
     }
   },
   created () {
@@ -112,26 +122,53 @@ export default {
         this.shortcut = ref.shortcut || 'S'
       })
       ipc.send('preference-get-message')
+    } else if (this.$root.runtime === 'tauri') {
+      try {
+        window.__TAURI__.core.invoke('get_preference').then(pref => {
+          this.starup_hidden = pref.starup_hidden
+          this.shortcut = pref.shortcut || 'S'
+          this.close_to_tray = pref.close_to_tray || false
+        })
+      } catch (_) {}
     }
   },
   methods: {
+    saveTauriPref (key, value) {
+      try {
+        window.__TAURI__.core.invoke('set_preference', { pref: { [key]: value } })
+      } catch (_) {}
+    },
     back () {
       this.$router.go(-1)
     },
+    toggleCloseToTray () {
+      this.close_to_tray = !this.close_to_tray
+      if (this.$root.runtime === 'tauri') {
+        this.saveTauriPref('close_to_tray', this.close_to_tray)
+      }
+    },
     toggle () {
       this.starup_hidden = !this.starup_hidden
-      const ipc = eval('require(\'electron\')').ipcRenderer
-      ipc.send('preference-message', {
-        starup_hidden: this.starup_hidden,
-        shortcut: this.shortcut
-      })
+      if (this.$root.runtime === 'electron') {
+        const ipc = eval('require(\'electron\')').ipcRenderer
+        ipc.send('preference-message', {
+          starup_hidden: this.starup_hidden,
+          shortcut: this.shortcut
+        })
+      } else if (this.$root.runtime === 'tauri') {
+        this.saveTauriPref('starup_hidden', this.starup_hidden)
+      }
     },
     saveKey () {
-      const ipc = eval('require(\'electron\')').ipcRenderer
-      ipc.send('preference-message', {
-        starup_hidden: this.starup_hidden,
-        shortcut: this.shortcut
-      })
+      if (this.$root.runtime === 'electron') {
+        const ipc = eval('require(\'electron\')').ipcRenderer
+        ipc.send('preference-message', {
+          starup_hidden: this.starup_hidden,
+          shortcut: this.shortcut
+        })
+      } else if (this.$root.runtime === 'tauri') {
+        this.saveTauriPref('shortcut', this.shortcut)
+      }
     },
     saveTime () {
       this.$root.updatePreference({

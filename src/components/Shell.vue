@@ -117,7 +117,9 @@ export default {
     if (!this.defaultChild) {
       this.defaultChild = 'projectlist'
     }
-    this.$router.replace({ name: this.defaultChild })
+    if (this.$route.name !== this.defaultChild) {
+      this.$router.replace({ name: this.defaultChild })
+    }
     let iter = this.tips()
     this.interval_ptr = setInterval(() => {
       if (this.content !== '') {

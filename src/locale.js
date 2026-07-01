@@ -46,7 +46,8 @@ export default {
       'cut': 'Cut',
       'copy': 'Copy',
       'paste': 'Paste',
-      'global_shortcut': 'Global Shortcut'
+      'global_shortcut': 'Global Shortcut',
+      'close_to_tray': 'Close To Tray'
     },
     message: {
       'can_not_add_yourself': 'Can not add yourself.',
@@ -161,7 +162,8 @@ export default {
       'cut': '剪切',
       'copy': '复制',
       'paste': '粘贴',
-      'global_shortcut': '全局快捷键'
+      'global_shortcut': '全局快捷键',
+      'close_to_tray': '关闭时最小化到托盘'
     },
     message: {
       'can_not_add_yourself': '不能添加您自己。',

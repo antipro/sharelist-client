@@ -87,6 +87,7 @@ export default {
       this.$router.go(-1)
     },
     openExternal (url) {
+      if (this.$root.runtime !== 'electron') return
       const shell = eval('require(\'electron\')').shell
       shell.openExternal(url)
     }

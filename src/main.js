@@ -82,10 +82,10 @@ new Vue({
     if (userAgent.indexOf('electron/') > -1) {
       this.runtime = 'electron'
     }
-    if (window.__TAURI__) {
-      this.runtime = 'electron'
+    if (window.__TAURI__ || window.__TAURI_INTERNALS__) {
+      this.runtime = 'tauri'
     }
-    if (process.env.NODE_ENV !== 'development' && !window.__TAURI__) {
+    if (process.env.NODE_ENV !== 'development' && !window.__TAURI__ && !window.__TAURI_INTERNALS__) {
       $.getScript('cordova.js').done(() => {
         if (typeof window.cordova === 'undefined') {
           return
@@ -120,6 +120,7 @@ new Vue({
   },
   methods: {
     rightMenu (evt) {
+      if (this.runtime !== 'electron') return
       const { remote } = eval('require(\'electron\')')
       const { Menu, MenuItem } = remote
       const menu = new Menu()
